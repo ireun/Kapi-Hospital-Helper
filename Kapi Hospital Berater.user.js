@@ -53,7 +53,6 @@ window.addEventListener("load", function () {
 
 // global definitions
     var texte = new Object();
-    var gamepages = new Object();
     var medi = new Object();
 
     if (document.location.href.search("de.kapihospital.com") != -1) {
@@ -325,7 +324,7 @@ window.addEventListener("load", function () {
 
 //***********************************************************************************************************
 
-    var scriptUrl = "https://greasyfork.org/scripts/5182-kapi-hospital-berater/code/Kapi%20Hospital%20Berater.user.js";
+    var scriptUrl = "https://greasyfork.org/pl/scripts/5182-kapi-hospital-berater";
     var Global = unsafeWindow.Global;
     var loc = reg.exec(document.location.href);
     var all = document.getElementsByTagName("body")[0];
