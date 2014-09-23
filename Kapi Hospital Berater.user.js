@@ -653,25 +653,23 @@ window.addEventListener("load", function () {
 
         // Quicklinks
         var arrQuicklinks = [
-            [],
-            ["Apotheke Pillenexpress", "shop1", 1, 1],
-            [Ae + "rztevereinigung und Wettbewerb", "guildhouse", 3, 1],
-            ["Rathaus", "townhall", 3, 1],
-            ["Medizinischer Gro" + sz + "handel", "shop2", 1, 1],
-            ["Zeitungsredaktion", "editoraloffice", 3, 1],
-            ["Autoh" + ae + "ndler", "ambulancestore", 3, 2],
-            ["Forschungszentrum", "rcenter", 3, 2],
-            [],
-            ["Internetcafe", "shop3", 1, 2],
-            ["Architekturb" + ue + "ro", "architect", 3, 2],
-            ["Tante-Emma-Laden", "shop4", 1, 2],
-            ["Bushaltestelle", "busstop", 3, 1],
-            ["Speakers Corner", "speakers", 3, 1],
-            ["Garage", "garage", 2, 1],
-            ["Bank", "bank", 3, 1],
-            ["Patientenb" + oe + "rse", "exchange", 2, 1],
-            ["Fr" + ae + "ulein Rosenwasser", "goodgirl", 3, 1],
-            ["Dr. Knievel", "badboy", 3, 2]
+            [[texte["shop1"]], "shop1", 1, 1],
+            [[texte["quildhouse"]], "guildhouse", 3, 1],
+            [[texte["townhall"]], "townhall", 3, 1],
+            [[texte["shop2"]], "shop2", 1, 1],
+            [[texte["editoraloffice"]], "editoraloffice", 3, 1],
+            [[texte["ambulancestore"]], "ambulancestore", 3, 2],
+            [[texte["rcenter"]], "rcenter", 3, 2],
+            [[texte["shop3"]], "shop3", 1, 2],
+            [[texte["architect"]], "architect", 3, 2],
+            [[texte["shop4"]], "shop4", 1, 2],
+            [[texte["busstop"]], "busstop", 3, 1],
+            [[texte["speakers"]], "speakers", 3, 1],
+            [[texte["garage"]], "garage", 2, 1],
+            [[texte["bank"]], "bank", 3, 1],
+            [[texte["exchange"]], "exchange", 2, 1],
+            [[texte["goodgirl"]], "goodgirl", 3, 1],
+            [[texte["badboy"]], "badboy", 3, 2]
         ];
 
         newdiv = createElement("div", {id: "quicklinks"}, all);
@@ -1387,6 +1385,24 @@ window.addEventListener("load", function () {
                 //Systemwords
                 texte["waehrung"] = "hT"; //Global._KH_CURRENCY
                 texte["coins"] = "Coins";
+                // Quicklinks
+                texte["shop1"] = "Apotheke Pillenexpress";
+                texte["quildhouse"] = Ae + "rztevereinigung und Wettbewerb";
+                texte["townhall"] = "Rathaus";
+                texte["shop2"] = "Medizinischer Gro";
+                texte["editoraloffice"] = "Zeitungsredaktion";
+                texte["ambulancestore"] = "Autoh" + ae + "ndler";
+                texte["rcenter"] = "Forschungszentrum";
+                texte["shop3"] = "Internetcafe";
+                texte["architect"] = "Architekturb" + ue + "ro";
+                texte["shop4"] = "Tante-Emma-Laden";
+                texte["busstop"] = "Bushaltestelle";
+                texte["speakers"] = "Speakers Corner";
+                texte["garage"] = "Garage";
+                texte["bank"] = "Bank";
+                texte["exchange"] = "Patientenb" + oe + "rse";
+                texte["goodgirl"] = "Fr" + ae + "ulein Rosenwasser";
+                texte["badboy"] = "Dr. Knievel";
                 break;
 
             case "uk":
@@ -1441,11 +1457,30 @@ window.addEventListener("load", function () {
                 //Systemwords
                 texte["waehrung"] = "hT"; //Global._KH_CURRENCY
                 texte["coins"] = "Coins";
+                // Quicklinks
+                texte["shop1"] = "";
+                texte["quildhouse"] = "";
+                texte["townhall"] = "";
+                texte["shop2"] = "";
+                texte["editoraloffice"] = "";
+                texte["ambulancestore"] = "";
+                texte["rcenter"] = "";
+                texte["shop3"] = "";
+                texte["architect"] = "";
+                texte["shop4"] = "";
+                texte["busstop"] = "";
+                texte["speakers"] = "";
+                texte[""] = "";
+                texte["garage"] = "";
+                texte["bank"] = "";
+                texte["exchange"] = "";
+                texte["goodgirl"] = "";
+                texte["badboy"] = "";
                 break;
 
             case "pl":
                 texte["berater"] = "Doradca";
-                texte["autologin1"] = "Sprawdzenie aktywnych sesji. Prosz" + e_pl + "odczekac 5 sekund<br>...";
+                texte["autologin1"] = "Sprawdzanie aktywnych sesji. Prosz" + e_pl + "odczekac 5 sekund...";
                 texte["autologin2"] = "Wszystkie konta zalogowane.";
                 texte["optionen"] = "Opcje";
                 texte["fertig"] = "Gotowe";
@@ -1459,7 +1494,7 @@ window.addEventListener("load", function () {
                 texte["set_RackMax"] = "Limit zakupu";
                 texte["set_valGlobalClockInTitle"] = "Czas w tytule karty.";
                 texte["set_valStartQuestAutomatic"] = "AutoQuest.";
-                texte["info_AutoLogin"] = "Po wprowadzeniu nazwy uzytkownika i has"+ l_pl + "a nast"+ e_pl + "puje automatyczne logowanie. Pozwala to zachowa" + c_pl + " " + c_pl + "iaglosc grania. Przy wielu kontach musi by" + c_pl + "dozwolone wyskakiwanie okienek.";
+                texte["info_AutoLogin"] = "Po wprowadzeniu nazwy u" +z_pl + "ytkownika i has"+ l_pl + "a nast"+ e_pl + "puje automatyczne logowanie. Pozwala to zachowa" + c_pl + " " + c_pl + "iaglosc grania. Przy wielu kontach musi by" + c_pl + "dozwolone wyskakiwanie okienek.";
                 texte["info_Update"] = "Automatycznie sprawdza czy jest nowsza wersja tego skryptu.";
                 texte["info_RackLow"] = "Produkt zostanie zaznaczony, gdy jego ilo" + s_pl + c_pl + " w regale spadnie poni" +z_pl + "ej tego poziomu";
                 texte["info_RackMax"] = "Poprzez automnatyczny zakup, produkt b" + e_pl + "dzie zape" + l_pl + "niany do tego limitu.";
@@ -1478,7 +1513,7 @@ window.addEventListener("load", function () {
                 texte["buy"] = "kup";
                 texte["cancel"] = "Anuluj";
                 texte["autoBuy"] = "Kup leki";
-                texte["autoClean"] = "Wyczy" + s_pl + c_pl + "pokoje";
+                texte["autoClean"] = "Wyczy" + s_pl + c_pl + " pokoje";
                 texte["autoNurse"] = "Zadzwo" + n_pl + " po piel" + e_pl + "gniark" + e_pl + ".";
                 texte["autoDisposeMedi"] = "Rozporawd" + x_pl + " leki";
                 // patients panel
@@ -1495,6 +1530,25 @@ window.addEventListener("load", function () {
                 //Systemwords
                 texte["waehrung"] = "hT"; //Global._KH_CURRENCY
                 texte["coins"] = "Monety";
+                // Quicklinks
+                texte["shop1"] = "Apteka Sza" + l_pl + "pigu" + l_pl;
+                texte["quildhouse"] = "";
+                texte["townhall"] = "";
+                texte["shop2"] = "Hurtownia G.Rypa";
+                texte["editoraloffice"] = "";
+                texte["ambulancestore"] = "";
+                texte["rcenter"] = "";
+                texte["shop3"] = "";
+                texte["architect"] = "";
+                texte["shop4"] = "";
+                texte["busstop"] = "";
+                texte["speakers"] = "";
+                texte[""] = "";
+                texte["garage"] = "";
+                texte["bank"] = "";
+                texte["exchange"] = "";
+                texte["goodgirl"] = "";
+                texte["badboy"] = "";
                 break;
 
             case "cz":
@@ -1549,6 +1603,25 @@ window.addEventListener("load", function () {
                 //Systemwords
                 texte["waehrung"] = "hT"; //Global._KH_CURRENCY
                 texte["coins"] = "Mince";
+                // Quicklinks
+                texte["shop1"] = "";
+                texte["quildhouse"] = "";
+                texte["townhall"] = "";
+                texte["shop2"] = "";
+                texte["editoraloffice"] = "";
+                texte["ambulancestore"] = "";
+                texte["rcenter"] = "";
+                texte["shop3"] = "";
+                texte["architect"] = "";
+                texte["shop4"] = "";
+                texte["busstop"] = "";
+                texte["speakers"] = "";
+                texte[""] = "";
+                texte["garage"] = "";
+                texte["bank"] = "";
+                texte["exchange"] = "";
+                texte["goodgirl"] = "";
+                texte["badboy"] = "";
                 break;
         }
     }
