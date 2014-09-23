@@ -1,13 +1,15 @@
 // ==UserScript==
 // @name           Kapi Hospital Berater
-// @date           20.02.2013
-// @version        2.4.4.1.03
+// @description    Kapi Hospital Helper
+// @date           21.09.2014
+// @version        2.4.8
 // @include        http://*kapihospital.com/*
 // @grant          GM_getValue
 // @grant          GM_setValue
 // @grant          GM_addStyle
 // @grant          GM_xmlhttpRequest
 // @require        http://ajax.googleapis.com/ajax/libs/jquery/1.2.6/jquery.js
+// @namespace      https://greasyfork.org/users/5507
 // ==/UserScript==
 
 window.addEventListener("load", function () {
@@ -323,7 +325,7 @@ window.addEventListener("load", function () {
 
 //***********************************************************************************************************
 
-    var scriptUrl = "http://userscripts.org/scripts/show/86220";
+    var scriptUrl = "https://greasyfork.org/scripts/5182-kapi-hospital-berater/code/Kapi%20Hospital%20Berater.user.js";
     var Global = unsafeWindow.Global;
     var loc = reg.exec(document.location.href);
     var all = document.getElementsByTagName("body")[0];
@@ -394,7 +396,7 @@ window.addEventListener("load", function () {
             if (valLastUpdate == "") {
                 GM_xmlhttpRequest({
                     method: "GET",
-                    url: "http://userscripts.org/scripts/source/86220.meta.js",
+                    url: "https://greasyfork.org/scripts/5182-kapi-hospital-berater/code/Kapi%20Hospital%20Berater.meta.js",
                     onload: function (response) {
                         keyusoversion = /uso:version\s+(\d+)/;
                         serverversion = keyusoversion.exec(response.responseText)[1];
@@ -404,14 +406,14 @@ window.addEventListener("load", function () {
             } else {
                 GM_xmlhttpRequest({
                     method: "GET",
-                    url: "http://userscripts.org/scripts/source/86220.meta.js",
+                    url: "https://greasyfork.org/scripts/5182-kapi-hospital-berater/code/Kapi%20Hospital%20Berater.meta.js",
                     onload: function (response) {
                         keyusoversion = /uso:version\s+(\d+)/;
                         serverversion = keyusoversion.exec(response.responseText)[1];
                         if (valLastUpdate != serverversion) {
                             GM_setValue("valLastUpdate", serverversion);
                             if (confirm(texte["confirmUpdate"])) {
-                                document.location.href = "http://userscripts.org/scripts/source/86220.user.js";
+                                document.location.href = "https://greasyfork.org/scripts/5182-kapi-hospital-berater/code/Kapi%20Hospital%20Berater.user.js";
                             }
                         }
                     }
