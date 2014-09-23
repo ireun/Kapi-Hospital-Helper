@@ -3339,7 +3339,7 @@ window.addEventListener("load", function () {
         var loc = reg2.exec(document.location.href);
 
         //Auto backing to login page
-        if (loc[2].search("logout") != -1) {
+        if (document.location.href.search("logout") != -1) {
             window.setTimeout(function () {
                 document.location.href = "http://www" + gamepage;
             }, 100);
