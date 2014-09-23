@@ -3383,4 +3383,11 @@ window.addEventListener("load", function () {
 
     /*************************** end function declarations **************************/
 
+    // Adblock
+    var Ads = document.getElementById("sky");
+
+    if (Ads) {
+        Ads.parentNode.removeChild(Ads);
+    }
+
 }, false);
