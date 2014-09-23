@@ -653,23 +653,108 @@ window.addEventListener("load", function () {
 
         // Quicklinks
         var arrQuicklinks = [
-            [[texte["shop1"]], "shop1", 1, 1],
-            [[texte["quildhouse"]], "guildhouse", 3, 1],
-            [[texte["townhall"]], "townhall", 3, 1],
-            [[texte["shop2"]], "shop2", 1, 1],
-            [[texte["editoraloffice"]], "editoraloffice", 3, 1],
-            [[texte["ambulancestore"]], "ambulancestore", 3, 2],
-            [[texte["rcenter"]], "rcenter", 3, 2],
-            [[texte["shop3"]], "shop3", 1, 2],
-            [[texte["architect"]], "architect", 3, 2],
-            [[texte["shop4"]], "shop4", 1, 2],
-            [[texte["busstop"]], "busstop", 3, 1],
-            [[texte["speakers"]], "speakers", 3, 1],
-            [[texte["garage"]], "garage", 2, 1],
-            [[texte["bank"]], "bank", 3, 1],
-            [[texte["exchange"]], "exchange", 2, 1],
-            [[texte["goodgirl"]], "goodgirl", 3, 1],
-            [[texte["badboy"]], "badboy", 3, 2]
+            [
+                [texte["shop1"]],
+                "shop1",
+                1,
+                1
+            ],
+            [
+                [texte["quildhouse"]],
+                "guildhouse",
+                3,
+                1
+            ],
+            [
+                [texte["townhall"]],
+                "townhall",
+                3,
+                1
+            ],
+            [
+                [texte["shop2"]],
+                "shop2",
+                1,
+                1
+            ],
+            [
+                [texte["editoraloffice"]],
+                "editoraloffice",
+                3,
+                1
+            ],
+            [
+                [texte["ambulancestore"]],
+                "ambulancestore",
+                3,
+                2
+            ],
+            [
+                [texte["rcenter"]],
+                "rcenter",
+                3,
+                2
+            ],
+            [
+                [texte["shop3"]],
+                "shop3",
+                1,
+                2
+            ],
+            [
+                [texte["architect"]],
+                "architect",
+                3,
+                2
+            ],
+            [
+                [texte["shop4"]],
+                "shop4",
+                1,
+                2
+            ],
+            [
+                [texte["busstop"]],
+                "busstop",
+                3,
+                1
+            ],
+            [
+                [texte["speakers"]],
+                "speakers",
+                3,
+                1
+            ],
+            [
+                [texte["garage"]],
+                "garage",
+                2,
+                1
+            ],
+            [
+                [texte["bank"]],
+                "bank",
+                3,
+                1
+            ],
+            [
+                [texte["exchange"]],
+                "exchange",
+                2,
+                1
+            ],
+            [
+                [texte["goodgirl"]],
+                "goodgirl",
+                3,
+                1
+            ],
+            [
+                [texte["badboy"]],
+                "badboy",
+                3,
+                2
+            ]
         ];
 
         newdiv = createElement("div", {id: "quicklinks"}, all);
@@ -1494,14 +1579,14 @@ window.addEventListener("load", function () {
                 texte["set_RackMax"] = "Limit zakupu";
                 texte["set_valGlobalClockInTitle"] = "Czas w tytule karty.";
                 texte["set_valStartQuestAutomatic"] = "AutoQuest.";
-                texte["info_AutoLogin"] = "Po wprowadzeniu nazwy u" +z_pl + "ytkownika i has"+ l_pl + "a nast"+ e_pl + "puje automatyczne logowanie. Pozwala to zachowa" + c_pl + " " + c_pl + "iaglosc grania. Przy wielu kontach musi by" + c_pl + "dozwolone wyskakiwanie okienek.";
+                texte["info_AutoLogin"] = "Po wprowadzeniu nazwy u" + z_pl + "ytkownika i has" + l_pl + "a nast" + e_pl + "puje automatyczne logowanie. Pozwala to zachowa" + c_pl + " " + c_pl + "iaglosc grania. Przy wielu kontach musi by" + c_pl + "dozwolone wyskakiwanie okienek.";
                 texte["info_Update"] = "Automatycznie sprawdza czy jest nowsza wersja tego skryptu.";
-                texte["info_RackLow"] = "Produkt zostanie zaznaczony, gdy jego ilo" + s_pl + c_pl + " w regale spadnie poni" +z_pl + "ej tego poziomu";
+                texte["info_RackLow"] = "Produkt zostanie zaznaczony, gdy jego ilo" + s_pl + c_pl + " w regale spadnie poni" + z_pl + "ej tego poziomu";
                 texte["info_RackMax"] = "Poprzez automnatyczny zakup, produkt b" + e_pl + "dzie zape" + l_pl + "niany do tego limitu.";
                 texte["info_valGlobalClockInTitle"] = "Czas globalny jest wy" + s_pl + "wietlany w pasku tytu" + l_pl + "owym okna.";
                 texte["info_valStartQuestAutomatic"] = "Czy kolejny quest powinien si" + e_pl + " zacz" + a_pl + c_pl + "zaraz po tym, gdy sko" + n_pl + "czy" + l_pl + " si" + e_pl + " poprzedni?";
                 texte["confirmUpdate"] = "Jest nowa wersja skryptu Doradca Kapi Hospital. Czy chcesz ja zainstalowac?";
-                texte["zeigePasswoerter"] = "Poka" + z_pl + " has" +l_pl + "o";
+                texte["zeigePasswoerter"] = "Poka" + z_pl + " has" + l_pl + "o";
                 texte["autoLogin"] = "Automatyczne logowanie";
                 texte["accountAktiv"] = "Konto aktywne";
                 texte["server"] = "Serwer";
@@ -1625,7 +1710,6 @@ window.addEventListener("load", function () {
                 break;
         }
     }
-
 
 
     function $(ID) {
