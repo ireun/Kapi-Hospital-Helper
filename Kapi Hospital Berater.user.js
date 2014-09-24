@@ -652,108 +652,25 @@ window.addEventListener("load", function () {
 
         // Quicklinks
         var arrQuicklinks = [
-            [
-                [texte["shop1"]],
-                "shop1",
-                1,
-                1
-            ],
-            [
-                [texte["quildhouse"]],
-                "guildhouse",
-                3,
-                1
-            ],
-            [
-                [texte["townhall"]],
-                "townhall",
-                3,
-                1
-            ],
-            [
-                [texte["shop2"]],
-                "shop2",
-                1,
-                1
-            ],
-            [
-                [texte["editoraloffice"]],
-                "editoraloffice",
-                3,
-                1
-            ],
-            [
-                [texte["ambulancestore"]],
-                "ambulancestore",
-                3,
-                2
-            ],
-            [
-                [texte["rcenter"]],
-                "rcenter",
-                3,
-                2
-            ],
-            [
-                [texte["shop3"]],
-                "shop3",
-                1,
-                2
-            ],
-            [
-                [texte["architect"]],
-                "architect",
-                3,
-                2
-            ],
-            [
-                [texte["shop4"]],
-                "shop4",
-                1,
-                2
-            ],
-            [
-                [texte["busstop"]],
-                "busstop",
-                3,
-                1
-            ],
-            [
-                [texte["speakers"]],
-                "speakers",
-                3,
-                1
-            ],
-            [
-                [texte["garage"]],
-                "garage",
-                2,
-                1
-            ],
-            [
-                [texte["bank"]],
-                "bank",
-                3,
-                1
-            ],
-            [
-                [texte["exchange"]],
-                "exchange",
-                2,
-                1
-            ],
-            [
-                [texte["goodgirl"]],
-                "goodgirl",
-                3,
-                1
-            ],
-            [
-                [texte["badboy"]],
-                "badboy",
-                3,
-                2
-            ]
+        [],
+        [[texte["shop1"]], "shop1", 1, 1],
+        [[texte["quildhouse"]], "guildhouse", 3, 1],
+        [[texte["townhall"]], "townhall", 3, 1],
+        [[texte["shop2"]], "shop2", 1, 1],
+        [[texte["editoraloffice"]], "editoraloffice", 3, 1],
+        [[texte["ambulancestore"]], "ambulancestore", 3, 2],
+        [[texte["rcenter"]], "rcenter", 3, 2],
+        [],
+        [[texte["shop3"]], "shop3", 1, 2],
+        [[texte["architect"]], "architect", 3, 2],
+        [[texte["shop4"]], "shop4", 1, 2],
+        [[texte["busstop"]], "busstop", 3, 1],
+        [[texte["speakers"]], "speakers", 3, 1],
+        [[texte["garage"]], "garage", 2, 1],
+        [[texte["bank"]], "bank", 3, 1],
+        [[texte["exchange"]], "exchange", 2, 1],
+        [[texte["goodgirl"]], "goodgirl", 3, 1],
+        [[texte["badboy"]], "badboy", 3, 2]
         ];
 
         newdiv = createElement("div", {id: "quicklinks"}, all);
@@ -785,7 +702,7 @@ window.addEventListener("load", function () {
         var breaker = createElement("div", {style: "height:20px;width:100px;"}, newdiv);
         createElement("hr", {style: "height:2px;color:blue; background: blue; width:100%;"}, breaker);
 
-        // Neue Autobuttons
+        // Autobuttons
         var arrQuicklinks2 = [
             [texte["autoBuy"]],
             [texte["autoNurse"]],
@@ -1616,23 +1533,22 @@ window.addEventListener("load", function () {
                 texte["coins"] = "Monety";
                 // Quicklinks
                 texte["shop1"] = "Apteka Sza" + l_pl + "pigu" + l_pl;
-                texte["quildhouse"] = "";
-                texte["townhall"] = "";
+                texte["quildhouse"] = "Związek lekarzy i konkursy";
+                texte["townhall"] = "Ratusz";
                 texte["shop2"] = "Hurtownia G.Rypa";
-                texte["editoraloffice"] = "";
-                texte["ambulancestore"] = "";
-                texte["rcenter"] = "";
-                texte["shop3"] = "";
-                texte["architect"] = "";
-                texte["shop4"] = "";
-                texte["busstop"] = "";
-                texte["speakers"] = "";
-                texte[""] = "";
-                texte["garage"] = "";
-                texte["bank"] = "";
-                texte["exchange"] = "";
-                texte["goodgirl"] = "";
-                texte["badboy"] = "";
+                texte["editoraloffice"] = "3";
+                texte["ambulancestore"] = "Autokomis";
+                texte["rcenter"] = "Instytut badawczy";
+                texte["shop3"] = "Kafejka internetowa";
+                texte["architect"] = "Biuro architektoniczne";
+                texte["shop4"] = "Sklepik pani Wandzi";
+                texte["busstop"] = "Przystanek autobusowy";
+                texte["speakers"] = "Mr. Gafon";
+                texte["garage"] = "Gara" + z_pl;
+                texte["bank"] = "Bank";
+                texte["exchange"] = "Gie" + l_pl + "da pacjent" + o_pl + "w";
+                texte["goodgirl"] = "Panienka z okienka";
+                texte["badboy"] = "Dr S. Raczek";
                 break;
 
             case "cz":
