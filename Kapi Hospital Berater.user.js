@@ -1,14 +1,14 @@
 // ==UserScript==
 // @name           Kapi Hospital Berater
 // @description    Kapi Hospital Helper
-// @date           21.09.2014
+// @date           24.09.2014
 // @version        2.4.8
 // @include        http://*kapihospital.com/*
 // @grant          GM_getValue
 // @grant          GM_setValue
 // @grant          GM_addStyle
 // @grant          GM_xmlhttpRequest
-// @require        http://ajax.googleapis.com/ajax/libs/jquery/1.2.6/jquery.js
+// @require        http://code.jquery.com/jquery-2.1.1.js
 // @namespace      https://greasyfork.org/users/5507
 // ==/UserScript==
 
@@ -110,6 +110,7 @@ window.addEventListener("load", function () {
         var regDelimDeci = /,/;
 
     }
+
     if (document.location.href.search("bg.kapihospital.com") != -1) {
         var lng = "uk";
         var gamepage = ".bg.kapihospital.com";
