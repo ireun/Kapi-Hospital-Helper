@@ -1,8 +1,8 @@
 // ==UserScript==
 // @name           Kapi Hospital Berater
 // @description    Kapi Hospital Helper
-// @date           24.09.2014
-// @version        2.4.8
+// @date           27.09.2014
+// @version        2.4.8.1
 // @include        http://*kapihospital.com/*
 // @grant          GM_getValue
 // @grant          GM_setValue
@@ -15,13 +15,13 @@
 window.addEventListener("load", function () {
 
 // Special Characters - DE
-    var ae = "\u00E4";
-    var oe = "\u00F6";
-    var ue = "\u00FC";
-    var Ae = "\u00C4";
-    var Oe = "\u00D6";
-    var Ue = "\u00DC";
-    var sz = "\u00DF";
+    var ae = "\u00E4";      // ä
+    var oe = "\u00F6";      // ö
+    var ue = "\u00FC";      // ü
+    var Ae = "\u00C4";      // Ä
+    var Oe = "\u00D6";      // Ö
+    var Ue = "\u00DC";      // Ü
+    var sz = "\u00DF";      // ß
 
 // Special Characters - PL
     var a_pl = "\u0105";    // ą
@@ -55,247 +55,142 @@ window.addEventListener("load", function () {
     var texte = new Object();
     var medi = new Object();
 
+    var reg2 = /http:\/\/(s\d+\.|www\.|)kapihospital\.com\/(.*)/i;
+    var delimThou = ".";
+    var regDelimThou = /\./g;
+    var delimDeci = ",";
+    var regDelimDeci = /,/;
+
     if (document.location.href.search("de.kapihospital.com") != -1) {
         var lng = "de";
         var gamepage = ".de.kapihospital.com";
         var reg = /http:\/\/s(\d+)\.de\.kapihospital\.com\/(.*?)\.php(.*)/i;
-        var reg2 = /http:\/\/(s\d+\.|www\.|)kapihospital\.com\/(.*)/i;
-        var delimThou = ".";
-        var regDelimThou = /\./g;
-        var delimDeci = ",";
-        var regDelimDeci = /,/;
     }
 
     if (document.location.href.search("uk.kapihospital.com") != -1) {
         var lng = "uk";
         var gamepage = ".uk.kapihospital.com";
         var reg = /http:\/\/s(\d+)\.uk\.kapihospital\.com\/(.*?)\.php(.*)/i;
-        var reg2 = /http:\/\/(s\d+\.|www\.|)kapihospital\.com\/(.*)/i;
-        var delimThou = ".";
-        var regDelimThou = /\./g;
-        var delimDeci = ",";
-        var regDelimDeci = /,/;
     }
 
     if (document.location.href.search("nl.kapihospital.com") != -1) {
         var lng = "uk";
         var gamepage = ".nl.kapihospital.com";
         var reg = /http:\/\/s(\d+)\.nl\.kapihospital\.com\/(.*?)\.php(.*)/i;
-        var reg2 = /http:\/\/(s\d+\.|www\.|)kapihospital\.com\/(.*)/i;
-        var delimThou = ".";
-        var regDelimThou = /\./g;
-        var delimDeci = ",";
-        var regDelimDeci = /,/;
     }
 
     if (document.location.href.search("fr.kapihospital.com") != -1) {
         var lng = "uk";
         var gamepage = ".fr.kapihospital.com";
         var reg = /http:\/\/s(\d+)\.fr\.kapihospital\.com\/(.*?)\.php(.*)/i;
-        var reg2 = /http:\/\/(s\d+\.|www\.|)kapihospital\.com\/(.*)/i;
-        var delimThou = ".";
-        var regDelimThou = /\./g;
-        var delimDeci = ",";
-        var regDelimDeci = /,/;
     }
 
     if (document.location.href.search("tr.kapihospital.com") != -1) {
         var lng = "uk";
         var gamepage = ".tr.kapihospital.com";
         var reg = /http:\/\/s(\d+)\.tr\.kapihospital\.com\/(.*?)\.php(.*)/i;
-        var reg2 = /http:\/\/(s\d+\.|www\.|)kapihospital\.com\/(.*)/i;
-        var delimThou = ".";
-        var regDelimThou = /\./g;
-        var delimDeci = ",";
-        var regDelimDeci = /,/;
-
     }
 
     if (document.location.href.search("bg.kapihospital.com") != -1) {
         var lng = "uk";
         var gamepage = ".bg.kapihospital.com";
         var reg = /http:\/\/s(\d+)\.bg\.kapihospital\.com\/(.*?)\.php(.*)/i;
-        var reg2 = /http:\/\/(s\d+\.|www\.|)kapihospital\.com\/(.*)/i;
-        var delimThou = ".";
-        var regDelimThou = /\./g;
-        var delimDeci = ",";
-        var regDelimDeci = /,/;
     }
 
     if (document.location.href.search("es.kapihospital.com") != -1) {
         var lng = "uk";
         var gamepage = ".es.kapihospital.com";
         var reg = /http:\/\/s(\d+)\.es\.kapihospital\.com\/(.*?)\.php(.*)/i;
-        var reg2 = /http:\/\/(s\d+\.|www\.|)kapihospital\.com\/(.*)/i;
-        var delimThou = ".";
-        var regDelimThou = /\./g;
-        var delimDeci = ",";
-        var regDelimDeci = /,/;
     }
 
     if (document.location.href.search("pl.kapihospital.com") != -1) {
         var lng = "pl";
         var gamepage = ".pl.kapihospital.com";
         var reg = /http:\/\/s(\d+)\.pl\.kapihospital\.com\/(.*?)\.php(.*)/i;
-        var reg2 = /http:\/\/(s\d+\.|www\.|)kapihospital\.com\/(.*)/i;
-        var delimThou = ".";
-        var regDelimThou = /\./g;
-        var delimDeci = ",";
-        var regDelimDeci = /,/;
     }
 
     if (document.location.href.search("ro.kapihospital.com") != -1) {
         var lng = "uk";
         var gamepage = ".ro.kapihospital.com";
         var reg = /http:\/\/s(\d+)\.ro\.kapihospital\.com\/(.*?)\.php(.*)/i;
-        var reg2 = /http:\/\/(s\d+\.|www\.|)kapihospital\.com\/(.*)/i;
-        var delimThou = ".";
-        var regDelimThou = /\./g;
-        var delimDeci = ",";
-        var regDelimDeci = /,/;
     }
 
     if (document.location.href.search("ru.kapihospital.com") != -1) {
         var lng = "uk";
         var gamepage = ".ru.kapihospital.com";
         var reg = /http:\/\/s(\d+)\.ru\.kapihospital\.com\/(.*?)\.php(.*)/i;
-        var reg2 = /http:\/\/(s\d+\.|www\.|)kapihospital\.com\/(.*)/i;
-        var delimThou = ".";
-        var regDelimThou = /\./g;
-        var delimDeci = ",";
-        var regDelimDeci = /,/;
     }
 
     if (document.location.href.search("cz.kapihospital.com") != -1) {
         var lng = "cz";
         var gamepage = ".cz.kapihospital.com";
         var reg = /http:\/\/s(\d+)\.cz\.kapihospital\.com\/(.*?)\.php(.*)/i;
-        var reg2 = /http:\/\/(s\d+\.|www\.|)kapihospital\.com\/(.*)/i;
-        var delimThou = ".";
-        var regDelimThou = /\./g;
-        var delimDeci = ",";
-        var regDelimDeci = /,/;
     }
 
     if (document.location.href.search("se.kapihospital.com") != -1) {
         var lng = "uk";
         var gamepage = ".se.kapihospital.com";
         var reg = /http:\/\/s(\d+)\.se\.kapihospital\.com\/(.*?)\.php(.*)/i;
-        var reg2 = /http:\/\/(s\d+\.|www\.|)kapihospital\.com\/(.*)/i;
-        var delimThou = ".";
-        var regDelimThou = /\./g;
-        var delimDeci = ",";
-        var regDelimDeci = /,/;
     }
 
     if (document.location.href.search("pt.kapihospital.com") != -1) {
         var lng = "uk";
         var gamepage = ".pt.kapihospital.com";
         var reg = /http:\/\/s(\d+)\.pt\.kapihospital\.com\/(.*?)\.php(.*)/i;
-        var reg2 = /http:\/\/(s\d+\.|www\.|)kapihospital\.com\/(.*)/i;
-        var delimThou = ".";
-        var regDelimThou = /\./g;
-        var delimDeci = ",";
-        var regDelimDeci = /,/;
     }
 
     if (document.location.href.search("hu.kapihospital.com") != -1) {
         var lng = "uk";
         var gamepage = ".hu.kapihospital.com";
         var reg = /http:\/\/s(\d+)\.hu\.kapihospital\.com\/(.*?)\.php(.*)/i;
-        var reg2 = /http:\/\/(s\d+\.|www\.|)kapihospital\.com\/(.*)/i;
-        var delimThou = ".";
-        var regDelimThou = /\./g;
-        var delimDeci = ",";
-        var regDelimDeci = /,/;
     }
 
     if (document.location.href.search("gr.kapihospital.com") != -1) {
         var lng = "uk";
         var gamepage = ".gr.kapihospital.com";
         var reg = /http:\/\/s(\d+)\.gr\.kapihospital\.com\/(.*?)\.php(.*)/i;
-        var reg2 = /http:\/\/(s\d+\.|www\.|)kapihospital\.com\/(.*)/i;
-        var delimThou = ".";
-        var regDelimThou = /\./g;
-        var delimDeci = ",";
-        var regDelimDeci = /,/;
     }
 
     if (document.location.href.search("us.kapihospital.com") != -1) {
         var lng = "uk";
         var gamepage = ".us.kapihospital.com";
         var reg = /http:\/\/s(\d+)\.us\.kapihospital\.com\/(.*?)\.php(.*)/i;
-        var reg2 = /http:\/\/(s\d+\.|www\.|)kapihospital\.com\/(.*)/i;
-        var delimThou = ".";
-        var regDelimThou = /\./g;
-        var delimDeci = ",";
-        var regDelimDeci = /,/;
     }
 
     if (document.location.href.search("it.kapihospital.com") != -1) {
         var lng = "uk";
         var gamepage = ".it.kapihospital.com";
         var reg = /http:\/\/s(\d+)\.it\.kapihospital\.com\/(.*?)\.php(.*)/i;
-        var reg2 = /http:\/\/(s\d+\.|www\.|)kapihospital\.com\/(.*)/i;
-        var delimThou = ".";
-        var regDelimThou = /\./g;
-        var delimDeci = ",";
-        var regDelimDeci = /,/;
     }
 
     if (document.location.href.search("dk.kapihospital.com") != -1) {
         var lng = "uk";
         var gamepage = ".dk.kapihospital.com";
         var reg = /http:\/\/s(\d+)\.dk\.kapihospital\.com\/(.*?)\.php(.*)/i;
-        var reg2 = /http:\/\/(s\d+\.|www\.|)kapihospital\.com\/(.*)/i;
-        var delimThou = ".";
-        var regDelimThou = /\./g;
-        var delimDeci = ",";
-        var regDelimDeci = /,/;
     }
 
     if (document.location.href.search("br.kapihospital.com") != -1) {
         var lng = "uk";
         var gamepage = ".br.kapihospital.com";
         var reg = /http:\/\/s(\d+)\.br\.kapihospital\.com\/(.*?)\.php(.*)/i;
-        var reg2 = /http:\/\/(s\d+\.|www\.|)kapihospital\.com\/(.*)/i;
-        var delimThou = ".";
-        var regDelimThou = /\./g;
-        var delimDeci = ",";
-        var regDelimDeci = /,/;
     }
 
     if (document.location.href.search("ir.kapihospital.com") != -1) {
         var lng = "uk";
         var gamepage = ".ir.kapihospital.com";
         var reg = /http:\/\/s(\d+)\.ir\.kapihospital\.com\/(.*?)\.php(.*)/i;
-        var reg2 = /http:\/\/(s\d+\.|www\.|)kapihospital\.com\/(.*)/i;
-        var delimThou = ".";
-        var regDelimThou = /\./g;
-        var delimDeci = ",";
-        var regDelimDeci = /,/;
     }
 
     if (document.location.href.search("no.kapihospital.com") != -1) {
         var lng = "uk";
         var gamepage = ".no.kapihospital.com";
         var reg = /http:\/\/s(\d+)\.no\.kapihospital\.com\/(.*?)\.php(.*)/i;
-        var reg2 = /http:\/\/(s\d+\.|www\.|)kapihospital\.com\/(.*)/i;
-        var delimThou = ".";
-        var regDelimThou = /\./g;
-        var delimDeci = ",";
-        var regDelimDeci = /,/;
     }
 
     if (document.location.href.search("ae.kapihospital.com") != -1) {
         var lng = "uk";
         var gamepage = ".ae.kapihospital.com";
         var reg = /http:\/\/s(\d+)\.ae\.kapihospital\.com\/(.*?)\.php(.*)/i;
-        var reg2 = /http:\/\/(s\d+\.|www\.|)kapihospital\.com\/(.*)/i;
-        var delimThou = ".";
-        var regDelimThou = /\./g;
-        var delimDeci = ",";
-        var regDelimDeci = /,/;
     }
 
     loadLanguage(lng);
@@ -325,7 +220,7 @@ window.addEventListener("load", function () {
 
 //***********************************************************************************************************
 
-    var scriptUrl = "https://greasyfork.org/pl/scripts/5182-kapi-hospital-berater";
+    var scriptUrl = "https://greasyfork.org/scripts/5182-kapi-hospital-berater";
     var Global = unsafeWindow.Global;
     var loc = reg.exec(document.location.href);
     var all = document.getElementsByTagName("body")[0];
@@ -653,25 +548,110 @@ window.addEventListener("load", function () {
 
         // Quicklinks
         var arrQuicklinks = [
-        [],
-        [[texte["shop1"]], "shop1", 1, 1],
-        [[texte["quildhouse"]], "guildhouse", 3, 1],
-        [[texte["townhall"]], "townhall", 3, 1],
-        [[texte["shop2"]], "shop2", 1, 1],
-        [[texte["editoraloffice"]], "editoraloffice", 3, 1],
-        [[texte["ambulancestore"]], "ambulancestore", 3, 2],
-        [[texte["rcenter"]], "rcenter", 3, 2],
-        [],
-        [[texte["shop3"]], "shop3", 1, 2],
-        [[texte["architect"]], "architect", 3, 2],
-        [[texte["shop4"]], "shop4", 1, 2],
-        [[texte["busstop"]], "busstop", 3, 1],
-        [[texte["speakers"]], "speakers", 3, 1],
-        [[texte["garage"]], "garage", 2, 1],
-        [[texte["bank"]], "bank", 3, 1],
-        [[texte["exchange"]], "exchange", 2, 1],
-        [[texte["goodgirl"]], "goodgirl", 3, 1],
-        [[texte["badboy"]], "badboy", 3, 2]
+            [],
+            [
+                [texte["shop1"]],
+                "shop1",
+                1,
+                1
+            ],
+            [
+                [texte["quildhouse"]],
+                "guildhouse",
+                3,
+                1
+            ],
+            [
+                [texte["townhall"]],
+                "townhall",
+                3,
+                1
+            ],
+            [
+                [texte["shop2"]],
+                "shop2",
+                1,
+                1
+            ],
+            [
+                [texte["editoraloffice"]],
+                "editoraloffice",
+                3,
+                1
+            ],
+            [
+                [texte["ambulancestore"]],
+                "ambulancestore",
+                3,
+                2
+            ],
+            [
+                [texte["rcenter"]],
+                "rcenter",
+                3,
+                2
+            ],
+            [],
+            [
+                [texte["shop3"]],
+                "shop3",
+                1,
+                2
+            ],
+            [
+                [texte["architect"]],
+                "architect",
+                3,
+                2
+            ],
+            [
+                [texte["shop4"]],
+                "shop4",
+                1,
+                2
+            ],
+            [
+                [texte["busstop"]],
+                "busstop",
+                3,
+                1
+            ],
+            [
+                [texte["speakers"]],
+                "speakers",
+                3,
+                1
+            ],
+            [
+                [texte["garage"]],
+                "garage",
+                2,
+                1
+            ],
+            [
+                [texte["bank"]],
+                "bank",
+                3,
+                1
+            ],
+            [
+                [texte["exchange"]],
+                "exchange",
+                2,
+                1
+            ],
+            [
+                [texte["goodgirl"]],
+                "goodgirl",
+                3,
+                1
+            ],
+            [
+                [texte["badboy"]],
+                "badboy",
+                3,
+                2
+            ]
         ];
 
         newdiv = createElement("div", {id: "quicklinks"}, all);
@@ -1626,7 +1606,6 @@ window.addEventListener("load", function () {
                 break;
         }
     }
-
 
     function $(ID) {
         return document.getElementById(ID)
