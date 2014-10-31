@@ -1,14 +1,14 @@
 // ==UserScript==
 // @name           Kapi Hospital Berater
 // @description    Kapi Hospital Helper
-// @date           27.09.2014
-// @version        2.4.8.1
+// @date           31.10.2014
+// @version        2.4.8.2
 // @include        http://*kapihospital.com/*
 // @grant          GM_getValue
 // @grant          GM_setValue
 // @grant          GM_addStyle
 // @grant          GM_xmlhttpRequest
-// @require        http://code.jquery.com/jquery-2.1.1.js
+// @require        https://code.jquery.com/jquery-2.1.1.min.js
 // @namespace      https://greasyfork.org/users/5507
 // ==/UserScript==
 
@@ -52,8 +52,8 @@ window.addEventListener("load", function () {
     var u3_cz = "\u00DA";   // Ú
 
 // global definitions
-    var texte = new Object();
-    var medi = new Object();
+    var texte = {};
+    var medi = {};
 
     var reg2 = /http:\/\/(s\d+\.|www\.|)kapihospital\.com\/(.*)/i;
     var delimThou = ".";
@@ -194,7 +194,7 @@ window.addEventListener("load", function () {
     }
 
     loadLanguage(lng);
-    var gamepages = new Object();
+    var gamepages = {};
     gamepages["de"] = "http://www.de.kapihospital.com";
     gamepages["uk"] = "http://www.uk.kapihospital.com/";
     gamepages["fr"] = "http://www.fr.kapihospital.com/";
@@ -231,7 +231,7 @@ window.addEventListener("load", function () {
     var server = "";
     var page = "";
     var pageZusatz = "";
-    var developer = false;
+    var developer = true;
     var candtable = document.getElementsByTagName("table");
     var username = "";
 
@@ -240,7 +240,7 @@ window.addEventListener("load", function () {
     var valGlobalClockInTitle = "";
     var questTime = "";
     var valStartQuestAutomatic = false;
-    var logindata = new Array;
+    var logindata = [];
 
 
     if (loc) {
@@ -330,9 +330,9 @@ window.addEventListener("load", function () {
 
         var lastXmlRequest = 0;
 
-        var rooms = new Array();
-        var patients = new Array();
-        var roomTimes = new Object();
+        var rooms = [];
+        var patients = [];
+        var roomTimes = {};
 
         roomTimes["global"] = [0, 0];
         roomTimes["allrooms"] = [0, 0];
@@ -375,10 +375,10 @@ window.addEventListener("load", function () {
 
                     this.title = texte["noch"] + " " + number_format(parseInt(tz.item(z).getElementsByTagName("td").item(1).textContent.replace(/\./g, ""), 10) - punkte);
                 }, false);
-            },
+            }
         });
 
-        patientDiseases = new Object();
+        patientDiseases = {};
         // patientDiseases[patientId][diseaseNr]: heartbeat,cured,notreatment,comesnext,""=ill
         // patientDiseases[patientId][room]: current room (type)
         // patientDiseases[patientId][floor]: current floor
@@ -425,7 +425,7 @@ window.addEventListener("load", function () {
                     for (var v in help) {
                         if (typeof(help[v]) != "function") $("help1").innerHTML += "<br>" + v + " : " + help[v];
                     }
-                    $("help1").innerHTML += "<br>"
+                    $("help1").innerHTML += "<br>";
                     if (patientDiseases[patientId]) {
                         for (var v in patientDiseases[patientId]) {
                             $("help1").innerHTML += "<br>" + v + " : " + patientDiseases[patientId][v];
@@ -440,7 +440,7 @@ window.addEventListener("load", function () {
                         if (typeof(help[v]) != "function") $("help1").innerHTML += "<br>" + v + " : " + help[v];
                         //else $("help1").innerHTML += "<br>"+v+" : Fkt";
                     }
-                    $("help1").innerHTML += "<br>"
+                    $("help1").innerHTML += "<br>";
                     var help = Global.availableRooms[help["roomid"]];
                     for (var v in help) {
                         if (typeof(help[v]) != "function") $("help1").innerHTML += "<br>" + v + " : " + help[v];
@@ -614,7 +614,7 @@ window.addEventListener("load", function () {
                 // Medi Buy Button
                 createElement("div", {class: "cursorclickable c1_a_50 c1_" + 15 + "_50", title: arrQuicklinks2[v][0]}, newdiv1);
                 newdiv1.addEventListener("click", function () {
-                    var medstoBuy = Array();
+                    var medstoBuy = [];
                     var price_overall = 0.00;
                     //var buytext ="";
 
@@ -663,7 +663,7 @@ window.addEventListener("load", function () {
                                                 if ($('prover'))
                                                     $('prover').innerHTML = hT_format(price_overall);
 
-                                                return;
+
                                             }, false);
 
                                             newinput = createElement("input", {"id": "am_" + Global.availableMedics._object[k]["id"], "type": "text", "maxlength": "3", "size": "3", "value": diff, "title": "Menge", "style": "width:25px;margin-left:5px;"}, tabcell);
@@ -714,7 +714,7 @@ window.addEventListener("load", function () {
                     newbutton.addEventListener("click", function () {
                         all.removeChild(dialogdiv);
                         dialogdiv = null;
-                        return;
+
                     }, false);
                 }, false);
             }
@@ -820,7 +820,7 @@ window.addEventListener("load", function () {
             var currRoom = null;
 
             if (!roomTimes[Global.selectedFloor]) {
-                roomTimes[Global.selectedFloor] = new Object;
+                roomTimes[Global.selectedFloor] = {};
             }
             var calcGlobalTime = false;
             roomTimes["allrooms"][Global.selectedFloor] = 0;
@@ -1101,7 +1101,7 @@ window.addEventListener("load", function () {
         window.setInterval(function () { // leaving patient
             var cand = $("goingpatient").getElementsByClassName("patient");
             for (var v = 0; v < cand.length; v++) {
-                var currPatientId = parseInt(cand[v].id.replace("p", ""), 10)
+                var currPatientId = parseInt(cand[v].id.replace("p", ""), 10);
                 if (patientDiseases[currPatientId]) {
                     delete patientDiseases[currPatientId];
                 }
@@ -1615,7 +1615,7 @@ window.addEventListener("load", function () {
             i = _[0].length % 3 || 3;
 
             _[0] = s.slice(0, i + (n < 0)) +
-                _[0].slice(i).replace(/(\d{3})/g, sep + '$1');
+            _[0].slice(i).replace(/(\d{3})/g, sep + '$1');
 
             s = _.join(dec);
         }
@@ -1754,9 +1754,9 @@ window.addEventListener("load", function () {
 
     function implode(arr) {//--- function written by Jan-Hans
         try {
-            var line = new String();
+            var line = String();
             var InternalCounter = -1;
-            var NoKey = new Boolean(false);
+            var NoKey = Boolean(false);
 
             if (typeof arr != "object")
                 throw("Argument not a Object or Array" + typeof arr + "<br>");
@@ -1922,7 +1922,7 @@ window.addEventListener("load", function () {
 
 
                 //CSS
-                var cssArr = new Object();
+                var cssArr = {};
                 cssArr["css_racklow"] = [
                     [],
                     "background-color:orangered;"
@@ -1969,7 +1969,7 @@ window.addEventListener("load", function () {
             logindata = explode(GM_getValue("logindata", "[]"));
         }
         catch (err) {
-            logindata = new Array;
+            logindata = [];
         }
 
         newtable = createElement("table", {align: "center"});
@@ -2170,13 +2170,13 @@ window.addEventListener("load", function () {
                 createElement("td", {colspan: "4"}, newtr, "");
             }
         } else if (mode == 2) {
-            var sumDiseases = new Object();
+            var sumDiseases = {};
             for (var pat in patientDiseases) {
                 for (var disease in patientDiseases[pat]) if (!isNaN(disease)) {
                     var currRoom = Global.availableDiseases[disease]["room"][0];
 
                     if (!sumDiseases[currRoom])
-                        sumDiseases[currRoom] = new Object();
+                        sumDiseases[currRoom] = {};
 
                     if (!sumDiseases[currRoom][disease])
                         sumDiseases[currRoom][disease] = [0, 0, 0, 0, 0, 0];
@@ -2258,7 +2258,7 @@ window.addEventListener("load", function () {
                     for (var v = 0; v < rooms.length; v++) {
                         if (( rooms[v].cleanup ) && ( rooms[v].ends == 0 ) && ( rooms[v].roomid != 6 )) {
                             var croom = Global.refRooms.get("r" + rooms[v].topleft);
-                            console.log("cleaner for room: " + rooms[v].topleft);
+                            console.log("Cleaning room: " + rooms[v].topleft);
                             croom._onDrop(cleaner, "", "");
                         }
                     }
@@ -2361,7 +2361,7 @@ window.addEventListener("load", function () {
     function initPatient(patientId) {
         if (!patientDiseases[patientId]) {
             //console.log("initPatient "+patientId);
-            patientDiseases[patientId] = new Object;
+            patientDiseases[patientId] = {};
             patientDiseases[patientId]["m"] = 0;
             patientDiseases[patientId]["floor"] = 1;
             //patientDiseases[patientId]["xml"] = 0;
@@ -2520,7 +2520,7 @@ window.addEventListener("load", function () {
         initPatient(currPatientId);
 
         // diseases
-        var usedRooms = new Object();
+        var usedRooms = {};
         var newdiv;
         var restlicheZeit = 0;
 
@@ -2596,7 +2596,7 @@ window.addEventListener("load", function () {
                 var text = JSON.parse(response.responseText);
                 updPatientState(id, jQuery(text["message"]), with_nurse);
             },
-            onerror: function (response) {
+            object:onerror=function (response) {
                 return "";
             }
         });
@@ -2750,7 +2750,7 @@ window.addEventListener("load", function () {
             if (canddiv[v].id == "medi_diseases")
                 break;
 
-        patientDiseases[currPatientId] = new Object;
+        patientDiseases[currPatientId] = {};
         var cured = true;
 
         for (var w = 0; w < canddiv[v].childNodes.length - 3; w++) {
@@ -2787,7 +2787,7 @@ window.addEventListener("load", function () {
             calcPatientState(currPatientId);
         }
 
-        var maxprice = parseFloat($("med_price").getElementsByTagName("span")[0].innerHTML.split("-")[1].replace(Global._KH_THOUSANDSEPERATOR, "").replace(Global._KH_DECIMALSEPERATOR, "."), 10)
+        var maxprice = parseFloat($("med_price").getElementsByTagName("span")[0].innerHTML.split("-")[1].replace(Global._KH_THOUSANDSEPERATOR, "").replace(Global._KH_DECIMALSEPERATOR, "."), 10);
         createElement("div", {"style": "position:absolute;top:380px;right:130px;color:red;"}, $("ref_divdetailsbig"), "85%: " + hT_formatgr(0.85 * maxprice) + ", 90%: " + hT_formatgr(0.9 * maxprice) + ", 95%: " + hT_formatgr(0.95 * maxprice));
 
         var newimg = createElement("img", {"style": "position:absolute;top:440px;left:219px;width:16px;height:16px;", "src": "http://pics.kapihospital.de/addressbook.gif", "class": "cursorclickable", "title": "Adressbuch"}, $("ref_divdetailsbig"));
@@ -2873,7 +2873,7 @@ window.addEventListener("load", function () {
             if (cand[0] && (help = keyMsgShow.exec(cand[0].href))) {
                 if (help[2] == "inbox") {
                     // Inbox
-                    var msgIdIn = new Array;
+                    var msgIdIn = [];
                     for (var v = 0; v < cand.length; v++) {
                         help = keyMsgShow.exec(cand[v].href);
                         if (help) {
@@ -2919,7 +2919,7 @@ window.addEventListener("load", function () {
                 }
                 if ($("deleteContact")) {
                     // contacts
-                    var contacts = new Array();
+                    var contacts = [];
                     cand = candtable[0].getElementsByTagName("tr");
                     for (var tr = 1; tr < cand.length - 3; tr++) {
                         contacts.push(/(.*?)&nbsp;/.exec(cand[tr].getElementsByTagName("td")[0].innerHTML)[1]);
@@ -2967,8 +2967,8 @@ window.addEventListener("load", function () {
         var newtab = createElement("table", {border: "1px", cellspacing: "0px", cellpadding: "0px", style: "text-align:center;position:absolute;bottom:-120px;left:-100px;width:750px;background-color: white;"}, $("msgwindow"));
 
         var valShowUncurable = GM_getValue(lng + "_" + server + "_" + username + "_valShowUncurable", false);
-        var highlightBoerse = new Object;
-        var highlightBoerse1 = new Object;
+        var highlightBoerse = {};
+        var highlightBoerse1 = {};
         try {
             highlightBoerse = explode(GM_getValue(lng + "_" + server + "_" + username + "_highlightBoerse", "{}"));
         } catch (err) {
@@ -3092,12 +3092,12 @@ window.addEventListener("load", function () {
                     candtd[2].style.backgroundColor = "yellow";
                 }
             }
-            var priceMax = parseFloat(candtd[3].innerHTML.replace(regDelimThou, "").replace(regDelimDeci, "."), 10)
+            var priceMax = parseFloat(candtd[3].innerHTML.replace(regDelimThou, "").replace(regDelimDeci, "."), 10);
             candtd[3].innerHTML = "&nbsp;" + number_format(priceMax, 2);
             candtd[3].style.textAlign = "right";
             candtd[4].style.textAlign = "right";
             candtd[5].style.textAlign = "right";
-            var price = parseFloat(candtd[4].innerHTML.replace(regDelimThou, "").replace(regDelimDeci, "."), 10)
+            var price = parseFloat(candtd[4].innerHTML.replace(regDelimThou, "").replace(regDelimDeci, "."), 10);
             candtd[4].innerHTML = "&nbsp;" + number_format(price, 2);
             candtd[5].getElementsByTagName("a")[0].innerHTML = "&nbsp;" + number_format(100 * price / priceMax) + "%";
             candtd[5].getElementsByTagName("a")[0].addEventListener("click", function () {
@@ -3191,14 +3191,9 @@ window.addEventListener("load", function () {
             newbutton = null;
         }
     }
-
     /*************************** end function declarations **************************/
 
-    // Adblock
-    var Ads = document.getElementById("sky");
-
-    if (Ads) {
-        Ads.parentNode.removeChild(Ads);
-    }
+        //Adblock
+    removeElement($("sky"));
 
 }, false);
