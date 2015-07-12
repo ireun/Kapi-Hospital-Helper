@@ -1,20 +1,21 @@
 // ==UserScript==
 // @name           Kapi Hospital Berater
 // @description    Kapi Hospital Helper
-// @date           31.10.2014
-// @version        2.4.8.2
+// @date           12.07.2015
+// @version        2.4.8.3
 // @include        http://*kapihospital.com/*
 // @grant          GM_getValue
 // @grant          GM_setValue
 // @grant          GM_addStyle
 // @grant          GM_xmlhttpRequest
-// @require        https://code.jquery.com/jquery-2.1.1.min.js
+// @require        http://code.jquery.com/jquery-2.1.4.min.js
 // @namespace      https://greasyfork.org/users/5507
 // ==/UserScript==
 
 window.addEventListener("load", function () {
 
     var info = "[Berater] "
+    
     console.log(info + "Start");
 
 // Special Characters - DE
@@ -414,9 +415,9 @@ window.addEventListener("load", function () {
                 refreshPatient(patids[v]["id"], false);
             }*/
         }
-        console.log(info+"if (developer)");
+        
         if (developer) {
-
+            console.log(info+"You are a developer");
             $("garten_komplett").addEventListener("mouseover", function (event) {
                 $("help1").innerHTML = "";
                 var roomId = 0;
@@ -739,11 +740,11 @@ window.addEventListener("load", function () {
 
                     for (var v = 0; v < rooms.length; v++) {
                         if (( rooms[v].roomid == 6 )) {
-                            console.log("Pr�fe Raum: " + rooms[v].topleft);
+                            console.log("Checking room: " + rooms[v].topleft);
 
                             //Wenn ein Patient drin liegt
                             if (rooms[v].patient != 0) {
-                                console.log("Bett hat Patient: " + rooms[v].patient);
+                                console.log("Patient has room: " + rooms[v].patient);
                                 refreshPatient(rooms[v].patient, true);
                             }
 
@@ -1233,7 +1234,8 @@ window.addEventListener("load", function () {
         newdiv1 = null;
         newbutton = null;
     }
-    console.log(info+"End do_main()")
+    console.log(info+"End do_main()");
+    
     /*************************** end do_main() ******************************************/
 
 
@@ -2270,7 +2272,7 @@ window.addEventListener("load", function () {
                     for (var v = 0; v < rooms.length; v++) {
                         if (( rooms[v].cleanup ) && ( rooms[v].ends == 0 ) && ( rooms[v].roomid != 6 )) {
                             var croom = Global.refRooms.get("r" + rooms[v].topleft);
-                            console.log("Cleaning room: " + rooms[v].topleft);
+                            console.log(info + "Cleaning room: " + rooms[v].topleft);
                             croom._onDrop(cleaner, "", "");
                         }
                     }
@@ -2843,20 +2845,20 @@ window.addEventListener("load", function () {
     }
 
     function start_Quest() {
-        console.log("startQuest");
+        console.log(info+"StartQuest");
         unsafeWindow.show_page("garage");
 
         window.setTimeout(function () {
             if ($("newswindow_badge")) {
                 //Erfolgsmeldung wird angezeigt
-                console.log("Im Finish");
+                console.log(info+"Finished");
                 unsafeWindow.close_badge();
             }
 
             window.setTimeout(function () {
-                console.log("Suche fenster");
+                console.log(info + "Search window");
                 if ($("ga_new") && $("ga_new").style.display != "none") {
-                    console.log("Starte neu");
+                    console.log(info + "Creating new");
                     questcnt = $('ga_done').innerHTML[0];
                     console.log(questcnt);
 
@@ -2865,7 +2867,7 @@ window.addEventListener("load", function () {
                 }
 
                 if ($("ga_running") && $("ga_running").style.display != "none")
-                    console.log("l�uft noch");
+                    console.log(info + "Still working..");
 
                 window.setTimeout(unsafeWindow.close_page, 500);
 
@@ -2873,7 +2875,7 @@ window.addEventListener("load", function () {
 
         }, 500);
     }
-    console.log(info+"start do_mail()");
+    console.log(info+"Start do_mail()");
     function do_Mail() {
         var keyMsgShow = /showMessage\(['|\s]*(\d+)['|\s]*,'(.*?)'\)/;
         var keyMsgDelete = /deleteMessage\(['|\s]*(\d+)['|\s]*,\s*this,\s*'(.*?)'\)/;
