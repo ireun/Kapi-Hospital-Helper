@@ -15,7 +15,7 @@
 window.addEventListener("load", function () {
 
     var info = "[Berater] "
-    
+
     console.log(info + "Start");
 
 // Special Characters - DE
@@ -222,7 +222,7 @@ window.addEventListener("load", function () {
     gamepages["no"] = "http://www.no.kapihospital.com/";
     gamepages["ae"] = "http://www.ae.kapihospital.com/";
 
-    console.log(info+"End of lang vars")
+    console.log(info + "End of lang vars")
 //***********************************************************************************************************
 
     var scriptUrl = "https://greasyfork.org/scripts/5182-kapi-hospital-berater";
@@ -270,13 +270,11 @@ window.addEventListener("load", function () {
         do_login();
 
 
-
-
 //***********************************************************************************************************
 
     function do_main() {
 
-        (info+"Start do_main()");
+        (info + "Start do_main()");
         //if (!username) document.location.href = "http://www"+gamepage;
         // CSS
         GM_addStyle("tr:hover{background-color:lightblue;}");
@@ -294,7 +292,7 @@ window.addEventListener("load", function () {
         GM_addStyle(".racklow{" + GM_getValue(lng + "_" + server + "_" + username + "_css_racklow", "background-color:orangered;") + "}");
         GM_addStyle(".cursorstandard{ cursor: default!important;}");
 
-        console.log(info+"Updatecheck");
+        console.log(info + "Updatecheck");
         if (GM_getValue("valUpdate", true)) {
             valLastUpdate = GM_getValue("valLastUpdate", "");
             if (valLastUpdate == "") {
@@ -360,9 +358,12 @@ window.addEventListener("load", function () {
         valStartQuestAutomatic = GM_getValue(lng + "_" + server + "_" + username + "_valStartQuestAutomatic", true);
 
         if (developer)
-            createElement("div", {id: "help1", style: "z-index:2;position:absolute;top:15px;left:0px;background-color:#CCC;border:2px solid black;padding:3px;"}, all);
+            createElement("div", {
+                id: "help1",
+                style: "z-index:2;position:absolute;top:15px;left:0px;background-color:#CCC;border:2px solid black;padding:3px;"
+            }, all);
 
-        console.log(info+"Points");
+        console.log(info + "Points");
         // punkte
         GM_xmlhttpRequest({
             method: "GET",
@@ -386,7 +387,7 @@ window.addEventListener("load", function () {
                 }, false);
             }
         });
-        console.log(info+"patientDiseases");
+        console.log(info + "patientDiseases");
         patientDiseases = {};
         // patientDiseases[patientId][diseaseNr]: heartbeat,cured,notreatment,comesnext,""=ill
         // patientDiseases[patientId][room]: current room (type)
@@ -407,17 +408,17 @@ window.addEventListener("load", function () {
          }
          }*/
 
-        console.log(info+"For non Premium Players, read patient stats from Server");
+        console.log(info + "For non Premium Players, read patient stats from Server");
         if (!Global.ISPREMIUM) {
-            console.log(info+"User not premium");
+            console.log(info + "User not premium");
             var patids = Global.refPatients.values();
             /*for (var v = 0; v < patids.length; v++) {
-                refreshPatient(patids[v]["id"], false);
-            }*/
+             refreshPatient(patids[v]["id"], false);
+             }*/
         }
-        
+
         if (developer) {
-            console.log(info+"You are a developer");
+            console.log(info + "You are a developer");
             $("garten_komplett").addEventListener("mouseover", function (event) {
                 $("help1").innerHTML = "";
                 var roomId = 0;
@@ -511,7 +512,10 @@ window.addEventListener("load", function () {
         for (var v = 0; v < newdiv.length; v++) if (newdiv[v].hasAttribute("onclick") && newdiv[v].getAttribute("onclick").search("facebook") != -1) newdiv[v].style.display = "none";
 
         // MiniIcons
-        newdiv = createElement("div", {id: "berater_miniicons ", style: "color:white;height:50px;position:absolute;width:13px;z-index:10;top:186px;left:5px;"}, maincontainer);
+        newdiv = createElement("div", {
+            id: "berater_miniicons ",
+            style: "color:white;height:50px;position:absolute;width:13px;z-index:10;top:186px;left:5px;"
+        }, maincontainer);
         newdiv1 = createElement("div", {class: "miniicon hoverblue cursorclickable", style: "border:0;"}, newdiv, "P");
         newdiv1.addEventListener("click", function () {
             buildInfoPanel("patients");
@@ -529,11 +533,15 @@ window.addEventListener("load", function () {
          }
          miniiconSelectFloor();
          */
-        console.log(info+"Button list");
+        console.log(info + "Button list");
 
         // Button-Leiste
         newdiv = createElement("div", {style: "position:absolute;top:784px;display:inline;"}, maincontainer);
-        newbutton = createElement("button", {type: "button", class: "cursorclickable", style: "margin-left:3px;"}, newdiv, texte["set_ScriptHomepage"]);
+        newbutton = createElement("button", {
+            type: "button",
+            class: "cursorclickable",
+            style: "margin-left:3px;"
+        }, newdiv, texte["set_ScriptHomepage"]);
         newbutton.addEventListener("click", function () {
             window.open(scriptUrl)
         }, false);
@@ -543,7 +551,12 @@ window.addEventListener("load", function () {
         newbutton.addEventListener("mouseout", function () {
             this.style.backgroundColor = ""
         }, false);
-        newbutton = createElement("button", {id: "berateroptionen", type: "button", class: "cursorclickable", style: "margin-left:3px;"}, newdiv, texte["optionen"]);
+        newbutton = createElement("button", {
+            id: "berateroptionen",
+            type: "button",
+            class: "cursorclickable",
+            style: "margin-left:3px;"
+        }, newdiv, texte["optionen"]);
         newbutton.addEventListener("click", function () {
             buildInfoPanel("options");
         }, false);
@@ -555,7 +568,11 @@ window.addEventListener("load", function () {
         }, false);
 
         // InfoPanel
-        createElement("div", {id: "infoPanel", name: "", style: "position:absolute;top:184px;left:252px;width:600px;height:500px;background-image:url('http://pics.kapihospital.de/bg_referral_01.jpg');z-index:101;display:none;"}, all);
+        createElement("div", {
+            id: "infoPanel",
+            name: "",
+            style: "position:absolute;top:184px;left:252px;width:600px;height:500px;background-image:url('http://pics.kapihospital.de/bg_referral_01.jpg');z-index:101;display:none;"
+        }, all);
 
         // Quicklinks
         var arrQuicklinks = [
@@ -588,8 +605,15 @@ window.addEventListener("load", function () {
         for (var mode = 1; mode < 4; mode++) {
             for (var v = 1; v < arrQuicklinks.length; v++)
                 if (arrQuicklinks[v][2] == mode) {
-                    var newdiv1 = createElement("div", {id: v, class: "hoverlightblue", title: arrQuicklinks[v][0]}, newdiv);
-                    createElement("div", {class: "cursorclickable c1_a_50 c1_" + v + "_50", title: arrQuicklinks[v][0]}, newdiv1);
+                    var newdiv1 = createElement("div", {
+                        id: v,
+                        class: "hoverlightblue",
+                        title: arrQuicklinks[v][0]
+                    }, newdiv);
+                    createElement("div", {
+                        class: "cursorclickable c1_a_50 c1_" + v + "_50",
+                        title: arrQuicklinks[v][0]
+                    }, newdiv1);
 
 
                     if ((arrQuicklinks[v][3] == 1) || city2Allowed) {
@@ -619,23 +643,44 @@ window.addEventListener("load", function () {
 
 
         for (var v = 0; v < arrQuicklinks2.length; v++) {
-            var newdiv1 = createElement("div", {id: "auto" + v, class: "hoverlightblue", title: arrQuicklinks2[v][0]}, newdiv);
+            var newdiv1 = createElement("div", {
+                id: "auto" + v,
+                class: "hoverlightblue",
+                title: arrQuicklinks2[v][0]
+            }, newdiv);
 
             if (v == 0) {
                 // Medi Buy Button
-                createElement("div", {class: "cursorclickable c1_a_50 c1_" + 15 + "_50", title: arrQuicklinks2[v][0]}, newdiv1);
+                createElement("div", {
+                    class: "cursorclickable c1_a_50 c1_" + 15 + "_50",
+                    title: arrQuicklinks2[v][0]
+                }, newdiv1);
                 newdiv1.addEventListener("click", function () {
                     var medstoBuy = [];
                     var price_overall = 0.00;
                     //var buytext ="";
 
-                    var dialogdiv = createElement("div", {"id": "buyquest", "style": "text-align:center; background-color:white; padding: 4px; height:500px; position:absolute; left:50%; top:50%; margin-left:-200px; margin-top:-200px; widht:400px; z-index:999;font-size:normal;"}, all);
-                    var dialogdiv2 = createElement("div", {"id": "buyquest2", "style": "overflow:auto; width:400px; height:475px;"}, dialogdiv);
-                    var dialogdiv3 = createElement("div", {"id": "buyquest3", "style": "height:25px;text-align:center;"}, dialogdiv);
+                    var dialogdiv = createElement("div", {
+                        "id": "buyquest",
+                        "style": "text-align:center; background-color:white; padding: 4px; height:500px; position:absolute; left:50%; top:50%; margin-left:-200px; margin-top:-200px; widht:400px; z-index:999;font-size:normal;"
+                    }, all);
+                    var dialogdiv2 = createElement("div", {
+                        "id": "buyquest2",
+                        "style": "overflow:auto; width:400px; height:475px;"
+                    }, dialogdiv);
+                    var dialogdiv3 = createElement("div", {
+                        "id": "buyquest3",
+                        "style": "height:25px;text-align:center;"
+                    }, dialogdiv);
 
                     createElement("h2", {}, dialogdiv2, "Medis kaufen");
 
-                    var newtab = createElement("table", {border: "1px", cellspacing: "0px", cellpadding: "0px", style: "text-align:left;width:100%;"}, dialogdiv2);
+                    var newtab = createElement("table", {
+                        border: "1px",
+                        cellspacing: "0px",
+                        cellpadding: "0px",
+                        style: "text-align:left;width:100%;"
+                    }, dialogdiv2);
                     tabrow = createElement("tr", "", newtab);
                     createElement("td", {style: "text-align:center;"}, tabrow, "kaufen");
                     createElement("td", {style: "text-align:center;"}, tabrow, "Bezeichnung");
@@ -660,7 +705,13 @@ window.addEventListener("load", function () {
                                             tabrow = createElement("tr", "", newtab);
                                             tabcell = createElement("td", {style: "text-align:center;"}, tabrow);
 
-                                            newinput = createElement("input", {"id": Global.availableMedics._object[k]["id"] + "#" + diff, "type": "checkbox", "checked": "checked", "title": Global.availableMedics._object[k]["name"], "style": "margin-right:0px;margin-left:1px;"}, tabcell);
+                                            newinput = createElement("input", {
+                                                "id": Global.availableMedics._object[k]["id"] + "#" + diff,
+                                                "type": "checkbox",
+                                                "checked": "checked",
+                                                "title": Global.availableMedics._object[k]["name"],
+                                                "style": "margin-right:0px;margin-left:1px;"
+                                            }, tabcell);
                                             newinput.addEventListener("click", function () {
 
                                                 price = Global.availableMedics._object["med" + this.id.split('#')[0]]["price"];
@@ -677,7 +728,15 @@ window.addEventListener("load", function () {
 
                                             }, false);
 
-                                            newinput = createElement("input", {"id": "am_" + Global.availableMedics._object[k]["id"], "type": "text", "maxlength": "3", "size": "3", "value": diff, "title": "Menge", "style": "width:25px;margin-left:5px;"}, tabcell);
+                                            newinput = createElement("input", {
+                                                "id": "am_" + Global.availableMedics._object[k]["id"],
+                                                "type": "text",
+                                                "maxlength": "3",
+                                                "size": "3",
+                                                "value": diff,
+                                                "title": "Menge",
+                                                "style": "width:25px;margin-left:5px;"
+                                            }, tabcell);
                                             newinput.addEventListener("keyup", function () {
                                                 this.value = keepDigits(this.value);
 
@@ -688,7 +747,10 @@ window.addEventListener("load", function () {
 
 
                                             tabcell = createElement("td", "", tabrow, Global.availableMedics._object[k]["name"]);
-                                            tabcell = createElement("td", {id: "prc" + Global.availableMedics._object[k]["id"], style: "text-align:right;"}, tabrow, medprice + " " + Global._KH_CURRENCY);
+                                            tabcell = createElement("td", {
+                                                id: "prc" + Global.availableMedics._object[k]["id"],
+                                                style: "text-align:right;"
+                                            }, tabrow, medprice + " " + Global._KH_CURRENCY);
                                             break;
                                         }
                                     }
@@ -700,15 +762,27 @@ window.addEventListener("load", function () {
 
                     tabrow = createElement("tr", "", newtab);
                     createElement("td", {}, tabrow, "Gesamtsumme");
-                    createElement("td", {id: "prover", colspan: "2", style: "text-align:right;font-color:red;font-weigth:bold;"}, tabrow, hT_format(price_overall));
+                    createElement("td", {
+                        id: "prover",
+                        colspan: "2",
+                        style: "text-align:right;font-color:red;font-weigth:bold;"
+                    }, tabrow, hT_format(price_overall));
 
 
-                    newbutton = createElement("button", {type: "button", class: "cursorclickable", id: "buyok", style: "width:100px;height:20px;margin:3px;"}, dialogdiv3, texte["buy"]);
+                    newbutton = createElement("button", {
+                        type: "button",
+                        class: "cursorclickable",
+                        id: "buyok",
+                        style: "width:100px;height:20px;margin:3px;"
+                    }, dialogdiv3, texte["buy"]);
                     newbutton.addEventListener("click", function () {
                         var checkboxes = dialogdiv2.querySelectorAll('input[type="checkbox"]');
                         for (var i = 0; i < checkboxes.length; i++) {
                             if (checkboxes[i].checked)
-                                medstoBuy.push({ "itemid": checkboxes[i].id.split('#')[0], "amount": $('am_' + checkboxes[i].id.split('#')[0]).value });
+                                medstoBuy.push({
+                                    "itemid": checkboxes[i].id.split('#')[0],
+                                    "amount": $('am_' + checkboxes[i].id.split('#')[0]).value
+                                });
                         }
 
                         if (medstoBuy.length > 0) {
@@ -721,7 +795,12 @@ window.addEventListener("load", function () {
                         all.removeChild(dialogdiv);
                     }, false);
 
-                    newbutton = createElement("button", {type: "button", class: "cursorclickable", id: "buycancel", style: "width:100px;height:20px;margin:3px;"}, dialogdiv3, texte["cancel"]);
+                    newbutton = createElement("button", {
+                        type: "button",
+                        class: "cursorclickable",
+                        id: "buycancel",
+                        style: "width:100px;height:20px;margin:3px;"
+                    }, dialogdiv3, texte["cancel"]);
                     newbutton.addEventListener("click", function () {
                         all.removeChild(dialogdiv);
                         dialogdiv = null;
@@ -734,7 +813,10 @@ window.addEventListener("load", function () {
                 var actpat;
 
                 // Autoschwester Button
-                createElement("div", {class: "cursorclickable c1_a_50 c1_" + 2 + "_50", title: arrQuicklinks2[v][0]}, newdiv1);
+                createElement("div", {
+                    class: "cursorclickable c1_a_50 c1_" + 2 + "_50",
+                    title: arrQuicklinks2[v][0]
+                }, newdiv1);
                 newdiv1.addEventListener("click", function () {
                     rooms = Global.refRooms.values();
 
@@ -756,13 +838,19 @@ window.addEventListener("load", function () {
 
             //Dreckige R�ume s�ubern
             if (v == 2) {
-                createElement("div", {class: "cursorclickable c1_a_50 c1_" + 8 + "_50", title: arrQuicklinks2[v][0]}, newdiv1);
+                createElement("div", {
+                    class: "cursorclickable c1_a_50 c1_" + 8 + "_50",
+                    title: arrQuicklinks2[v][0]
+                }, newdiv1);
                 newdiv1.addEventListener("click", cleaningfunc, false);
             }
 
             //MEdis verteilen
             if (v == 3) {
-                createElement("div", {class: "cursorclickable c1_a_50 c1_" + 1 + "_50", title: arrQuicklinks2[v][0]}, newdiv1);
+                createElement("div", {
+                    class: "cursorclickable c1_a_50 c1_" + 1 + "_50",
+                    title: arrQuicklinks2[v][0]
+                }, newdiv1);
                 newdiv1.addEventListener("click", medifunc, false);
             }
         }
@@ -873,7 +961,10 @@ window.addEventListener("load", function () {
                                     }
 
                                     if (!$("timeinfo_" + currRoom["topleft"])) {
-                                        createElement("div", {id: "timeinfo_" + currRoom["topleft"], style: "position:absolute;top:0px;left:1px;background-color:white;"}, $("r" + currRoom["topleft"]));
+                                        createElement("div", {
+                                            id: "timeinfo_" + currRoom["topleft"],
+                                            style: "position:absolute;top:0px;left:1px;background-color:white;"
+                                        }, $("r" + currRoom["topleft"]));
                                     }
 
                                     //console.log( time2str(roomTimes[Global.selectedFloor][currRoom["topleft"]][1]-now, 2) );
@@ -900,7 +991,10 @@ window.addEventListener("load", function () {
                                 }
 
                                 if (!$("timeinfo_" + currRoom["topleft"])) {
-                                    createElement("div", {id: "timeinfo_" + currRoom["topleft"], style: "position:absolute;bottom:23px;left:13px;font-weight:bold;background-color:white;"}, $("r" + currRoom["topleft"]));
+                                    createElement("div", {
+                                        id: "timeinfo_" + currRoom["topleft"],
+                                        style: "position:absolute;bottom:23px;left:13px;font-weight:bold;background-color:white;"
+                                    }, $("r" + currRoom["topleft"]));
                                 }
                                 $("timeinfo_" + currRoom["topleft"]).innerHTML = time2str(roomTimes[Global.selectedFloor][currRoom["topleft"]][1] - now);
 
@@ -922,7 +1016,10 @@ window.addEventListener("load", function () {
                                             var currDisease = null;
                                             if (currDisease = calcCurrDisease(currRoom["patient"])) {
                                                 if (!$("mediinfo_" + currRoom.topleft)) {
-                                                    createElement("div", {id: "mediinfo_" + currRoom.topleft, style: "position:absolute;top:5px;left:5px;font-weight:bold;background-color:white;-moz-border-radius:5px;"}, $("r" + currRoom.topleft));
+                                                    createElement("div", {
+                                                        id: "mediinfo_" + currRoom.topleft,
+                                                        style: "position:absolute;top:5px;left:5px;font-weight:bold;background-color:white;-moz-border-radius:5px;"
+                                                    }, $("r" + currRoom.topleft));
                                                 }
                                                 $("mediinfo_" + currRoom.topleft).setAttribute("class", "m_a_30 m_" + medi[currDisease]["id"] + "_30");
                                             }
@@ -990,12 +1087,20 @@ window.addEventListener("load", function () {
                 document.title = (roomTimes["global"][0] < nie ? time2str(roomTimes["global"][0] - now) : texte["fertig"].toUpperCase()) + " - " + roomTimes["emptyrooms"][0] + " - " + documentTitle;
             } else {
                 if (!$("globalclock")) {
-                    createElement("div", {id: "globalclock", title: "global time", style: "position:absolute;top:0px;left:0px;font-weight:bold;background-color:white;"}, all);
+                    createElement("div", {
+                        id: "globalclock",
+                        title: "global time",
+                        style: "position:absolute;top:0px;left:0px;font-weight:bold;background-color:white;"
+                    }, all);
                 }
                 $("globalclock").innerHTML = (roomTimes["global"][0] < nie ? time2str(roomTimes["global"][0] - now) : texte["fertig"].toUpperCase()) + " - " + roomTimes["emptyrooms"][0];
             }
             if (!$("floorclock")) {
-                createElement("div", {id: "floorclock", title: "floor time", style: "position:absolute;top:5px;left:20px;font-weight:bold;background-color:white;"}, $("hospital_content"));
+                createElement("div", {
+                    id: "floorclock",
+                    title: "floor time",
+                    style: "position:absolute;top:5px;left:20px;font-weight:bold;background-color:white;"
+                }, $("hospital_content"));
             }
             $("floorclock").innerHTML = ((roomTimes["allrooms"][Global.selectedFloor] > 0) ? (roomTimes["global"][Global.selectedFloor] < nie ? time2str(roomTimes["global"][Global.selectedFloor] - now) : texte["fertig"].toUpperCase()) : "---") + " - " + roomTimes["emptyrooms"][Global.selectedFloor];
 
@@ -1030,7 +1135,10 @@ window.addEventListener("load", function () {
 
                             //in bed
                             if (!$("mcont_" + currPatientId)) {
-                                createElement("div", {id: "mcont_" + currPatientId, style: "float:right;background-color:white;margin-right:2px;"}, canddiv[pat]);
+                                createElement("div", {
+                                    id: "mcont_" + currPatientId,
+                                    style: "float:right;background-color:white;margin-right:2px;"
+                                }, canddiv[pat]);
 
                                 for (var m = 0; m < patientDiseases[currPatientId]["m"]; m++) {
                                     createElement("div", {style: "width: 7px; height: 7px; margin: 1px;background-color:green;"}, $("mcont_" + currPatientId));
@@ -1092,7 +1200,11 @@ window.addEventListener("load", function () {
 
             // QuestClock
             if (!$("questclock")) {
-                createElement("div", {id: "questclock", title: "quest time", style: "position:absolute;bottom:0px;right:0px;font-weight:bold;background-color:white;"}, $("waitingroom"));
+                createElement("div", {
+                    id: "questclock",
+                    title: "quest time",
+                    style: "position:absolute;bottom:0px;right:0px;font-weight:bold;background-color:white;"
+                }, $("waitingroom"));
             }
 
             $("questclock").innerHTML = ( (questTime > now) ? time2str(questTime - now) : texte["fertig"].toUpperCase() );
@@ -1148,7 +1260,10 @@ window.addEventListener("load", function () {
         }, 5000);
 
         // Patient-MouseOver Diseases
-        var beraterDiseaseBubble = createElement("div", {id: "beraterDiseaseBubble", style: "z-index:2000;position:absolute;top:0px;left:0px;background-color:#CCC;-moz-border-radius:10px;border:2px solid black;padding:3px;margin-left:40px;"}, all);
+        var beraterDiseaseBubble = createElement("div", {
+            id: "beraterDiseaseBubble",
+            style: "z-index:2000;position:absolute;top:0px;left:0px;background-color:#CCC;-moz-border-radius:10px;border:2px solid black;padding:3px;margin-left:40px;"
+        }, all);
         hiddenPatientDiv = createElement("div", {id: "hiddenPatientDiv", style: "display:;"}, all);
 
         $("garten_komplett").addEventListener("mouseover", function (event) {
@@ -1234,8 +1349,9 @@ window.addEventListener("load", function () {
         newdiv1 = null;
         newbutton = null;
     }
-    console.log(info+"End do_main()");
-    
+
+    console.log(info + "End do_main()");
+
     /*************************** end do_main() ******************************************/
 
 
@@ -1764,7 +1880,7 @@ window.addEventListener("load", function () {
         }
     }
 
-    console.log(info+"Start implode(arr)");
+    console.log(info + "Start implode(arr)");
 
     function implode(arr) {//--- function written by Jan-Hans
         try {
@@ -1845,17 +1961,28 @@ window.addEventListener("load", function () {
             $("infoPanel").style.display = "block";
 
             divInfo = createElement("div", {style: "position:absolute;left:20px;top:80px;width:570px;height:400px;overflow:auto;"}, $("infoPanel"));
-            newdiv = createElement("img", {class: "cursorclickable", style: "font-size:10px;position:absolute;height:35px;width:35px;right:10px;top:2px;"}, $("infoPanel"));
+            newdiv = createElement("img", {
+                class: "cursorclickable",
+                style: "font-size:10px;position:absolute;height:35px;width:35px;right:10px;top:2px;"
+            }, $("infoPanel"));
             newdiv.addEventListener("click", closeInfoPanel, false);
 
             if (mode == "options") {
-                createElement("div", {align: "center", style: "line-height:30px;font-weight:bold;"}, divInfo, texte["optionen"]);
+                createElement("div", {
+                    align: "center",
+                    style: "line-height:30px;font-weight:bold;"
+                }, divInfo, texte["optionen"]);
                 newtable = createElement("table", {style: "width:100%;", border: "1"}, divInfo);
 
                 newtr = createElement("tr", "", newtable);
                 newtd = createElement("td", {align: "center"}, newtr);
                 var valUpdate = GM_getValue("valUpdate", true);
-                inp = createElement("input", {id: "inputvalUpdate", type: "checkbox", class: "link", checked: valUpdate}, newtd);
+                inp = createElement("input", {
+                    id: "inputvalUpdate",
+                    type: "checkbox",
+                    class: "link",
+                    checked: valUpdate
+                }, newtd);
                 inp.addEventListener("click", function () {
                     valUpdate = this.checked;
                     GM_setValue("valUpdate", valUpdate);
@@ -1865,7 +1992,12 @@ window.addEventListener("load", function () {
 
                 newtr = createElement("tr", "", newtable);
                 newtd = createElement("td", {align: "center"}, newtr);
-                inp = createElement("input", {id: "inputvalGlobalClockInTitle", type: "checkbox", class: "link", checked: valGlobalClockInTitle}, newtd);
+                inp = createElement("input", {
+                    id: "inputvalGlobalClockInTitle",
+                    type: "checkbox",
+                    class: "link",
+                    checked: valGlobalClockInTitle
+                }, newtd);
                 inp.addEventListener("click", function () {
                     valGlobalClockInTitle = this.checked;
                     GM_setValue(lng + "_" + server + "_" + username + "_valGlobalClockInTitle", valGlobalClockInTitle);
@@ -1875,7 +2007,13 @@ window.addEventListener("load", function () {
 
                 newtr = createElement("tr", "", newtable);
                 newtd = createElement("td", {align: "center"}, newtr);
-                newinput = createElement("input", {id: "inputvalRackLimit", value: valRackLimit, maxlength: "5", size: "5px", style: "background-color:transparent;"}, newtd);
+                newinput = createElement("input", {
+                    id: "inputvalRackLimit",
+                    value: valRackLimit,
+                    maxlength: "5",
+                    size: "5px",
+                    style: "background-color:transparent;"
+                }, newtd);
                 newinput.addEventListener("focus", function () {
                     this.style.backgroundColor = "lightblue";
                 }, false);
@@ -1894,7 +2032,13 @@ window.addEventListener("load", function () {
 
                 newtr = createElement("tr", "", newtable);
                 newtd = createElement("td", {align: "center"}, newtr);
-                newinput = createElement("input", {id: "inputvalMaxRackLimit", value: valMaxRackLimit, maxlength: "5", size: "5px", style: "background-color:transparent;"}, newtd);
+                newinput = createElement("input", {
+                    id: "inputvalMaxRackLimit",
+                    value: valMaxRackLimit,
+                    maxlength: "5",
+                    size: "5px",
+                    style: "background-color:transparent;"
+                }, newtd);
                 newinput.addEventListener("focus", function () {
                     this.style.backgroundColor = "lightblue";
                 }, false);
@@ -1913,7 +2057,12 @@ window.addEventListener("load", function () {
 
                 newtr = createElement("tr", "", newtable);
                 newtd = createElement("td", {align: "center"}, newtr);
-                inp = createElement("input", {id: "inputvalStartQuestAutomatic", type: "checkbox", class: "link", checked: valStartQuestAutomatic}, newtd);
+                inp = createElement("input", {
+                    id: "inputvalStartQuestAutomatic",
+                    type: "checkbox",
+                    class: "link",
+                    checked: valStartQuestAutomatic
+                }, newtd);
                 inp.addEventListener("click", function () {
                     valStartQuestAutomatic = this.checked;
                     GM_setValue(lng + "_" + server + "_" + username + "_valStartQuestAutomatic", valStartQuestAutomatic);
@@ -1922,7 +2071,10 @@ window.addEventListener("load", function () {
                 createElement("td", "", newtr, texte["info_valStartQuestAutomatic"]);
 
                 //AutoLogin
-                createElement("div", {align: "center", style: "line-height:30px;margin-top:20px;font-weight:bold;"}, divInfo, texte["autoLogin"]);
+                createElement("div", {
+                    align: "center",
+                    style: "line-height:30px;margin-top:20px;font-weight:bold;"
+                }, divInfo, texte["autoLogin"]);
                 newtable = createElement("table", {id: "tableAutologin", align: "center"}, divInfo);
 
                 buildLoginTable(false);
@@ -1941,7 +2093,10 @@ window.addEventListener("load", function () {
                     [],
                     "background-color:orangered;"
                 ];
-                createElement("div", {align: "center", style: "line-height:30px;margin-top:20px;font-weight:bold;"}, divInfo, "CSS");
+                createElement("div", {
+                    align: "center",
+                    style: "line-height:30px;margin-top:20px;font-weight:bold;"
+                }, divInfo, "CSS");
                 newtable = createElement("table", {align: "center"}, divInfo);
                 for (var v in cssArr) {
                     newtr = createElement("tr", "", newtable);
@@ -1998,7 +2153,12 @@ window.addEventListener("load", function () {
         for (var v = 0; v < logindata.length; v++) {
             newtr = createElement("tr", "", newtable);
             newtd = createElement("td", "", newtr);
-            newinp = createElement("input", {id: "loginActive" + v, type: "checkbox", title: texte["accountAktiv"], checked: logindata[v][4]}, newtd);
+            newinp = createElement("input", {
+                id: "loginActive" + v,
+                type: "checkbox",
+                title: texte["accountAktiv"],
+                checked: logindata[v][4]
+            }, newtd);
             newinp.addEventListener("change", function () {
                 logindata[this.id.replace("loginActive", "")][4] = this.checked;
             }, false);
@@ -2030,13 +2190,23 @@ window.addEventListener("load", function () {
             }, false);
 
             newtd = createElement("td", "", newtr);
-            newinput = createElement("input", {id: "loginName" + v, style: "width:150px", value: logindata[v][2], maxlength: "20"}, newtd);
+            newinput = createElement("input", {
+                id: "loginName" + v,
+                style: "width:150px",
+                value: logindata[v][2],
+                maxlength: "20"
+            }, newtd);
             newinput.addEventListener("change", function () {
                 logindata[this.id.replace("loginName", "")][2] = this.value;
             }, false);
 
             newtd = createElement("td", {}, newtr);
-            newinput = createElement("input", {id: "loginPW" + v, style: "width:150px", value: logindata[v][3], maxlength: "20"}, newtd);
+            newinput = createElement("input", {
+                id: "loginPW" + v,
+                style: "width:150px",
+                value: logindata[v][3],
+                maxlength: "20"
+            }, newtd);
 
             if (!showPW)
                 newinput.type = "password";
@@ -2047,8 +2217,15 @@ window.addEventListener("load", function () {
 
             newtd = createElement("td", "", newtr);
             if (v > 0) {
-                newdiv = createElement("div", {id: "loginUp" + v, class: "link2", style: "width:14px;height:10px;"}, newtd);
-                createElement("img", {src: "http://dqt9wzym747n.cloudfront.net/pics/quest_up.gif", style: "width:14px;height:10px;"}, newdiv);
+                newdiv = createElement("div", {
+                    id: "loginUp" + v,
+                    class: "link2",
+                    style: "width:14px;height:10px;"
+                }, newtd);
+                createElement("img", {
+                    src: "http://dqt9wzym747n.cloudfront.net/pics/quest_up.gif",
+                    style: "width:14px;height:10px;"
+                }, newdiv);
                 newdiv.addEventListener("mouseover", function () {
                     this.style.backgroundColor = "blue"
                 }, false);
@@ -2064,8 +2241,15 @@ window.addEventListener("load", function () {
             }
 
             if (v < logindata.length - 1) {
-                newdiv = createElement("div", {id: "loginDown" + v, class: "link2", style: "width:14px;height:10px;"}, newtd);
-                createElement("img", {src: "http://dqt9wzym747n.cloudfront.net/pics/quest_down.gif", style: "width:14px;height:10px;"}, newdiv);
+                newdiv = createElement("div", {
+                    id: "loginDown" + v,
+                    class: "link2",
+                    style: "width:14px;height:10px;"
+                }, newtd);
+                createElement("img", {
+                    src: "http://dqt9wzym747n.cloudfront.net/pics/quest_down.gif",
+                    style: "width:14px;height:10px;"
+                }, newdiv);
                 newdiv.addEventListener("mouseover", function () {
                     this.style.backgroundColor = "blue"
                 }, false);
@@ -2081,7 +2265,11 @@ window.addEventListener("load", function () {
             }
 
             newtd = createElement("td", {title: texte["loeschen"], id: "loginDelete" + v}, newtr);
-            createElement("img", {src: "http://dqt9wzym747n.cloudfront.net/pics/popin/contracts/anullieren.gif", class: "link2", style: "width: 16px; height: 16px;"}, newtd);
+            createElement("img", {
+                src: "http://dqt9wzym747n.cloudfront.net/pics/popin/contracts/anullieren.gif",
+                class: "link2",
+                style: "width: 16px; height: 16px;"
+            }, newtd);
             newtd.addEventListener("mouseover", function () {
                 this.style.backgroundColor = "blue"
             }, false);
@@ -2097,7 +2285,11 @@ window.addEventListener("load", function () {
         }
 
         newtr = createElement("tr", "", newtable);
-        newtd = createElement("td", {colspan: "5", class: "link", style: "font-weight:bold;font-size:16px;text-align:right;"}, newtr, "+");
+        newtd = createElement("td", {
+            colspan: "5",
+            class: "link",
+            style: "font-weight:bold;font-size:16px;text-align:right;"
+        }, newtr, "+");
         newtd.addEventListener("mouseover", function () {
             this.style.backgroundColor = "blue"
         }, false);
@@ -2132,11 +2324,21 @@ window.addEventListener("load", function () {
             buildPatientsTable(mode, showCured, this.checked);
         }, false);
         createElement("span", "", newspan, texte["minipics"]);
-        newinput = createElement("input", {type: "button", style: "margin-right:3px", value: "Patienten", class: "cursorclickable"}, newth);
+        newinput = createElement("input", {
+            type: "button",
+            style: "margin-right:3px",
+            value: "Patienten",
+            class: "cursorclickable"
+        }, newth);
         newinput.addEventListener("click", function () {
             buildPatientsTable(1, showCured, minipic);
         }, false);
-        newinput = createElement("input", {type: "button", style: "margin-right:3px", value: "R" + ae + "ume", class: "cursorclickable"}, newth);
+        newinput = createElement("input", {
+            type: "button",
+            style: "margin-right:3px",
+            value: "R" + ae + "ume",
+            class: "cursorclickable"
+        }, newth);
         newinput.addEventListener("click", function () {
             buildPatientsTable(2, showCured, minipic);
         }, false);
@@ -2148,7 +2350,11 @@ window.addEventListener("load", function () {
                         case 1:
                         case 2:
                             if (posi == 0) {
-                                newtr = createElement("tr", {"id": pat, "class": "cursorclickable", "onclick": 'show_page("medical",this)'}, newtablebody);
+                                newtr = createElement("tr", {
+                                    "id": pat,
+                                    "class": "cursorclickable",
+                                    "onclick": 'show_page("medical",this)'
+                                }, newtablebody);
                                 newtr.addEventListener("click", closeInfoPanel, false);
                                 createElement("td", "", newtr, pat);
                                 createElement("td", {colspan: "2"}, newtr, Global.availableRooms[6]["name"]);
@@ -2159,7 +2365,11 @@ window.addEventListener("load", function () {
                         case 3:
                         case 4:
                             if (posi == 1) {
-                                newtr = createElement("tr", {"id": pat, "class": "cursorclickable", "onclick": 'show_page("medical",this)'}, newtablebody);
+                                newtr = createElement("tr", {
+                                    "id": pat,
+                                    "class": "cursorclickable",
+                                    "onclick": 'show_page("medical",this)'
+                                }, newtablebody);
                                 newtr.addEventListener("click", closeInfoPanel, false);
                                 createElement("td", "", newtr, pat);
                                 createElement("td", "", newtr, patientDiseases[pat]["floor"]);
@@ -2170,7 +2380,11 @@ window.addEventListener("load", function () {
                             break;
                         case 0:
                             if (posi == 2) {
-                                newtr = createElement("tr", {"id": pat, "class": "cursorclickable", "onclick": 'show_page("medical",this)'}, newtablebody);
+                                newtr = createElement("tr", {
+                                    "id": pat,
+                                    "class": "cursorclickable",
+                                    "onclick": 'show_page("medical",this)'
+                                }, newtablebody);
                                 newtr.addEventListener("click", closeInfoPanel, false);
                                 createElement("td", "", newtr, pat);
                                 createElement("td", {colspan: "2"}, newtr, texte["waitingroom"]);
@@ -2234,7 +2448,7 @@ window.addEventListener("load", function () {
                     newtd = createElement("td", {style: (v == 3 ? "padding-right:30px;" : "")}, newtr);
 
                     for (var disease in sumDiseases[r]) {
-                        if (sumDiseases[r][disease][ 2 * v + ( 1 - showCured ) ] > 0) {
+                        if (sumDiseases[r][disease][2 * v + ( 1 - showCured )] > 0) {
                             newdiv = createElement("div", {style: "float:left;margin-right:2px;"}, newtd);
                             createElement("div", {class: "d_a_30 d_" + disease + "_30"}, newdiv);
                             createElement("div", "", newdiv, time2str(Global.availableDiseases[disease]["basetime"], 1));
@@ -2544,7 +2758,10 @@ window.addEventListener("load", function () {
                     newdiv = createElement("div", {style: "float:left;"}, target);
                     if (minipic) {
                         if (patientDiseases[currPatientId][disease] == "cured") {
-                            newdiv1 = createElement("div", {class: "d_a_15 d_" + disease + "_15", style: "opacity:0.5;"}, newdiv);
+                            newdiv1 = createElement("div", {
+                                class: "d_a_15 d_" + disease + "_15",
+                                style: "opacity:0.5;"
+                            }, newdiv);
                             createElement("div", {class: "treatment_icon_15 treatment_icon_15_1"}, newdiv1);
                         }
                         else {
@@ -2553,7 +2770,10 @@ window.addEventListener("load", function () {
                     }
                     else {
                         if (patientDiseases[currPatientId][disease] == "cured") {
-                            newdiv1 = createElement("div", {class: "d_a_30 d_" + disease + "_30", style: "opacity:0.3;"}, newdiv);
+                            newdiv1 = createElement("div", {
+                                class: "d_a_30 d_" + disease + "_30",
+                                style: "opacity:0.3;"
+                            }, newdiv);
                             createElement("div", {class: "treatmenticons " + patientDiseases[currPatientId][disease] + "s"}, newdiv1);
                         }
                         else if (patientDiseases[currPatientId][disease]) {
@@ -2610,7 +2830,7 @@ window.addEventListener("load", function () {
                 var text = JSON.parse(response.responseText);
                 updPatientState(id, jQuery(text["message"]), with_nurse);
             },
-            object:onerror=function (response) {
+            object: onerror = function (response) {
                 return "";
             }
         });
@@ -2804,10 +3024,22 @@ window.addEventListener("load", function () {
         var maxprice = parseFloat($("med_price").getElementsByTagName("span")[0].innerHTML.split("-")[1].replace(Global._KH_THOUSANDSEPERATOR, "").replace(Global._KH_DECIMALSEPERATOR, "."), 10);
         createElement("div", {"style": "position:absolute;top:380px;right:130px;color:red;"}, $("ref_divdetailsbig"), "85%: " + hT_formatgr(0.85 * maxprice) + ", 90%: " + hT_formatgr(0.9 * maxprice) + ", 95%: " + hT_formatgr(0.95 * maxprice));
 
-        var newimg = createElement("img", {"style": "position:absolute;top:440px;left:219px;width:16px;height:16px;", "src": "http://pics.kapihospital.de/addressbook.gif", "class": "cursorclickable", "title": "Adressbuch"}, $("ref_divdetailsbig"));
+        var newimg = createElement("img", {
+            "style": "position:absolute;top:440px;left:219px;width:16px;height:16px;",
+            "src": "http://pics.kapihospital.de/addressbook.gif",
+            "class": "cursorclickable",
+            "title": "Adressbuch"
+        }, $("ref_divdetailsbig"));
         newimg.addEventListener("click", function () {
-            var newdiv = createElement("div", {"id": "refAdressBook", "style": "top:70px;width:265px;height:350px;position:absolute;z-index:30;right:0px;background:url('http://pics.kapihospital.de/addressbook_newmsg.gif') no-repeat scroll left top transparent;overflow:visible;"}, $("ref_divdetails"));
-            var newdiv1 = createElement("div", {"style": "position:absolute;left:12px;top:5px;z-index:2;width:15px;height:10px;", "class": "cursorclickable", "title": "schlie" + sz + "en"}, newdiv);
+            var newdiv = createElement("div", {
+                "id": "refAdressBook",
+                "style": "top:70px;width:265px;height:350px;position:absolute;z-index:30;right:0px;background:url('http://pics.kapihospital.de/addressbook_newmsg.gif') no-repeat scroll left top transparent;overflow:visible;"
+            }, $("ref_divdetails"));
+            var newdiv1 = createElement("div", {
+                "style": "position:absolute;left:12px;top:5px;z-index:2;width:15px;height:10px;",
+                "class": "cursorclickable",
+                "title": "schlie" + sz + "en"
+            }, newdiv);
             newdiv1.addEventListener("click", function () {
                 removeElement($("refAdressBook"));
             }, false);
@@ -2845,13 +3077,13 @@ window.addEventListener("load", function () {
     }
 
     function start_Quest() {
-        console.log(info+"StartQuest");
+        console.log(info + "StartQuest");
         unsafeWindow.show_page("garage");
 
         window.setTimeout(function () {
             if ($("newswindow_badge")) {
                 //Erfolgsmeldung wird angezeigt
-                console.log(info+"Finished");
+                console.log(info + "Finished");
                 unsafeWindow.close_badge();
             }
 
@@ -2875,7 +3107,8 @@ window.addEventListener("load", function () {
 
         }, 500);
     }
-    console.log(info+"Start do_mail()");
+
+    console.log(info + "Start do_mail()");
     function do_Mail() {
         var keyMsgShow = /showMessage\(['|\s]*(\d+)['|\s]*,'(.*?)'\)/;
         var keyMsgDelete = /deleteMessage\(['|\s]*(\d+)['|\s]*,\s*this,\s*'(.*?)'\)/;
@@ -2926,8 +3159,18 @@ window.addEventListener("load", function () {
                         if (help[2] == "inbox") {
                             var msgIdIn = explode(GM_getValue(lng + "_" + server + "_" + username + "msgIdIn", "[]"));
                             for (var c = 0; c < msgIdIn.length; c++) if (msgIdIn[c] == help[1]) break;
-                            if (c > 0) createElement("input", {"type": "button", "value": "vorige Nachricht", "onclick": "javascript:Messages.showMessage(" + msgIdIn[c - 1] + ",'inbox');", "class": "cursorclickable msg_input"}, $("msgNavigation"));
-                            if (c < msgIdIn.length - 1) createElement("input", {"type": "button", "value": "n" + ae + "chste Nachricht", "onclick": "javascript:Messages.showMessage(" + msgIdIn[c + 1] + ",'inbox');", "class": "cursorclickable msg_input"}, $("msgNavigation"));
+                            if (c > 0) createElement("input", {
+                                "type": "button",
+                                "value": "vorige Nachricht",
+                                "onclick": "javascript:Messages.showMessage(" + msgIdIn[c - 1] + ",'inbox');",
+                                "class": "cursorclickable msg_input"
+                            }, $("msgNavigation"));
+                            if (c < msgIdIn.length - 1) createElement("input", {
+                                "type": "button",
+                                "value": "n" + ae + "chste Nachricht",
+                                "onclick": "javascript:Messages.showMessage(" + msgIdIn[c + 1] + ",'inbox');",
+                                "class": "cursorclickable msg_input"
+                            }, $("msgNavigation"));
                         }
                     }
                 }
@@ -2978,7 +3221,12 @@ window.addEventListener("load", function () {
         $("ex_bubble").style.zIndex = "1";
 
         /*var newdiv = createElement("div",{style:"position:absolute;bottom:-70px;left:20px;background-color: white;"},$("msgwindow"));*/
-        var newtab = createElement("table", {border: "1px", cellspacing: "0px", cellpadding: "0px", style: "text-align:center;position:absolute;bottom:-120px;left:-100px;width:750px;background-color: white;"}, $("msgwindow"));
+        var newtab = createElement("table", {
+            border: "1px",
+            cellspacing: "0px",
+            cellpadding: "0px",
+            style: "text-align:center;position:absolute;bottom:-120px;left:-100px;width:750px;background-color: white;"
+        }, $("msgwindow"));
 
         var valShowUncurable = GM_getValue(lng + "_" + server + "_" + username + "_valShowUncurable", false);
         var highlightBoerse = {};
@@ -2997,7 +3245,11 @@ window.addEventListener("load", function () {
         var tabrow = createElement("tr", "", newtab);
         var tabcell = createElement("td", {colspan: "20"}, tabrow);
 
-        var newinput = createElement("input", {"id": "valShowUncurable", "type": "checkbox", "checked": valShowUncurable}, tabcell);
+        var newinput = createElement("input", {
+            "id": "valShowUncurable",
+            "type": "checkbox",
+            "checked": valShowUncurable
+        }, tabcell);
         newinput.addEventListener("click", function () {
             GM_setValue(lng + "_" + server + "_" + username + "_valShowUncurable", this.checked);
             click($("ex_navi").getElementsByTagName("div")[1]);
@@ -3029,7 +3281,13 @@ window.addEventListener("load", function () {
         for (var r in Global.availableRooms) if (Global.availableRooms[r].diseases.length > 0) {
 
             tabcell = createElement("td", "", newrow1);
-            newinput = createElement("input", {"id": "hl" + r, "type": "checkbox", "checked": highlightBoerse[r], "title": Global.availableRooms[r].name, "style": "margin-right:0px;margin-left:1px;"}, tabcell);
+            newinput = createElement("input", {
+                "id": "hl" + r,
+                "type": "checkbox",
+                "checked": highlightBoerse[r],
+                "title": Global.availableRooms[r].name,
+                "style": "margin-right:0px;margin-left:1px;"
+            }, tabcell);
             newinput.addEventListener("click", function () {
                 highlightBoerse[this.id.replace("hl", "")] = this.checked;
                 GM_setValue(lng + "_" + server + "_" + username + "_highlightBoerse", implode(highlightBoerse));
@@ -3037,7 +3295,13 @@ window.addEventListener("load", function () {
             }, false);
 
             tabcell = createElement("td", "", newrow2);
-            newinput = createElement("input", {"id": "hl1" + r, "type": "checkbox", "checked": highlightBoerse1[r], "title": Global.availableRooms[r].name, "style": "margin-right:0px;margin-left:1px;"}, tabcell);
+            newinput = createElement("input", {
+                "id": "hl1" + r,
+                "type": "checkbox",
+                "checked": highlightBoerse1[r],
+                "title": Global.availableRooms[r].name,
+                "style": "margin-right:0px;margin-left:1px;"
+            }, tabcell);
             newinput.addEventListener("click", function () {
                 highlightBoerse1[this.id.replace("hl1", "")] = this.checked;
                 GM_setValue(lng + "_" + server + "_" + username + "_highlightBoerse1", implode(highlightBoerse1));
@@ -3045,7 +3309,13 @@ window.addEventListener("load", function () {
             }, false);
 
             tabcell = createElement("td", "", newrow3);
-            newinput = createElement("input", {"id": "bl" + r, "type": "checkbox", "checked": blockBoerse[r], "title": Global.availableRooms[r].name, "style": "margin-right:0px;margin-left:1px;"}, tabcell);
+            newinput = createElement("input", {
+                "id": "bl" + r,
+                "type": "checkbox",
+                "checked": blockBoerse[r],
+                "title": Global.availableRooms[r].name,
+                "style": "margin-right:0px;margin-left:1px;"
+            }, tabcell);
             newinput.addEventListener("click", function () {
                 blockBoerse[this.id.replace("bl", "")] = this.checked;
                 GM_setValue(lng + "_" + server + "_" + username + "_blockBoerse", implode(blockBoerse));
@@ -3196,7 +3466,12 @@ window.addEventListener("load", function () {
             var newdiv = createElement("div", {style: "position:absolute;top:0px;left:0px;width:412px;padding:10px;background-color:#999;-moz-border-radius:10px;"}, $("login_div"));
             var newbutton;
             for (var v = 0; v < logindata.length; v++) if (logindata[v][1] != "0") {
-                newbutton = createElement("button", {type: "button", class: "cursorclickable", id: "autologin" + v, style: "width:200px;height:20px;margin:3px;"}, newdiv, texte["server"] + " " + logindata[v][1] + "." + logindata[v][0] + ": " + logindata[v][2]);
+                newbutton = createElement("button", {
+                    type: "button",
+                    class: "cursorclickable",
+                    id: "autologin" + v,
+                    style: "width:200px;height:20px;margin:3px;"
+                }, newdiv, texte["server"] + " " + logindata[v][1] + "." + logindata[v][0] + ": " + logindata[v][2]);
                 newbutton.addEventListener("click", function () {
                     submit_login(this.id.replace("autologin", ""));
                 }, false);
@@ -3205,6 +3480,7 @@ window.addEventListener("load", function () {
             newbutton = null;
         }
     }
+
     /*************************** end function declarations **************************/
 
         //Adblock
