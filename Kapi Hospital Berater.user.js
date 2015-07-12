@@ -14,42 +14,45 @@
 
 window.addEventListener("load", function () {
 
+    var info = "[Berater] "
+    console.log(info + "Start");
+
 // Special Characters - DE
-    var ae = "\u00E4";      // ä
-    var oe = "\u00F6";      // ö
-    var ue = "\u00FC";      // ü
-    var Ae = "\u00C4";      // Ä
-    var Oe = "\u00D6";      // Ö
-    var Ue = "\u00DC";      // Ü
-    var sz = "\u00DF";      // ß
+    var ae = "\u00E4";      // �
+    var oe = "\u00F6";      // �
+    var ue = "\u00FC";      // �
+    var Ae = "\u00C4";      // �
+    var Oe = "\u00D6";      // �
+    var Ue = "\u00DC";      // �
+    var sz = "\u00DF";      // �
 
 // Special Characters - PL
-    var a_pl = "\u0105";    // ą
-    var c_pl = "\u0107";    // ć
-    var e_pl = "\u0119";    // ę
-    var l_pl = "\u0142";    // ł
-    var n_pl = "\u0144";    // ń
-    var o_pl = "\u00F3";    // ó
-    var s_pl = "\u015B";    // ś
-    var z_pl = "\u017C";    // ź
-    var x_pl = "\u017A";    // ż
+    var a_pl = "\u0105";    // �
+    var c_pl = "\u0107";    // �
+    var e_pl = "\u0119";    // �
+    var l_pl = "\u0142";    // �
+    var n_pl = "\u0144";    // �
+    var o_pl = "\u00F3";    // �
+    var s_pl = "\u015B";    // �
+    var z_pl = "\u017C";    // �
+    var x_pl = "\u017A";    // �
 
 // Special Characters - CZ
-    var a_cz = "\u00E1";    // á
-    var c_cz = "\u010D";    // č
-    var d_cz = "\u010F";    // ď
-    var e_cz = "\u00E9";    // é
-    var i_cz = "\u00ED";    // í
-    var o_cz = "\u00F3";    // ó
-    var r_cz = "\u0159";    // ř
-    var s_cz = "\u0161";    // š
-    var t_cz = "\u0165";    // ť
-    var u_cz = "\u00FA";    // ú
-    var y_cz = "\u00FD";    // ý
-    var z_cz = "\u017E";    // ž
-    var e2_cz = "\u011B";   // ě
-    var u2_cz = "\u016F";   // ů
-    var u3_cz = "\u00DA";   // Ú
+    var a_cz = "\u00E1";    // �
+    var c_cz = "\u010D";    // �
+    var d_cz = "\u010F";    // �
+    var e_cz = "\u00E9";    // �
+    var i_cz = "\u00ED";    // �
+    var o_cz = "\u00F3";    // �
+    var r_cz = "\u0159";    // �
+    var s_cz = "\u0161";    // �
+    var t_cz = "\u0165";    // �
+    var u_cz = "\u00FA";    // �
+    var y_cz = "\u00FD";    // �
+    var z_cz = "\u017E";    // �
+    var e2_cz = "\u011B";   // �
+    var u2_cz = "\u016F";   // �
+    var u3_cz = "\u00DA";   // �
 
 // global definitions
     var texte = {};
@@ -218,6 +221,7 @@ window.addEventListener("load", function () {
     gamepages["no"] = "http://www.no.kapihospital.com/";
     gamepages["ae"] = "http://www.ae.kapihospital.com/";
 
+    console.log(info+"End of lang vars")
 //***********************************************************************************************************
 
     var scriptUrl = "https://greasyfork.org/scripts/5182-kapi-hospital-berater";
@@ -265,9 +269,13 @@ window.addEventListener("load", function () {
         do_login();
 
 
+
+
 //***********************************************************************************************************
 
     function do_main() {
+
+        (info+"Start do_main()");
         //if (!username) document.location.href = "http://www"+gamepage;
         // CSS
         GM_addStyle("tr:hover{background-color:lightblue;}");
@@ -285,7 +293,7 @@ window.addEventListener("load", function () {
         GM_addStyle(".racklow{" + GM_getValue(lng + "_" + server + "_" + username + "_css_racklow", "background-color:orangered;") + "}");
         GM_addStyle(".cursorstandard{ cursor: default!important;}");
 
-        // Updatecheck
+        console.log(info+"Updatecheck");
         if (GM_getValue("valUpdate", true)) {
             valLastUpdate = GM_getValue("valLastUpdate", "");
             if (valLastUpdate == "") {
@@ -353,7 +361,7 @@ window.addEventListener("load", function () {
         if (developer)
             createElement("div", {id: "help1", style: "z-index:2;position:absolute;top:15px;left:0px;background-color:#CCC;border:2px solid black;padding:3px;"}, all);
 
-
+        console.log(info+"Points");
         // punkte
         GM_xmlhttpRequest({
             method: "GET",
@@ -377,7 +385,7 @@ window.addEventListener("load", function () {
                 }, false);
             }
         });
-
+        console.log(info+"patientDiseases");
         patientDiseases = {};
         // patientDiseases[patientId][diseaseNr]: heartbeat,cured,notreatment,comesnext,""=ill
         // patientDiseases[patientId][room]: current room (type)
@@ -398,14 +406,15 @@ window.addEventListener("load", function () {
          }
          }*/
 
-        //For non Premium Players, read patient stats from Server
+        console.log(info+"For non Premium Players, read patient stats from Server");
         if (!Global.ISPREMIUM) {
+            console.log(info+"User not premium");
             var patids = Global.refPatients.values();
-            for (var v = 0; v < patids.length; v++) {
+            /*for (var v = 0; v < patids.length; v++) {
                 refreshPatient(patids[v]["id"], false);
-            }
+            }*/
         }
-
+        console.log(info+"if (developer)");
         if (developer) {
 
             $("garten_komplett").addEventListener("mouseover", function (event) {
@@ -519,6 +528,7 @@ window.addEventListener("load", function () {
          }
          miniiconSelectFloor();
          */
+        console.log(info+"Button list");
 
         // Button-Leiste
         newdiv = createElement("div", {style: "position:absolute;top:784px;display:inline;"}, maincontainer);
@@ -729,7 +739,7 @@ window.addEventListener("load", function () {
 
                     for (var v = 0; v < rooms.length; v++) {
                         if (( rooms[v].roomid == 6 )) {
-                            console.log("Prüfe Raum: " + rooms[v].topleft);
+                            console.log("Pr�fe Raum: " + rooms[v].topleft);
 
                             //Wenn ein Patient drin liegt
                             if (rooms[v].patient != 0) {
@@ -743,7 +753,7 @@ window.addEventListener("load", function () {
                 }, false);
             }
 
-            //Dreckige Räume säubern
+            //Dreckige R�ume s�ubern
             if (v == 2) {
                 createElement("div", {class: "cursorclickable c1_a_50 c1_" + 8 + "_50", title: arrQuicklinks2[v][0]}, newdiv1);
                 newdiv1.addEventListener("click", cleaningfunc, false);
@@ -1223,7 +1233,7 @@ window.addEventListener("load", function () {
         newdiv1 = null;
         newbutton = null;
     }
-
+    console.log(info+"End do_main()")
     /*************************** end do_main() ******************************************/
 
 
@@ -1251,7 +1261,7 @@ window.addEventListener("load", function () {
                 texte["info_RackLow"] = "Ein Medikament wird markiert, falls der Lagerbestand unter diese Grenze f" + ae + "llt.";
                 texte["info_RackMax"] = "Es werden beim automatischen Einkauf die Medikamente bis zu diesem Lagerbestand afgef" + ue + "llt.";
                 texte["info_valGlobalClockInTitle"] = "Die globale Zeit wird im Fenstertitel angezeigt. Ansonsten im Fenster.";
-                texte["info_valStartQuestAutomatic"] = "Soll sofort die nächste Quest gestartet werden, wenn eine beended wurde ( max. 8 )?";
+                texte["info_valStartQuestAutomatic"] = "Soll sofort die n�chste Quest gestartet werden, wenn eine beended wurde ( max. 8 )?";
                 texte["confirmUpdate"] = "Es liegt eine neue Script-Version vor. Diese installieren?";
                 texte["zeigePasswoerter"] = "zeige Passw" + oe + "rter";
                 texte["autoLogin"] = "Automatischer Login";
@@ -1429,7 +1439,7 @@ window.addEventListener("load", function () {
                 texte["coins"] = "Monety";
                 // Quicklinks
                 texte["shop1"] = "Apteka Sza" + l_pl + "pigu" + l_pl;
-                texte["quildhouse"] = "Związek lekarzy i konkursy";
+                texte["quildhouse"] = "Zwi�zek lekarzy i konkursy";
                 texte["townhall"] = "Ratusz";
                 texte["shop2"] = "Hurtownia G.Rypa";
                 texte["editoraloffice"] = "3";
@@ -1468,7 +1478,7 @@ window.addEventListener("load", function () {
                 texte["info_RackLow"] = "Ozna" + c_cz + i_cz + " l" + e_cz + "ky, jejich" + z_cz + " mno" + z_cz + "stv" + i_cz + " klesne pod zadanou hodnotu.";
                 texte["info_RackMax"] = "By Automatic buying product will be purchased until reaching this number.";
                 texte["info_valGlobalClockInTitle"] = "Zobraz" + i_cz + " glob" + a_cz + "ln" + i_cz + " " + c_cz + "as v titulku okna.";
-                texte["info_valStartQuestAutomatic"] = "Soll sofort die nächste Quest gestartet werden, wenn eine beended wurde ( max. 8 )?";
+                texte["info_valStartQuestAutomatic"] = "Soll sofort die n�chste Quest gestartet werden, wenn eine beended wurde ( max. 8 )?";
                 texte["confirmUpdate"] = "Je kdispozici nov" + a_cz + " verze R" + a_cz + "dce Kapi Hospital. Chcete ji nainstalovat?";
                 texte["zeigePasswoerter"] = "Uk" + a_cz + "zat heslo";
                 texte["autoLogin"] = "Automatick" + e_cz + " p" + r_cz + "ihla" + s_cz + "ov" + a_cz + "n" + i_cz;
@@ -1495,7 +1505,7 @@ window.addEventListener("load", function () {
                 texte["waitingroom"] = c_cz + "ek" + a_cz + "rna";
                 texte["Gesamt"] = "Gesamt";
                 // boerse
-                texte["showUncurable"] = "Zobrazit nevyl" + e_cz + c_cz + "itelné";
+                texte["showUncurable"] = "Zobrazit nevyl" + e_cz + c_cz + "iteln�";
                 //Systemwords
                 texte["waehrung"] = "hT"; //Global._KH_CURRENCY
                 texte["coins"] = "Mince";
@@ -1615,7 +1625,7 @@ window.addEventListener("load", function () {
             i = _[0].length % 3 || 3;
 
             _[0] = s.slice(0, i + (n < 0)) +
-            _[0].slice(i).replace(/(\d{3})/g, sep + '$1');
+                _[0].slice(i).replace(/(\d{3})/g, sep + '$1');
 
             s = _.join(dec);
         }
@@ -1751,6 +1761,8 @@ window.addEventListener("load", function () {
             throw ("Explode error : " + err);
         }
     }
+
+    console.log(info+"Start implode(arr)");
 
     function implode(arr) {//--- function written by Jan-Hans
         try {
@@ -2853,7 +2865,7 @@ window.addEventListener("load", function () {
                 }
 
                 if ($("ga_running") && $("ga_running").style.display != "none")
-                    console.log("läuft noch");
+                    console.log("l�uft noch");
 
                 window.setTimeout(unsafeWindow.close_page, 500);
 
@@ -2861,7 +2873,7 @@ window.addEventListener("load", function () {
 
         }, 500);
     }
-
+    console.log(info+"start do_mail()");
     function do_Mail() {
         var keyMsgShow = /showMessage\(['|\s]*(\d+)['|\s]*,'(.*?)'\)/;
         var keyMsgDelete = /deleteMessage\(['|\s]*(\d+)['|\s]*,\s*this,\s*'(.*?)'\)/;
