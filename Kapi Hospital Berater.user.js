@@ -18,42 +18,42 @@ window.addEventListener("load", function () {
     console.log(info + "Start");
 
 // Special Characters - DE
-    var ae = "\u00E4";      // �
-    var oe = "\u00F6";      // �
-    var ue = "\u00FC";      // �
-    var Ae = "\u00C4";      // �
-    var Oe = "\u00D6";      // �
-    var Ue = "\u00DC";      // �
-    var sz = "\u00DF";      // �
+    var ae = "\u00E4";      // ä
+    var oe = "\u00F6";      // ö
+    var ue = "\u00FC";      // ü
+    var Ae = "\u00C4";      // Ä
+    var Oe = "\u00D6";      // Ö
+    var Ue = "\u00DC";      // Ü
+    var sz = "\u00DF";      // ß
 
 // Special Characters - PL
-    var a_pl = "\u0105";    // �
-    var c_pl = "\u0107";    // �
-    var e_pl = "\u0119";    // �
-    var l_pl = "\u0142";    // �
-    var n_pl = "\u0144";    // �
-    var o_pl = "\u00F3";    // �
-    var s_pl = "\u015B";    // �
-    var z_pl = "\u017C";    // �
-    var x_pl = "\u017A";    // �
+    var a_pl = "\u0105";    // ą
+    var c_pl = "\u0107";    // ć
+    var e_pl = "\u0119";    // ę
+    var l_pl = "\u0142";    // ł
+    var n_pl = "\u0144";    // ń
+    var o_pl = "\u00F3";    // ó
+    var s_pl = "\u015B";    // ś
+    var z_pl = "\u017C";    // ź
+    var x_pl = "\u017A";    // ż
 
 // Special Characters - CZ
-    var a_cz = "\u00E1";    // �
-    var c_cz = "\u010D";    // �
-    var d_cz = "\u010F";    // �
-    var e_cz = "\u00E9";    // �
-    var i_cz = "\u00ED";    // �
-    var o_cz = "\u00F3";    // �
-    var r_cz = "\u0159";    // �
-    var s_cz = "\u0161";    // �
-    var t_cz = "\u0165";    // �
-    var u_cz = "\u00FA";    // �
-    var y_cz = "\u00FD";    // �
-    var z_cz = "\u017E";    // �
-    var e2_cz = "\u011B";   // �
-    var u2_cz = "\u016F";   // �
-    var u3_cz = "\u00DA";   // �
-
+    var a_cz = "\u00E1";    // á
+    var c_cz = "\u010D";    // č
+    var d_cz = "\u010F";    // ď
+    var e_cz = "\u00E9";    // é
+    var i_cz = "\u00ED";    // í
+    var o_cz = "\u00F3";    // ó
+    var r_cz = "\u0159";    // ř
+    var s_cz = "\u0161";    // š
+    var t_cz = "\u0165";    // ť
+    var u_cz = "\u00FA";    // ú
+    var y_cz = "\u00FD";    // ý
+    var z_cz = "\u017E";    // ž
+    var e2_cz = "\u011B";   // ě
+    var u2_cz = "\u016F";   // ů
+    var u3_cz = "\u00DA";   // Ú
+    
 // global definitions
     var texte = {};
     var medi = {};
