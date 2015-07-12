@@ -53,7 +53,7 @@ window.addEventListener("load", function () {
     var e2_cz = "\u011B";   // ě
     var u2_cz = "\u016F";   // ů
     var u3_cz = "\u00DA";   // Ú
-    
+
 // global definitions
     var texte = {};
     var medi = {};
@@ -1261,7 +1261,7 @@ window.addEventListener("load", function () {
                 texte["info_RackLow"] = "Ein Medikament wird markiert, falls der Lagerbestand unter diese Grenze f" + ae + "llt.";
                 texte["info_RackMax"] = "Es werden beim automatischen Einkauf die Medikamente bis zu diesem Lagerbestand afgef" + ue + "llt.";
                 texte["info_valGlobalClockInTitle"] = "Die globale Zeit wird im Fenstertitel angezeigt. Ansonsten im Fenster.";
-                texte["info_valStartQuestAutomatic"] = "Soll sofort die n�chste Quest gestartet werden, wenn eine beended wurde ( max. 8 )?";
+                texte["info_valStartQuestAutomatic"] = "Soll sofort die n" + ae + "chste Quest gestartet werden, wenn eine beended wurde ( max. 8 )?";
                 texte["confirmUpdate"] = "Es liegt eine neue Script-Version vor. Diese installieren?";
                 texte["zeigePasswoerter"] = "zeige Passw" + oe + "rter";
                 texte["autoLogin"] = "Automatischer Login";
@@ -1439,7 +1439,7 @@ window.addEventListener("load", function () {
                 texte["coins"] = "Monety";
                 // Quicklinks
                 texte["shop1"] = "Apteka Sza" + l_pl + "pigu" + l_pl;
-                texte["quildhouse"] = "Zwi�zek lekarzy i konkursy";
+                texte["quildhouse"] = "Zwi" + a_pl + "zek lekarzy i konkursy";
                 texte["townhall"] = "Ratusz";
                 texte["shop2"] = "Hurtownia G.Rypa";
                 texte["editoraloffice"] = "3";
@@ -1478,7 +1478,7 @@ window.addEventListener("load", function () {
                 texte["info_RackLow"] = "Ozna" + c_cz + i_cz + " l" + e_cz + "ky, jejich" + z_cz + " mno" + z_cz + "stv" + i_cz + " klesne pod zadanou hodnotu.";
                 texte["info_RackMax"] = "By Automatic buying product will be purchased until reaching this number.";
                 texte["info_valGlobalClockInTitle"] = "Zobraz" + i_cz + " glob" + a_cz + "ln" + i_cz + " " + c_cz + "as v titulku okna.";
-                texte["info_valStartQuestAutomatic"] = "Soll sofort die n�chste Quest gestartet werden, wenn eine beended wurde ( max. 8 )?";
+                texte["info_valStartQuestAutomatic"] = "Soll sofort die n" + ae + "chste Quest gestartet werden, wenn eine beended wurde ( max. 8 )?";
                 texte["confirmUpdate"] = "Je kdispozici nov" + a_cz + " verze R" + a_cz + "dce Kapi Hospital. Chcete ji nainstalovat?";
                 texte["zeigePasswoerter"] = "Uk" + a_cz + "zat heslo";
                 texte["autoLogin"] = "Automatick" + e_cz + " p" + r_cz + "ihla" + s_cz + "ov" + a_cz + "n" + i_cz;
@@ -1505,7 +1505,7 @@ window.addEventListener("load", function () {
                 texte["waitingroom"] = c_cz + "ek" + a_cz + "rna";
                 texte["Gesamt"] = "Gesamt";
                 // boerse
-                texte["showUncurable"] = "Zobrazit nevyl" + e_cz + c_cz + "iteln�";
+                texte["showUncurable"] = "Zobrazit nevyl" + e_cz + c_cz + "iteln" + e_cz;
                 //Systemwords
                 texte["waehrung"] = "hT"; //Global._KH_CURRENCY
                 texte["coins"] = "Mince";
