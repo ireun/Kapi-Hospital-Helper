@@ -3120,7 +3120,7 @@ window.addEventListener("load", function () {
             cand = candtable[0].getElementsByTagName("a");
             if (cand[0] && (help = keyMsgShow.exec(cand[0].href))) {
                 if (help[2] == "inbox") {
-                    // Inbox
+                    console.log(info * "inbox");
                     var msgIdIn = [];
                     for (var v = 0; v < cand.length; v++) {
                         help = keyMsgShow.exec(cand[v].href);
@@ -3176,7 +3176,7 @@ window.addEventListener("load", function () {
                     }
                 }
                 if ($("deleteContact")) {
-                    // contacts
+                    console.log(info + "Contacts")
                     var contacts = [];
                     cand = candtable[0].getElementsByTagName("tr");
                     for (var tr = 1; tr < cand.length - 3; tr++) {
@@ -3430,7 +3430,7 @@ window.addEventListener("load", function () {
     }
 
 //***********************************************************************************************************
-
+    console.log(info + "do_login")
     function do_login() {
         var loc = reg2.exec(document.location.href);
 
@@ -3484,7 +3484,7 @@ window.addEventListener("load", function () {
 
     /*************************** end function declarations **************************/
 
-        //Adblock
+    console.log(info + "Removing ads");
     removeElement($("sky"));
 
 }, false);
