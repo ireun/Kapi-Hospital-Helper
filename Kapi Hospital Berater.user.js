@@ -1,15 +1,17 @@
 // ==UserScript==
-// @name           Kapi Hospital Berater
-// @description    Kapi Hospital Helper
-// @date           12.07.2015
-// @version        2.4.8.3
-// @include        http://*kapihospital.com/*
-// @grant          GM_getValue
-// @grant          GM_setValue
-// @grant          GM_addStyle
-// @grant          GM_xmlhttpRequest
-// @require        http://code.jquery.com/jquery-2.1.4.min.js
-// @namespace      https://greasyfork.org/users/5507
+// @name            Kapi Hospital Berater
+// @description     Kapi Hospital Helper
+// @date            13.07.2015
+// @version         2.4.8.4
+// @author          IreuN
+// @include         http://*kapihospital.com/*
+// @grant           GM_getValue
+// @grant           GM_setValue
+// @grant           GM_addStyle
+// @grant           GM_xmlhttpRequest
+// @require         http://code.jquery.com/jquery-2.1.4.min.js
+// @namespace       https://greasyfork.org/users/5507
+// @supportURL      https://github.com/ireun/Kapi-Hospital-Berater/issues
 // ==/UserScript==
 
 window.addEventListener("load", function () {
@@ -1021,7 +1023,8 @@ window.addEventListener("load", function () {
                                                         style: "position:absolute;top:5px;left:5px;font-weight:bold;background-color:white;-moz-border-radius:5px;"
                                                     }, $("r" + currRoom.topleft));
                                                 }
-                                                $("mediinfo_" + currRoom.topleft).setAttribute("class", "m_a_30 m_" + medi[currDisease]["id"] + "_30");
+                                                //$("mediinfo_" + currRoom.topleft).setAttribute("class", "m_a_30 m_" + medi[currDisease]["id"] + "_30");
+                                                $("mediinfo_" + currRoom.topleft).setAttribute("class", "m_a_30");
                                             }
                                         } else {
                                             if ($("mediinfo_" + currRoom.topleft)) {
@@ -2600,7 +2603,7 @@ window.addEventListener("load", function () {
 
             for (var v = 0; v < help["diseases"].length; v++) {
                 patientDiseases[patientId][help["diseases"][v]] = "";
-                patientDiseases[patientId]["room" + Global.availableDiseases[help["diseases"][v]]["room"][0]] = 1;
+                patientDiseases[patientId]["room" + Global.availableDiseases[0][help["diseases"][v]]["room"][0]] = 1;
             }
         }
 
@@ -2785,11 +2788,11 @@ window.addEventListener("load", function () {
                         }
 
                         if (patientDiseases[currPatientId][disease] != "cured") {
-                            newdiv2 = createElement("div", "", newdiv, time2str(Global.availableDiseases[disease]["basetime"], 1));
-                            restlicheZeit += Global.availableDiseases[disease]["basetime"];
+                            newdiv2 = createElement("div", "", newdiv, time2str(Global.availableDiseases[0][disease]["basetime"], 1));
+                            restlicheZeit += Global.availableDiseases[0][disease]["basetime"];
 
-                            if (!usedRooms[Global.availableDiseases[disease]["room"][0]]) {
-                                usedRooms[Global.availableDiseases[disease]["room"][0]] = 1;
+                            if (!usedRooms[Global.availableDiseases[0][disease]["room"][0]]) {
+                                usedRooms[Global.availableDiseases[0][disease]["room"][0]] = 1;
                                 newdiv2.style.fontWeight = "bold";
                             }
                         }
@@ -2929,11 +2932,11 @@ window.addEventListener("load", function () {
         if (patientDiseases[patientId]) {
             var currRoomId = null;
             for (var disease in patientDiseases[patientId]) if (!isNaN(disease) && (patientDiseases[patientId][disease] == "heartbeat")) {
-                currRoomId = Global.availableDiseases[disease]["room"][0];
+                currRoomId = Global.availableDiseases[0][disease]["room"][0];
                 break;
             }
             if (currRoomId) {
-                for (var disease in patientDiseases[patientId]) if (!isNaN(disease) && (patientDiseases[patientId][disease] == "") && (currRoomId == Global.availableDiseases[disease]["room"])) {
+                for (var disease in patientDiseases[patientId]) if (!isNaN(disease) && (patientDiseases[patientId][disease] == "") && (currRoomId == Global.availableDiseases[0][disease]["room"])) {
                     patientDiseases[patientId][disease] = "comesnext";
                 }
             }
@@ -2949,7 +2952,7 @@ window.addEventListener("load", function () {
             var cured = true;
 
             for (var v in patientDiseases[patientId]) if (!isNaN(v)) {
-                var currDiseaseRoom = Global.availableDiseases[v]["room"][0];
+                var currDiseaseRoom = Global.availableDiseases[0][v]["room"][0];
 
                 if (patientDiseases[patientId][v] == "heartbeat") {
                     patientDiseases[patientId][v] = "cured";
@@ -2980,7 +2983,7 @@ window.addEventListener("load", function () {
         // diseases
         var canddiv = $("msgwindow").getElementsByTagName("div");
 
-        for (var v = 0; v < canddiv.length; v++)
+        for (var v = 0; v < canddiv.length - 1; v++)
             if (canddiv[v].id == "medi_diseases")
                 break;
 
@@ -3000,7 +3003,7 @@ window.addEventListener("load", function () {
                     cured = false;
             } else {
                 patientDiseases[currPatientId][disease] = "";
-                patientDiseases[currPatientId]["room" + Global.availableDiseases[disease]["room"][0]] = 1;
+                patientDiseases[currPatientId]["room" + Global.availableDiseases[0][disease]["room"][0]] = 1;
                 cured = false;
             }
         }
@@ -3119,7 +3122,7 @@ window.addEventListener("load", function () {
             cand = candtable[0].getElementsByTagName("a");
             if (cand[0] && (help = keyMsgShow.exec(cand[0].href))) {
                 if (help[2] == "inbox") {
-                    // Inbox
+                    console.log(info * "inbox");
                     var msgIdIn = [];
                     for (var v = 0; v < cand.length; v++) {
                         help = keyMsgShow.exec(cand[v].href);
@@ -3175,7 +3178,7 @@ window.addEventListener("load", function () {
                     }
                 }
                 if ($("deleteContact")) {
-                    // contacts
+                    console.log(info + "Contacts")
                     var contacts = [];
                     cand = candtable[0].getElementsByTagName("tr");
                     for (var tr = 1; tr < cand.length - 3; tr++) {
@@ -3429,7 +3432,7 @@ window.addEventListener("load", function () {
     }
 
 //***********************************************************************************************************
-
+    console.log(info + "do_login")
     function do_login() {
         var loc = reg2.exec(document.location.href);
 
@@ -3483,7 +3486,7 @@ window.addEventListener("load", function () {
 
     /*************************** end function declarations **************************/
 
-        //Adblock
+    console.log(info + "Removing ads");
     removeElement($("sky"));
 
 }, false);
