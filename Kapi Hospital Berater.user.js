@@ -1,8 +1,8 @@
 // ==UserScript==
 // @name            Kapi Hospital Berater
 // @description     Kapi Hospital Helper
-// @date            13.07.2015
-// @version         2.4.8.4
+// @date            15.07.2015
+// @version         2.4.8.5
 // @author          IreuN
 // @include         http://*kapihospital.com/*
 // @grant           GM_getValue
