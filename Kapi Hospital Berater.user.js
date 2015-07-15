@@ -15,7 +15,6 @@
 // ==/UserScript==
 
 window.addEventListener("load", function () {
-
     var info = "[Berater] ";
 
     console.log(info + "Start");
@@ -67,164 +66,49 @@ window.addEventListener("load", function () {
     var delimDeci = ",";
     var regDelimDeci = /,/;
 
-    if (document.location.href.search("de.kapihospital.com") != -1) {
-        var lng = "de";
-        var gamepage = ".de.kapihospital.com";
-        var reg = /http:\/\/s(\d+)\.de\.kapihospital\.com\/(.*?)\.php(.*)/i;
+    var ccode = [
+        ["de", "de", ".de.kapihospital.com"],
+        ["en", "uk", ".uk.kapihospital.com"],
+        ["en", "uk", ".uk.kapihospital.com"],
+        ["en", "nl", ".nl.kapihospital.com"],
+        ["en", "fr", ".fr.kapihospital.com"],
+        ["en", "tr", ".tr.kapihospital.com"],
+        ["en", "bg", ".bg.kapihospital.com"],
+        ["en", "es", ".es.kapihospital.com"],
+        ["pl", "pl", ".pl.kapihospital.com"],
+        ["en", "ro", ".ro.kapihospital.com"],
+        ["en", "ru", ".ru.kapihospital.com"],
+        ["cz", "cz", ".cz.kapihospital.com"],
+        ["en", "se", ".se.kapihospital.com"],
+        ["en", "pt", ".pt.kapihospital.com"],
+        ["en", "hu", ".hu.kapihospital.com"],
+        ["en", "gr", ".gr.kapihospital.com"],
+        ["en", "us", ".us.kapihospital.com"],
+        ["en", "it", ".it.kapihospital.com"],
+        ["en", "dk", ".dk.kapihospital.com"],
+        ["en", "br", ".br.kapihospital.com"],
+        ["en", "ir", ".ir.kapihospital.com"],
+        ["en", "no", ".no.kapihospital.com"],
+        ["en", "ae", ".ae.kapihospital.com"]];
+
+    var lng;
+    var reg;
+    var gamepages = {}
+
+    {
+        var i;
+        for (i = 0; i < ccode.length && !(document.location.href.search(ccode[i][1] + ".kapihospital.com") != -1); i++) {
+        }
+
+        lng = ccode[i][0];
+        reg = new RegExp("http://s(\\d+)\\." + ccode[i][1] + "\\.kapihospital\\.com/(.*?)\\.php(.*)", "i");
+        gamepages[ccode[i][1]] = "http://www" + ccode[i][2];
     }
 
-    if (document.location.href.search("uk.kapihospital.com") != -1) {
-        var lng = "uk";
-        var gamepage = ".uk.kapihospital.com";
-        var reg = /http:\/\/s(\d+)\.uk\.kapihospital\.com\/(.*?)\.php(.*)/i;
-    }
 
-    if (document.location.href.search("nl.kapihospital.com") != -1) {
-        var lng = "uk";
-        var gamepage = ".nl.kapihospital.com";
-        var reg = /http:\/\/s(\d+)\.nl\.kapihospital\.com\/(.*?)\.php(.*)/i;
-    }
-
-    if (document.location.href.search("fr.kapihospital.com") != -1) {
-        var lng = "uk";
-        var gamepage = ".fr.kapihospital.com";
-        var reg = /http:\/\/s(\d+)\.fr\.kapihospital\.com\/(.*?)\.php(.*)/i;
-    }
-
-    if (document.location.href.search("tr.kapihospital.com") != -1) {
-        var lng = "uk";
-        var gamepage = ".tr.kapihospital.com";
-        var reg = /http:\/\/s(\d+)\.tr\.kapihospital\.com\/(.*?)\.php(.*)/i;
-    }
-
-    if (document.location.href.search("bg.kapihospital.com") != -1) {
-        var lng = "uk";
-        var gamepage = ".bg.kapihospital.com";
-        var reg = /http:\/\/s(\d+)\.bg\.kapihospital\.com\/(.*?)\.php(.*)/i;
-    }
-
-    if (document.location.href.search("es.kapihospital.com") != -1) {
-        var lng = "uk";
-        var gamepage = ".es.kapihospital.com";
-        var reg = /http:\/\/s(\d+)\.es\.kapihospital\.com\/(.*?)\.php(.*)/i;
-    }
-
-    if (document.location.href.search("pl.kapihospital.com") != -1) {
-        var lng = "pl";
-        var gamepage = ".pl.kapihospital.com";
-        var reg = /http:\/\/s(\d+)\.pl\.kapihospital\.com\/(.*?)\.php(.*)/i;
-    }
-
-    if (document.location.href.search("ro.kapihospital.com") != -1) {
-        var lng = "uk";
-        var gamepage = ".ro.kapihospital.com";
-        var reg = /http:\/\/s(\d+)\.ro\.kapihospital\.com\/(.*?)\.php(.*)/i;
-    }
-
-    if (document.location.href.search("ru.kapihospital.com") != -1) {
-        var lng = "uk";
-        var gamepage = ".ru.kapihospital.com";
-        var reg = /http:\/\/s(\d+)\.ru\.kapihospital\.com\/(.*?)\.php(.*)/i;
-    }
-
-    if (document.location.href.search("cz.kapihospital.com") != -1) {
-        var lng = "cz";
-        var gamepage = ".cz.kapihospital.com";
-        var reg = /http:\/\/s(\d+)\.cz\.kapihospital\.com\/(.*?)\.php(.*)/i;
-    }
-
-    if (document.location.href.search("se.kapihospital.com") != -1) {
-        var lng = "uk";
-        var gamepage = ".se.kapihospital.com";
-        var reg = /http:\/\/s(\d+)\.se\.kapihospital\.com\/(.*?)\.php(.*)/i;
-    }
-
-    if (document.location.href.search("pt.kapihospital.com") != -1) {
-        var lng = "uk";
-        var gamepage = ".pt.kapihospital.com";
-        var reg = /http:\/\/s(\d+)\.pt\.kapihospital\.com\/(.*?)\.php(.*)/i;
-    }
-
-    if (document.location.href.search("hu.kapihospital.com") != -1) {
-        var lng = "uk";
-        var gamepage = ".hu.kapihospital.com";
-        var reg = /http:\/\/s(\d+)\.hu\.kapihospital\.com\/(.*?)\.php(.*)/i;
-    }
-
-    if (document.location.href.search("gr.kapihospital.com") != -1) {
-        var lng = "uk";
-        var gamepage = ".gr.kapihospital.com";
-        var reg = /http:\/\/s(\d+)\.gr\.kapihospital\.com\/(.*?)\.php(.*)/i;
-    }
-
-    if (document.location.href.search("us.kapihospital.com") != -1) {
-        var lng = "uk";
-        var gamepage = ".us.kapihospital.com";
-        var reg = /http:\/\/s(\d+)\.us\.kapihospital\.com\/(.*?)\.php(.*)/i;
-    }
-
-    if (document.location.href.search("it.kapihospital.com") != -1) {
-        var lng = "uk";
-        var gamepage = ".it.kapihospital.com";
-        var reg = /http:\/\/s(\d+)\.it\.kapihospital\.com\/(.*?)\.php(.*)/i;
-    }
-
-    if (document.location.href.search("dk.kapihospital.com") != -1) {
-        var lng = "uk";
-        var gamepage = ".dk.kapihospital.com";
-        var reg = /http:\/\/s(\d+)\.dk\.kapihospital\.com\/(.*?)\.php(.*)/i;
-    }
-
-    if (document.location.href.search("br.kapihospital.com") != -1) {
-        var lng = "uk";
-        var gamepage = ".br.kapihospital.com";
-        var reg = /http:\/\/s(\d+)\.br\.kapihospital\.com\/(.*?)\.php(.*)/i;
-    }
-
-    if (document.location.href.search("ir.kapihospital.com") != -1) {
-        var lng = "uk";
-        var gamepage = ".ir.kapihospital.com";
-        var reg = /http:\/\/s(\d+)\.ir\.kapihospital\.com\/(.*?)\.php(.*)/i;
-    }
-
-    if (document.location.href.search("no.kapihospital.com") != -1) {
-        var lng = "uk";
-        var gamepage = ".no.kapihospital.com";
-        var reg = /http:\/\/s(\d+)\.no\.kapihospital\.com\/(.*?)\.php(.*)/i;
-    }
-
-    if (document.location.href.search("ae.kapihospital.com") != -1) {
-        var lng = "uk";
-        var gamepage = ".ae.kapihospital.com";
-        var reg = /http:\/\/s(\d+)\.ae\.kapihospital\.com\/(.*?)\.php(.*)/i;
-    }
+    console.log(info + "Setting language: " + lng);
 
     loadLanguage(lng);
-    var gamepages = {};
-    gamepages["de"] = "http://www.de.kapihospital.com";
-    gamepages["uk"] = "http://www.uk.kapihospital.com/";
-    gamepages["fr"] = "http://www.fr.kapihospital.com/";
-    gamepages["nl"] = "http://www.nl.kapihospital.com/";
-    gamepages["tr"] = "http://www.tr.kapihospital.com/";
-    gamepages["bg"] = "http://www.bg.kapihospital.com/";
-    gamepages["es"] = "http://www.es.kapihospital.com/";
-    gamepages["pl"] = "http://www.pl.kapihospital.com/";
-    gamepages["ro"] = "http://www.ro.kapihospital.com/";
-    gamepages["ru"] = "http://www.ru.kapihospital.com/";
-    gamepages["cz"] = "http://www.cz.kapihospital.com/";
-    gamepages["se"] = "http://www.se.kapihospital.com/";
-    gamepages["pt"] = "http://www.pt.kapihospital.com/";
-    gamepages["hu"] = "http://www.hu.kapihospital.com/";
-    gamepages["gr"] = "http://www.gr.kapihospital.com/";
-    gamepages["us"] = "http://www.us.kapihospital.com/";
-    gamepages["it"] = "http://www.it.kapihospital.com/";
-    gamepages["dk"] = "http://www.dk.kapihospital.com/";
-    gamepages["br"] = "http://www.br.kapihospital.com/";
-    gamepages["ir"] = "http://www.ir.kapihospital.com/";
-    gamepages["no"] = "http://www.no.kapihospital.com/";
-    gamepages["ae"] = "http://www.ae.kapihospital.com/";
-
-    console.log(info + "End of lang vars");
 //***********************************************************************************************************
 
     var scriptUrl = "https://greasyfork.org/scripts/5182-kapi-hospital-berater";
@@ -276,7 +160,7 @@ window.addEventListener("load", function () {
 
     function do_main() {
 
-        (info + "Start do_main()");
+        console.log(info + "Start do_main()");
         //if (!username) document.location.href = "http://www"+gamepage;
         // CSS
         GM_addStyle("tr:hover{background-color:lightblue;}");
@@ -560,6 +444,7 @@ window.addEventListener("load", function () {
             style: "margin-left:3px;"
         }, newdiv, texte["optionen"]);
         newbutton.addEventListener("click", function () {
+            console.log(info + "Opening settings..")
             buildInfoPanel("options");
         }, false);
         newbutton.addEventListener("mouseover", function () {
@@ -1024,7 +909,7 @@ window.addEventListener("load", function () {
                                                     }, $("r" + currRoom.topleft));
                                                 }
                                                 //$("mediinfo_" + currRoom.topleft).setAttribute("class", "m_a_30 m_" + medi[currDisease]["id"] + "_30");
-                                                $("mediinfo_" + currRoom.topleft).setAttribute("class", "m_a_30");
+                                                $("mediinfo_" + currRoom.topleft).setAttribute("class", "m_a_30 m_" + "1" + "_30"); // Need a variable here.
                                             }
                                         } else {
                                             if ($("mediinfo_" + currRoom.topleft)) {
@@ -1433,7 +1318,7 @@ window.addEventListener("load", function () {
                 texte["badboy"] = "Dr. Knievel";
                 break;
 
-            case "uk":
+            case "en":
                 texte["berater"] = "Adviser";
                 texte["autologin1"] = "Checking active sessions.  Please wait 5 seconds<br>...";
                 texte["autologin2"] = "All accounts logged in.";
@@ -3095,11 +2980,14 @@ window.addEventListener("load", function () {
                 if ($("ga_new") && $("ga_new").style.display != "none") {
                     console.log(info + "Creating new");
                     questcnt = $('ga_done').innerHTML[0];
-                    console.log(questcnt);
+                    console.log(info + "Quest number: " + questcnt);
 
                     if (questcnt < 8)
                         unsafeWindow.Garage.doJob();
+                } else {
+                    console.log("Eight quests done, job's done. ;)");
                 }
+
 
                 if ($("ga_running") && $("ga_running").style.display != "none")
                     console.log(info + "Still working..");
@@ -3439,7 +3327,7 @@ window.addEventListener("load", function () {
         //Auto backing to login page
         if (document.location.href.search("logout") != -1) {
             window.setTimeout(function () {
-                document.location.href = "http://www" + gamepage;
+                document.location.href = "http://www." + lng + ".kapihospital.com";
             }, 100);
         }
         else {
