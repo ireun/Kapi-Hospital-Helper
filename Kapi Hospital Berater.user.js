@@ -1,8 +1,8 @@
 // ==UserScript==
 // @name            Kapi Hospital Berater
 // @description     Kapi Hospital Helper
-// @date            15.07.2015
-// @version         2.4.8.5
+// @date            18.07.2015
+// @version         2.4.8.6
 // @author          IreuN
 // @include         http://*kapihospital.com/*
 // @grant           GM_getValue
@@ -93,22 +93,17 @@ window.addEventListener("load", function () {
 
     var lng;
     var reg;
-    var gamepages = {}
+    var gamepages = {};
 
-    {
-        var i;
-        for (i = 0; i < ccode.length && !(document.location.href.search(ccode[i][1] + ".kapihospital.com") != -1); i++) {
+    ccode.forEach(function (ccode) {
+        if (document.location.href.search(ccode[1] + ".kapihospital.com") != -1) {
+            lng = ccode[0];
+            reg = new RegExp("http://s(\\d+)\\." + ccode[1] + "\\.kapihospital\\.com/(.*?)\\.php(.*)", "i");
+            gamepages[ccode[1]] = "http://www" + ccode[2];
+            console.log(info + "Setting language: " + lng);
+            loadLanguage(lng);
         }
-
-        lng = ccode[i][0];
-        reg = new RegExp("http://s(\\d+)\\." + ccode[i][1] + "\\.kapihospital\\.com/(.*?)\\.php(.*)", "i");
-        gamepages[ccode[i][1]] = "http://www" + ccode[i][2];
-    }
-
-
-    console.log(info + "Setting language: " + lng);
-
-    loadLanguage(lng);
+    });
 //***********************************************************************************************************
 
     var scriptUrl = "https://greasyfork.org/scripts/5182-kapi-hospital-berater";
@@ -444,7 +439,7 @@ window.addEventListener("load", function () {
             style: "margin-left:3px;"
         }, newdiv, texte["optionen"]);
         newbutton.addEventListener("click", function () {
-            console.log(info + "Opening settings..")
+            console.log(info + "Opening settings..");
             buildInfoPanel("options");
         }, false);
         newbutton.addEventListener("mouseover", function () {
@@ -1688,7 +1683,7 @@ window.addEventListener("load", function () {
         }
 
         //minutes
-        time = time / 60;
+        time /= 60;
         if (mode != 2)
             tmp = ":";
 
@@ -1704,14 +1699,14 @@ window.addEventListener("load", function () {
 
         if (mode != 2) {
             //hours
-            time = time / 60;
+            time /= 60;
             if (time >= 1)
                 str = Math.floor(time % 24) + str;
             else
                 str = "0" + str;
 
             //days
-            time = time / 24;
+            time /= 24;
 
             if (time >= 1)
                 str = Math.floor(time) + "d " + str;
@@ -3066,7 +3061,7 @@ window.addEventListener("load", function () {
                     }
                 }
                 if ($("deleteContact")) {
-                    console.log(info + "Contacts")
+                    console.log(info + "Contacts");
                     var contacts = [];
                     cand = candtable[0].getElementsByTagName("tr");
                     for (var tr = 1; tr < cand.length - 3; tr++) {
@@ -3320,7 +3315,7 @@ window.addEventListener("load", function () {
     }
 
 //***********************************************************************************************************
-    console.log(info + "do_login")
+    console.log(info + "do_login");
     function do_login() {
         var loc = reg2.exec(document.location.href);
 
