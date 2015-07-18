@@ -1,8 +1,8 @@
 // ==UserScript==
-// @name            Kapi Hospital Berater
-// @description     Kapi Hospital Helper
+// @name            Kapi Hospital Helper
+// @description     A UserScript that's made to help you play!
 // @date            18.07.2015
-// @version         2.4.8.7
+// @version         2.4.8.8
 // @author          IreuN
 // @include         http://*kapihospital.com/*
 // @grant           GM_getValue
@@ -16,7 +16,7 @@
 
 window.addEventListener("load", function () {
 
-    var info = "[Berater] ";
+    var info = "[Helper] ";
 
     console.log(info + "Start");
 
@@ -229,8 +229,8 @@ window.addEventListener("load", function () {
         roomTimes["emptyrooms"] = [0, 0];
 
 
-        for (var v in Global.availableMedics._object) {
-            medi[Global.availableMedics._object[v]["diseases"]] = Global.availableMedics._object[v];
+        for (var v in Global.availableMedics[0]) {
+            medi[Global.availableMedics[0][v]["diseases"]] = Global.availableMedics[0][v];
         }
         var cand = document.getElementsByClassName("room");
 
@@ -350,8 +350,8 @@ window.addEventListener("load", function () {
 
             help = Global.availableRooms[1];
             help = Global.availableDiseases[6];
-            help = Global.availableMedics._object["med6"];
-            help = Global.availableMedics._object;
+            help = Global.availableMedics[0]["med6"];
+            help = Global.availableMedics[0];
             //Log(help);
         }
 
@@ -584,34 +584,34 @@ window.addEventListener("load", function () {
                     createElement("td", {style: "text-align:center;"}, tabrow, "Preis");
 
                     for (var i = 0; i < unsafeWindow.Rack.elements.length; i++) {
-                        for (var k in Global.availableMedics._object) {
-                            if (Global.availableMedics._object[k]["id"] == unsafeWindow.Rack.elements[i]["product"]) {
-                                if (Global.availableMedics._object[k]["shop"] != 0) {
-                                    if (Global.availableMedics._object[k]["shop"] < 3 || city2Allowed) {
-                                        //console.log(Global.availableMedics._object[k]);
+                        for (var k in Global.availableMedics[0]) {
+                            if (Global.availableMedics[0][k]["id"] == unsafeWindow.Rack.elements[i]["product"]) {
+                                if (Global.availableMedics[0][k]["shop"] != 0) {
+                                    if (Global.availableMedics[0][k]["shop"] < 3 || city2Allowed) {
+                                        //console.log(Global.availableMedics[0][k]);
                                         if (( diff = valMaxRackLimit - parseInt(unsafeWindow.Rack.elements[i]["amount"], 10) ) > 0) {
-                                            medprice = number_format((Global.availableMedics._object[k]["price"] * diff), 2, ',', '.');
+                                            medprice = number_format((Global.availableMedics[0][k]["price"] * diff), 2, ',', '.');
                                             //console.log("medprice >"+ medprice + "<" );
 
-                                            price_overall += parseFloat((Global.availableMedics._object[k]["price"] * diff), 2);
+                                            price_overall += parseFloat((Global.availableMedics[0][k]["price"] * diff), 2);
                                             console.log("price_overall >" + price_overall + "<");
 
-                                            //medstoBuy.push( { "itemid":Global.availableMedics._object[k]["id"], "amount":diff } );
-                                            //buytext += diff + " x " +Global.availableMedics._object[k]["name"] + ": " + medprice + Global._KH_CURRENCY + "\n";
+                                            //medstoBuy.push( { "itemid":Global.availableMedics[0][k]["id"], "amount":diff } );
+                                            //buytext += diff + " x " +Global.availableMedics[0][k]["name"] + ": " + medprice + Global._KH_CURRENCY + "\n";
 
                                             tabrow = createElement("tr", "", newtab);
                                             tabcell = createElement("td", {style: "text-align:center;"}, tabrow);
 
                                             newinput = createElement("input", {
-                                                "id": Global.availableMedics._object[k]["id"] + "#" + diff,
+                                                "id": Global.availableMedics[0][k]["id"] + "#" + diff,
                                                 "type": "checkbox",
                                                 "checked": "checked",
-                                                "title": Global.availableMedics._object[k]["name"],
+                                                "title": Global.availableMedics[0][k]["name"],
                                                 "style": "margin-right:0px;margin-left:1px;"
                                             }, tabcell);
                                             newinput.addEventListener("click", function () {
 
-                                                price = Global.availableMedics._object["med" + this.id.split('#')[0]]["price"];
+                                                price = Global.availableMedics[0]["med" + this.id.split('#')[0]]["price"];
                                                 price *= parseInt(this.id.split('#')[1]);
 
                                                 if (this.checked)
@@ -626,7 +626,7 @@ window.addEventListener("load", function () {
                                             }, false);
 
                                             newinput = createElement("input", {
-                                                "id": "am_" + Global.availableMedics._object[k]["id"],
+                                                "id": "am_" + Global.availableMedics[0][k]["id"],
                                                 "type": "text",
                                                 "maxlength": "3",
                                                 "size": "3",
@@ -643,9 +643,9 @@ window.addEventListener("load", function () {
                                             }, false);
 
 
-                                            tabcell = createElement("td", "", tabrow, Global.availableMedics._object[k]["name"]);
+                                            tabcell = createElement("td", "", tabrow, Global.availableMedics[0][k]["name"]);
                                             tabcell = createElement("td", {
-                                                id: "prc" + Global.availableMedics._object[k]["id"],
+                                                id: "prc" + Global.availableMedics[0][k]["id"],
                                                 style: "text-align:right;"
                                             }, tabrow, medprice + " " + Global._KH_CURRENCY);
                                             break;
@@ -918,8 +918,7 @@ window.addEventListener("load", function () {
                                                         style: "position:absolute;top:5px;left:5px;font-weight:bold;background-color:white;-moz-border-radius:5px;"
                                                     }, $("r" + currRoom.topleft));
                                                 }
-                                                //$("mediinfo_" + currRoom.topleft).setAttribute("class", "m_a_30 m_" + medi[currDisease]["id"] + "_30");
-                                                $("mediinfo_" + currRoom.topleft).setAttribute("class", "m_a_30 m_" + "1" + "_30"); // Need a variable here.
+                                                $("mediinfo_" + currRoom.topleft).setAttribute("class", "m_a_30 m_" + medi[currDisease]["id"] + "_30");
                                             }
                                         } else {
                                             if ($("mediinfo_" + currRoom.topleft)) {
@@ -1235,7 +1234,7 @@ window.addEventListener("load", function () {
 
         // Rack
         $("rackItems").addEventListener("dblclick", function (event) {
-            var shop = Global.availableMedics._object["med" + event.target.getAttribute("medid")]["shop"];
+            var shop = Global.availableMedics[0]["med" + event.target.getAttribute("medid")]["shop"];
             if ((shop < 3) || city2Allowed) {
                 unsafeWindow.show_page("shop" + shop);
             } else {
@@ -1422,8 +1421,8 @@ window.addEventListener("load", function () {
                 texte["info_RackLow"] = "Produkt zostanie zaznaczony, gdy jego ilo" + s_pl + c_pl + " w regale spadnie poni" + z_pl + "ej tego poziomu";
                 texte["info_RackMax"] = "Poprzez automnatyczny zakup, produkt b" + e_pl + "dzie zape" + l_pl + "niany do tego limitu.";
                 texte["info_valGlobalClockInTitle"] = "Czas globalny jest wy" + s_pl + "wietlany w pasku tytu" + l_pl + "owym okna.";
-                texte["info_valStartQuestAutomatic"] = "Czy kolejny quest powinien si" + e_pl + " zacz" + a_pl + c_pl + "zaraz po tym, gdy sko" + n_pl + "czy" + l_pl + " si" + e_pl + " poprzedni?";
-                texte["confirmUpdate"] = "Jest nowa wersja skryptu Doradca Kapi Hospital. Czy chcesz ja zainstalowac?";
+                texte["info_valStartQuestAutomatic"] = "Czy kolejny quest powinien si" + e_pl + " zacz" + a_pl + c_pl + " zaraz po tym, gdy sko" + n_pl + "czy" + l_pl + " si" + e_pl + " poprzedni?";
+                texte["confirmUpdate"] = "Jest nowa wersja skryptu Doradca Kapi Hospital. Czy chcesz j" + a_pl + " zainstalowa" + c_pl + "?";
                 texte["zeigePasswoerter"] = "Poka" + z_pl + " has" + l_pl + "o";
                 texte["autoLogin"] = "Automatyczne logowanie";
                 texte["accountAktiv"] = "Konto aktywne";
@@ -1441,7 +1440,7 @@ window.addEventListener("load", function () {
                 texte["autoDisposeMedi"] = "Rozporawd" + x_pl + " leki";
                 // patients panel
                 texte["zeigeGeheilteKrankheiten"] = "Poka" + z_pl + " wyleczone choroby";
-                texte["minipics"] = "Minipics";
+                texte["minipics"] = "Małe obrazki";
                 texte["Beschreibung"] = "untreated/overall";
                 texte["Beschreibung2"] = "helptext to understand this window: Number of untreated diseases without those currently treated/overall number";
                 texte["frei"] = "Wolny";
@@ -1673,10 +1672,10 @@ window.addEventListener("load", function () {
                 var medid = checkboxes[i].id.split('#')[0];
                 var amount = $('am_' + medid).value;
 
-                var medprice = number_format((Global.availableMedics._object["med" + medid]["price"] * amount), 2, ',', '.');
+                var medprice = number_format((Global.availableMedics[0]["med" + medid]["price"] * amount), 2, ',', '.');
                 $('prc' + medid).innerHTML = medprice + " " + Global._KH_CURRENCY;
 
-                overall += parseFloat((Global.availableMedics._object["med" + medid]["price"] * amount), 2);
+                overall += parseFloat((Global.availableMedics[0]["med" + medid]["price"] * amount), 2);
             }
         }
 
@@ -2225,7 +2224,7 @@ window.addEventListener("load", function () {
         newinput = createElement("input", {
             type: "button",
             style: "margin-right:3px",
-            value: "Patienten",
+            value: "Patients",
             class: "cursorclickable"
         }, newth);
         newinput.addEventListener("click", function () {
@@ -2234,7 +2233,7 @@ window.addEventListener("load", function () {
         newinput = createElement("input", {
             type: "button",
             style: "margin-right:3px",
-            value: "R" + ae_de + "ume",
+            value: "Rooms",
             class: "cursorclickable"
         }, newth);
         newinput.addEventListener("click", function () {
