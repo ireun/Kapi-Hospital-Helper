@@ -2,7 +2,7 @@
 // @name            Kapi Hospital Berater
 // @description     Kapi Hospital Helper
 // @date            18.07.2015
-// @version         2.4.8.6
+// @version         2.4.8.7
 // @author          IreuN
 // @include         http://*kapihospital.com/*
 // @grant           GM_getValue
@@ -15,18 +15,19 @@
 // ==/UserScript==
 
 window.addEventListener("load", function () {
+
     var info = "[Berater] ";
 
     console.log(info + "Start");
 
 // Special Characters - DE
-    var ae = "\u00E4";      // ä
-    var oe = "\u00F6";      // ö
-    var ue = "\u00FC";      // ü
-    var Ae = "\u00C4";      // Ä
-    var Oe = "\u00D6";      // Ö
-    var Ue = "\u00DC";      // Ü
-    var sz = "\u00DF";      // ß
+    var ae_de = "\u00E4";      // ä
+    var oe_de = "\u00F6";      // ö
+    var ue_de = "\u00FC";      // ü
+    var Ae_de = "\u00C4";      // Ä
+    var Oe_de = "\u00D6";      // Ö
+    var Ue_de = "\u00DC";      // Ü
+    var sz_de = "\u00DF";      // ß
 
 // Special Characters - PL
     var a_pl = "\u0105";    // ą
@@ -147,8 +148,9 @@ window.addEventListener("load", function () {
                 break;
         }
     }
-    else
+    else {
         do_login();
+    }
 
 
 //***********************************************************************************************************
@@ -238,11 +240,12 @@ window.addEventListener("load", function () {
         questTime = GM_getValue(lng + "_" + server + "_" + username + "_questTime", 0);
         valStartQuestAutomatic = GM_getValue(lng + "_" + server + "_" + username + "_valStartQuestAutomatic", true);
 
-        if (developer)
+        if (developer) {
             createElement("div", {
                 id: "help1",
                 style: "z-index:2;position:absolute;top:15px;left:0px;background-color:#CCC;border:2px solid black;padding:3px;"
             }, all);
+        }
 
         console.log(info + "Points");
         // punkte
@@ -260,11 +263,13 @@ window.addEventListener("load", function () {
                 $("pkt").addEventListener("mouseover", function () {
                     var punkte = parseInt(this.innerHTML.replace(/\./g, ""), 10);
 
-                    for (var z = 0; z < tz.length; z++)
-                        if (punkte < parseInt(tz.item(z).getElementsByTagName("td").item(1).textContent.replace(/\./g, ""), 10))
+                    for (var z = 0; z < tz.length; z++) {
+                        if (punkte < parseInt(tz.item(z).getElementsByTagName("td").item(1).textContent.replace(/\./g, ""), 10)) {
                             break;
+                        }
 
-                    this.title = texte["noch"] + " " + number_format(parseInt(tz.item(z).getElementsByTagName("td").item(1).textContent.replace(/\./g, ""), 10) - punkte);
+                        this.title = texte["noch"] + " " + number_format(parseInt(tz.item(z).getElementsByTagName("td").item(1).textContent.replace(/\./g, ""), 10) - punkte);
+                    }
                 }, false);
             }
         });
@@ -335,7 +340,9 @@ window.addEventListener("load", function () {
                     $("help1").innerHTML += "<br>";
                     var help = Global.availableRooms[help["roomid"]];
                     for (var v in help) {
-                        if (typeof(help[v]) != "function") $("help1").innerHTML += "<br>" + v + " : " + help[v];
+                        if (typeof(help[v]) != "function") {
+                            $("help1").innerHTML += "<br>" + v + " : " + help[v];
+                        }
                     }
 
                 }
@@ -357,10 +364,12 @@ window.addEventListener("load", function () {
                 var prev = unsafeWindow.Rack._curPage - 1;
                 var max = Math.ceil(unsafeWindow.Rack.elements.size() / 16);
 
-                if (unsafeWindow.Rack._curPage == 1)
+                if (unsafeWindow.Rack._curPage == 1) {
                     unsafeWindow.Rack.update(max);
-                else
+                }
+                else {
                     unsafeWindow.Rack.update(prev);
+                }
             }, false);
 
 
@@ -369,10 +378,12 @@ window.addEventListener("load", function () {
                 var next = unsafeWindow.Rack._curPage + 1;
                 var max = Math.ceil(unsafeWindow.Rack.elements.size() / 16);
 
-                if (next > max)
+                if (next > max) {
                     unsafeWindow.Rack.update(1);
-                else
+                }
+                else {
                     unsafeWindow.Rack.update(next);
+                }
 
             }, true);
 
@@ -390,7 +401,11 @@ window.addEventListener("load", function () {
             $("nicelink").style.display = "none";
         }
         newdiv = document.getElementsByTagName("div");
-        for (var v = 0; v < newdiv.length; v++) if (newdiv[v].hasAttribute("onclick") && newdiv[v].getAttribute("onclick").search("facebook") != -1) newdiv[v].style.display = "none";
+        for (var v = 0; v < newdiv.length; v++) {
+            if (newdiv[v].hasAttribute("onclick") && newdiv[v].getAttribute("onclick").search("facebook") != -1) {
+                newdiv[v].style.display = "none";
+            }
+        }
 
         // MiniIcons
         newdiv = createElement("div", {
@@ -424,13 +439,13 @@ window.addEventListener("load", function () {
             style: "margin-left:3px;"
         }, newdiv, texte["set_ScriptHomepage"]);
         newbutton.addEventListener("click", function () {
-            window.open(scriptUrl)
+            window.open(scriptUrl);
         }, false);
         newbutton.addEventListener("mouseover", function () {
-            this.style.backgroundColor = "#cc9"
+            this.style.backgroundColor = "#cc9";
         }, false);
         newbutton.addEventListener("mouseout", function () {
-            this.style.backgroundColor = ""
+            this.style.backgroundColor = "";
         }, false);
         newbutton = createElement("button", {
             id: "berateroptionen",
@@ -443,10 +458,10 @@ window.addEventListener("load", function () {
             buildInfoPanel("options");
         }, false);
         newbutton.addEventListener("mouseover", function () {
-            this.style.backgroundColor = "#cc9"
+            this.style.backgroundColor = "#cc9";
         }, false);
         newbutton.addEventListener("mouseout", function () {
-            this.style.backgroundColor = ""
+            this.style.backgroundColor = "";
         }, false);
 
         // InfoPanel
@@ -487,7 +502,7 @@ window.addEventListener("load", function () {
         for (var mode = 1; mode < 4; mode++) {
             for (var v = 1; v < arrQuicklinks.length; v++)
                 if (arrQuicklinks[v][2] == mode) {
-                    var newdiv1 = createElement("div", {
+                    newdiv1 = createElement("div", {
                         id: v,
                         class: "hoverlightblue",
                         title: arrQuicklinks[v][0]
@@ -525,7 +540,7 @@ window.addEventListener("load", function () {
 
 
         for (var v = 0; v < arrQuicklinks2.length; v++) {
-            var newdiv1 = createElement("div", {
+            newdiv1 = createElement("div", {
                 id: "auto" + v,
                 class: "hoverlightblue",
                 title: arrQuicklinks2[v][0]
@@ -1257,14 +1272,14 @@ window.addEventListener("load", function () {
                 texte["set_RackMax"] = "Maximaler Lagerbestand";
                 texte["set_valGlobalClockInTitle"] = "Globale Zeit im Titel";
                 texte["set_valStartQuestAutomatic"] = "Quests automatisch";
-                texte["info_AutoLogin"] = "Sobald Nutzerdaten und Passwort eingegeben sind, werden die Accounts wieder eingeloggt. Es m" + ue + "ssen Popups erlaubt werden bei mehreren Accounts.";
-                texte["info_Update"] = "Es wird gepr" + ue + "ft, ob eine neuere Version dieses Scriptes verf" + ue + "gbar ist.";
-                texte["info_RackLow"] = "Ein Medikament wird markiert, falls der Lagerbestand unter diese Grenze f" + ae + "llt.";
-                texte["info_RackMax"] = "Es werden beim automatischen Einkauf die Medikamente bis zu diesem Lagerbestand afgef" + ue + "llt.";
+                texte["info_AutoLogin"] = "Sobald Nutzerdaten und Passwort eingegeben sind, werden die Accounts wieder eingeloggt. Es m" + ue_de + "ssen Popups erlaubt werden bei mehreren Accounts.";
+                texte["info_Update"] = "Es wird gepr" + ue_de + "ft, ob eine neuere Version dieses Scriptes verf" + ue_de + "gbar ist.";
+                texte["info_RackLow"] = "Ein Medikament wird markiert, falls der Lagerbestand unter diese Grenze f" + ae_de + "llt.";
+                texte["info_RackMax"] = "Es werden beim automatischen Einkauf die Medikamente bis zu diesem Lagerbestand afgef" + ue_de + "llt.";
                 texte["info_valGlobalClockInTitle"] = "Die globale Zeit wird im Fenstertitel angezeigt. Ansonsten im Fenster.";
-                texte["info_valStartQuestAutomatic"] = "Soll sofort die n" + ae + "chste Quest gestartet werden, wenn eine beended wurde ( max. 8 )?";
+                texte["info_valStartQuestAutomatic"] = "Soll sofort die n" + ae_de + "chste Quest gestartet werden, wenn eine beended wurde ( max. 8 )?";
                 texte["confirmUpdate"] = "Es liegt eine neue Script-Version vor. Diese installieren?";
-                texte["zeigePasswoerter"] = "zeige Passw" + oe + "rter";
+                texte["zeigePasswoerter"] = "zeige Passw" + oe_de + "rter";
                 texte["autoLogin"] = "Automatischer Login";
                 texte["accountAktiv"] = "Account aktiv";
                 texte["server"] = "Server";
@@ -1272,11 +1287,11 @@ window.addEventListener("load", function () {
                 texte["name"] = "Name";
                 texte["passwort"] = "Passwort";
                 texte["speichern"] = "speichern";
-                texte["loeschen"] = "l" + oe + "schen";
+                texte["loeschen"] = "l" + oe_de + "schen";
                 texte["buy"] = "kaufen";
                 texte["cancel"] = "Abbrechen";
-                texte["autoBuy"] = "automatische Lagerauff" + ue + "llung";
-                texte["autoClean"] = "R" + ae + "ume s" + ae + "ubern";
+                texte["autoBuy"] = "automatische Lagerauff" + ue_de + "llung";
+                texte["autoClean"] = "R" + ae_de + "ume s" + ae_de + "ubern";
                 texte["autoNurse"] = "Krankenschwester rufen";
                 texte["autoDisposeMedi"] = "Medikamente verteilen";
                 // patients panel
@@ -1295,21 +1310,21 @@ window.addEventListener("load", function () {
                 texte["coins"] = "Coins";
                 // Quicklinks
                 texte["shop1"] = "Apotheke Pillenexpress";
-                texte["quildhouse"] = Ae + "rztevereinigung und Wettbewerb";
+                texte["quildhouse"] = Ae_de + "rztevereinigung und Wettbewerb";
                 texte["townhall"] = "Rathaus";
                 texte["shop2"] = "Medizinischer Gro";
                 texte["editoraloffice"] = "Zeitungsredaktion";
-                texte["ambulancestore"] = "Autoh" + ae + "ndler";
+                texte["ambulancestore"] = "Autoh" + ae_de + "ndler";
                 texte["rcenter"] = "Forschungszentrum";
                 texte["shop3"] = "Internetcafe";
-                texte["architect"] = "Architekturb" + ue + "ro";
+                texte["architect"] = "Architekturb" + ue_de + "ro";
                 texte["shop4"] = "Tante-Emma-Laden";
                 texte["busstop"] = "Bushaltestelle";
                 texte["speakers"] = "Speakers Corner";
                 texte["garage"] = "Garage";
                 texte["bank"] = "Bank";
-                texte["exchange"] = "Patientenb" + oe + "rse";
-                texte["goodgirl"] = "Fr" + ae + "ulein Rosenwasser";
+                texte["exchange"] = "Patientenb" + oe_de + "rse";
+                texte["goodgirl"] = "Fr" + ae_de + "ulein Rosenwasser";
                 texte["badboy"] = "Dr. Knievel";
                 break;
 
@@ -1479,7 +1494,7 @@ window.addEventListener("load", function () {
                 texte["info_RackLow"] = "Ozna" + c_cz + i_cz + " l" + e_cz + "ky, jejich" + z_cz + " mno" + z_cz + "stv" + i_cz + " klesne pod zadanou hodnotu.";
                 texte["info_RackMax"] = "By Automatic buying product will be purchased until reaching this number.";
                 texte["info_valGlobalClockInTitle"] = "Zobraz" + i_cz + " glob" + a_cz + "ln" + i_cz + " " + c_cz + "as v titulku okna.";
-                texte["info_valStartQuestAutomatic"] = "Soll sofort die n" + ae + "chste Quest gestartet werden, wenn eine beended wurde ( max. 8 )?";
+                texte["info_valStartQuestAutomatic"] = "Soll sofort die n" + ae_de + "chste Quest gestartet werden, wenn eine beended wurde ( max. 8 )?";
                 texte["confirmUpdate"] = "Je kdispozici nov" + a_cz + " verze R" + a_cz + "dce Kapi Hospital. Chcete ji nainstalovat?";
                 texte["zeigePasswoerter"] = "Uk" + a_cz + "zat heslo";
                 texte["autoLogin"] = "Automatick" + e_cz + " p" + r_cz + "ihla" + s_cz + "ov" + a_cz + "n" + i_cz;
@@ -1492,8 +1507,8 @@ window.addEventListener("load", function () {
                 texte["loeschen"] = "Vymazat";
                 texte["buy"] = "kaufen";
                 texte["cancel"] = "Abbrechen";
-                texte["autoBuy"] = "automatische Lagerauff" + ue + "llung";
-                texte["autoClean"] = "R" + ae + "ume s" + ae + "ubern";
+                texte["autoBuy"] = "automatische Lagerauff" + ue_de + "llung";
+                texte["autoClean"] = "R" + ae_de + "ume s" + ae_de + "ubern";
                 texte["autoNurse"] = "Krankenschwester rufen";
                 texte["autoDisposeMedi"] = "Medikamente verteilen";
                 // patients panel
@@ -2219,7 +2234,7 @@ window.addEventListener("load", function () {
         newinput = createElement("input", {
             type: "button",
             style: "margin-right:3px",
-            value: "R" + ae + "ume",
+            value: "R" + ae_de + "ume",
             class: "cursorclickable"
         }, newth);
         newinput.addEventListener("click", function () {
@@ -2286,11 +2301,13 @@ window.addEventListener("load", function () {
                 for (var disease in patientDiseases[pat]) if (!isNaN(disease)) {
                     var currRoom = Global.availableDiseases[disease]["room"][0];
 
-                    if (!sumDiseases[currRoom])
+                    if (!sumDiseases[currRoom]) {
                         sumDiseases[currRoom] = {};
+                    }
 
-                    if (!sumDiseases[currRoom][disease])
+                    if (!sumDiseases[currRoom][disease]) {
                         sumDiseases[currRoom][disease] = [0, 0, 0, 0, 0, 0];
+                    }
 
                     switch (patientDiseases[pat]["state"]) {
                         case 1:
@@ -2341,10 +2358,12 @@ window.addEventListener("load", function () {
                     }
 
                     totalTotalTime += totalTime;
-                    if (v == 3)
+                    if (v == 3) {
                         newdiv = createElement("div", {style: "margin-right:2px;font-weight:bold;padding-top:20px;"}, newtd, time2str(totalTotalTime, 1));
-                    else
+                    }
+                    else {
                         newdiv = createElement("div", {style: "margin-right:2px;font-weight:bold;padding-top:20px;"}, newtd, time2str(totalTime, 1));
+                    }
                 }
             }
         }
@@ -2379,11 +2398,11 @@ window.addEventListener("load", function () {
                         initfloor(floor);
                     }
                     else {
-                        if (floor != cur_floor)
+                        if (floor != cur_floor) {
                             $('floor_jump_' + cur_floor).click();
+                        }
                     }
-                }
-                , 1000);
+                }, 1000);
         }
 
         initfloor(floor);
@@ -2459,8 +2478,9 @@ window.addEventListener("load", function () {
                             initmedi(floor);
                         }
 
-                        if (floor != cur_floor)
+                        if (floor != cur_floor) {
                             $('floor_jump_' + cur_floor).click();
+                        }
                     }
                 }
                 , 1500);
@@ -2478,8 +2498,9 @@ window.addEventListener("load", function () {
             //patientDiseases[patientId]["xml"] = 0;
 
             var help = Global.refPatients.get("p" + patientId);
-            if (help)
+            if (help) {
                 patientDiseases[patientId]["floor"] = help["floor"];
+            }
 
             for (var v = 0; v < help["diseases"].length; v++) {
                 patientDiseases[patientId][help["diseases"][v]] = "";
@@ -2510,14 +2531,17 @@ window.addEventListener("load", function () {
 
                     patientDiseases[patientId][disease] = (/(.+) (.+)/).exec(obj[0].childNodes[w].childNodes[1].firstChild.getAttribute("class"))[2];
 
-                    if (patientDiseases[patientId][disease] == "notreatment")
+                    if (patientDiseases[patientId][disease] == "notreatment") {
                         patientDiseases[patientId]["unhealable"] = 1;
+                    }
 
 
-                    if (patientDiseases[patientId][disease] != "cured")
+                    if (patientDiseases[patientId][disease] != "cured") {
                         cured = false;
-                    else
+                    }
+                    else {
                         patientDiseases[patientId]["room" + Global.availableDiseases[disease]["room"][0]] = 0;
+                    }
                 }
                 else {
                     patientDiseases[patientId][disease] = "";
@@ -2562,10 +2586,12 @@ window.addEventListener("load", function () {
             }
         }
 
-        if (cured)
+        if (cured) {
             patientDiseases[patientId]["state"] = 5;
-        else
+        }
+        else {
             calcComesNext(patientId);
+        }
 
         calcPatientState(patientId);
     }
@@ -2574,8 +2600,9 @@ window.addEventListener("load", function () {
         var help = Global.refPatients.get("p" + patientId);
         var help2 = null;
 
-        if (help)
+        if (help) {
             help2 = Global.refRooms.get(help["room"]);
+        }
 
         if (patientDiseases[patientId]["state"] != 5) {
 
@@ -2610,20 +2637,23 @@ window.addEventListener("load", function () {
 
     function plotPatient(target, currPatientId, showCured, minipic) { //(target) , (target,showCured)
         if (!isNaN(currPatientId)) {
-            if (typeof(showCured) != "boolean")
+            if (typeof(showCured) != "boolean") {
                 showCured = true;
+            }
         } else {
-            if (typeof(currPatientId) == "boolean")
+            if (typeof(currPatientId) == "boolean") {
                 showCured = currPatientId;
-
-            else
+            }
+            else {
                 showCured = true;
+            }
 
             currPatientId = parseInt(target.getAttribute("name"), 10);
         }
 
-        if (typeof(minipic) != "boolean")
+        if (typeof(minipic) != "boolean") {
             minipic = false;
+        }
 
         Log("plotPatient " + currPatientId + " " + showCured + " " + minipic);
         target.innerHTML = "";
@@ -2783,15 +2813,19 @@ window.addEventListener("load", function () {
                 var currPatient = Global.refPatients.get("p" + patientId);
                 var currRoom = Global.refRooms.get(currPatient["room"]);
                 if (currRoom) {
-                    if (patientDiseases[patientId]["room" + currRoom.roomid]) delete patientDiseases[patientId]["room" + currRoom.roomid];
-                    for (var disease in patientDiseases[patientId]) if ((!isNaN(disease)) && (patientDiseases[patientId][disease] != "cured")) {
-                        for (var roomDiseaseNr = 0; roomDiseaseNr < Global.availableRooms[currRoom.roomid]["diseases"][roomDiseaseNr]; roomDiseaseNr++) {
-                            if (disease == Global.availableRooms[currRoom.roomid]["diseases"][roomDiseaseNr]) {
-                                if (!result) {
-                                    patientDiseases[patientId][disease] = "heartbeat";
-                                    result = disease;
-                                } else {
-                                    patientDiseases[patientId]["room" + currRoom.roomid] = 1;
+                    if (patientDiseases[patientId]["room" + currRoom.roomid]) {
+                        delete patientDiseases[patientId]["room" + currRoom.roomid];
+                    }
+                    for (var disease in patientDiseases[patientId]) {
+                        if ((!isNaN(disease)) && (patientDiseases[patientId][disease] != "cured")) {
+                            for (var roomDiseaseNr = 0; roomDiseaseNr < Global.availableRooms[currRoom.roomid]["diseases"][roomDiseaseNr]; roomDiseaseNr++) {
+                                if (disease == Global.availableRooms[currRoom.roomid]["diseases"][roomDiseaseNr]) {
+                                    if (result) {
+                                        patientDiseases[patientId]["room" + currRoom.roomid] = 1;
+                                    } else {
+                                        patientDiseases[patientId][disease] = "heartbeat";
+                                        result = disease;
+                                    }
                                 }
                             }
                         }
@@ -2836,11 +2870,13 @@ window.addEventListener("load", function () {
 
                 if (patientDiseases[patientId][v] == "heartbeat") {
                     patientDiseases[patientId][v] = "cured";
-                    if (patientDiseases[patientId]["room" + currDiseaseRoom])
+                    if (patientDiseases[patientId]["room" + currDiseaseRoom]) {
                         delete patientDiseases[patientId]["room" + currDiseaseRoom];
+                    }
                 } else {
-                    if (patientDiseases[patientId][v] == "comesnext")
+                    if (patientDiseases[patientId][v] == "comesnext") {
                         patientDiseases[patientId][v] = "";
+                    }
 
                     if (patientDiseases[patientId][v] != "cured") {
                         cured = false;
@@ -2852,8 +2888,9 @@ window.addEventListener("load", function () {
             if (cured && (patientDiseases[patientId]["m"] > 3))
                 patientDiseases[patientId]["state"] = 5;
 
-        } else
+        } else {
             initPatient(patientId);
+        }
     }
 
     function do_Patientenblatt() {
@@ -2863,9 +2900,11 @@ window.addEventListener("load", function () {
         // diseases
         var canddiv = $("msgwindow").getElementsByTagName("div");
 
-        for (var v = 0; v < canddiv.length - 1; v++)
-            if (canddiv[v].id == "medi_diseases")
+        for (var v = 0; v < canddiv.length - 1; v++) {
+            if (canddiv[v].id == "medi_diseases") {
                 break;
+            }
+        }
 
         patientDiseases[currPatientId] = {};
         var cured = true;
@@ -2876,11 +2915,13 @@ window.addEventListener("load", function () {
 
             if (canddiv[v].childNodes[w].childNodes[1].firstChild) {
                 patientDiseases[currPatientId][disease] = (/(.+) (.+)/).exec(canddiv[v].childNodes[w].childNodes[1].firstChild.getAttribute("class"))[2];
-                if (patientDiseases[currPatientId][disease] == "notreatment")
+                if (patientDiseases[currPatientId][disease] == "notreatment") {
                     patientDiseases[currPatientId]["unhealable"] = 1;
+                }
 
-                if (patientDiseases[currPatientId][disease] != "cured")
+                if (patientDiseases[currPatientId][disease] != "cured") {
                     cured = false;
+                }
             } else {
                 patientDiseases[currPatientId][disease] = "";
                 patientDiseases[currPatientId]["room" + Global.availableDiseases[0][disease]["room"][0]] = 1;
@@ -2891,14 +2932,16 @@ window.addEventListener("load", function () {
         var canddiv = $("msgwindow").getElementsByClassName("minitreatment");
         patientDiseases[currPatientId]["m"] = 4;
 
-        for (var v = 0; v < canddiv.length; v++)
+        for (var v = 0; v < canddiv.length; v++) {
             if (canddiv[v].style.backgroundImage == "") {
                 patientDiseases[currPatientId]["m"]--;
                 cured = false;
             }
+        }
 
-        if (cured)
+        if (cured) {
             patientDiseases[currPatientId]["state"] = 5;
+        }
         else {
             calcComesNext(currPatientId);
             calcPatientState(currPatientId);
@@ -2921,7 +2964,7 @@ window.addEventListener("load", function () {
             var newdiv1 = createElement("div", {
                 "style": "position:absolute;left:12px;top:5px;z-index:2;width:15px;height:10px;",
                 "class": "cursorclickable",
-                "title": "schlie" + sz + "en"
+                "title": "schlie" + sz_de + "en"
             }, newdiv);
             newdiv1.addEventListener("click", function () {
                 removeElement($("refAdressBook"));
@@ -2984,8 +3027,9 @@ window.addEventListener("load", function () {
                 }
 
 
-                if ($("ga_running") && $("ga_running").style.display != "none")
+                if ($("ga_running") && $("ga_running").style.display != "none") {
                     console.log(info + "Still working..");
+                }
 
                 window.setTimeout(unsafeWindow.close_page, 500);
 
@@ -3040,23 +3084,27 @@ window.addEventListener("load", function () {
                 cand = $("msgNavigation").getElementsByTagName("input");
                 if (cand.length > 1) {
                     // InMessage
-                    var help = keyMsgDelete.exec(cand[cand.length - 2].getAttribute("onclick"));
+                    help = keyMsgDelete.exec(cand[cand.length - 2].getAttribute("onclick"));
                     if (help) {
                         if (help[2] == "inbox") {
                             var msgIdIn = explode(GM_getValue(lng + "_" + server + "_" + username + "msgIdIn", "[]"));
-                            for (var c = 0; c < msgIdIn.length; c++) if (msgIdIn[c] == help[1]) break;
+                            for (var c = 0; c < msgIdIn.length; c++) if (msgIdIn[c] == help[1]) {
+                                break
+                            }
                             if (c > 0) createElement("input", {
                                 "type": "button",
-                                "value": "vorige Nachricht",
+                                "value": "Previous message",
                                 "onclick": "javascript:Messages.showMessage(" + msgIdIn[c - 1] + ",'inbox');",
                                 "class": "cursorclickable msg_input"
                             }, $("msgNavigation"));
-                            if (c < msgIdIn.length - 1) createElement("input", {
-                                "type": "button",
-                                "value": "n" + ae + "chste Nachricht",
-                                "onclick": "javascript:Messages.showMessage(" + msgIdIn[c + 1] + ",'inbox');",
-                                "class": "cursorclickable msg_input"
-                            }, $("msgNavigation"));
+                            if (c < msgIdIn.length - 1) {
+                                createElement("input", {
+                                    "type": "button",
+                                    "value": "Next message",
+                                    "onclick": "javascript:Messages.showMessage(" + msgIdIn[c + 1] + ",'inbox');",
+                                    "class": "cursorclickable msg_input"
+                                }, $("msgNavigation"));
+                            }
                         }
                     }
                 }
@@ -3077,14 +3125,14 @@ window.addEventListener("load", function () {
 
     function laden(elemente, i) {
 
-        /* loader-Objekt initialisieren */
+        /* Initialize Object-loader */
 
         loader.onload = function () {
             if (i < (elemente.length - 1)) {
                 laden(elemente, i + 1);
             }
             else {
-                /* alle Elemente geladen */
+                /* All elements loaded */
             }
         }
     }
@@ -3164,49 +3212,50 @@ window.addEventListener("load", function () {
         tabcell = createElement("td", "", newrow2, "Hervorheben 2");
         tabcell = createElement("td", "", newrow3, "Verberge");
 
-        for (var r in Global.availableRooms) if (Global.availableRooms[r].diseases.length > 0) {
+        for (var r in Global.availableRooms) {
+            if (Global.availableRooms[r].diseases.length > 0) {
+                tabcell = createElement("td", "", newrow1);
+                newinput = createElement("input", {
+                    "id": "hl" + r,
+                    "type": "checkbox",
+                    "checked": highlightBoerse[r],
+                    "title": Global.availableRooms[r].name,
+                    "style": "margin-right:0px;margin-left:1px;"
+                }, tabcell);
+                newinput.addEventListener("click", function () {
+                    highlightBoerse[this.id.replace("hl", "")] = this.checked;
+                    GM_setValue(lng + "_" + server + "_" + username + "_highlightBoerse", implode(highlightBoerse));
+                    click($("ex_navi").getElementsByTagName("div")[1]);
+                }, false);
 
-            tabcell = createElement("td", "", newrow1);
-            newinput = createElement("input", {
-                "id": "hl" + r,
-                "type": "checkbox",
-                "checked": highlightBoerse[r],
-                "title": Global.availableRooms[r].name,
-                "style": "margin-right:0px;margin-left:1px;"
-            }, tabcell);
-            newinput.addEventListener("click", function () {
-                highlightBoerse[this.id.replace("hl", "")] = this.checked;
-                GM_setValue(lng + "_" + server + "_" + username + "_highlightBoerse", implode(highlightBoerse));
-                click($("ex_navi").getElementsByTagName("div")[1]);
-            }, false);
+                tabcell = createElement("td", "", newrow2);
+                newinput = createElement("input", {
+                    "id": "hl1" + r,
+                    "type": "checkbox",
+                    "checked": highlightBoerse1[r],
+                    "title": Global.availableRooms[r].name,
+                    "style": "margin-right:0px;margin-left:1px;"
+                }, tabcell);
+                newinput.addEventListener("click", function () {
+                    highlightBoerse1[this.id.replace("hl1", "")] = this.checked;
+                    GM_setValue(lng + "_" + server + "_" + username + "_highlightBoerse1", implode(highlightBoerse1));
+                    click($("ex_navi").getElementsByTagName("div")[1]);
+                }, false);
 
-            tabcell = createElement("td", "", newrow2);
-            newinput = createElement("input", {
-                "id": "hl1" + r,
-                "type": "checkbox",
-                "checked": highlightBoerse1[r],
-                "title": Global.availableRooms[r].name,
-                "style": "margin-right:0px;margin-left:1px;"
-            }, tabcell);
-            newinput.addEventListener("click", function () {
-                highlightBoerse1[this.id.replace("hl1", "")] = this.checked;
-                GM_setValue(lng + "_" + server + "_" + username + "_highlightBoerse1", implode(highlightBoerse1));
-                click($("ex_navi").getElementsByTagName("div")[1]);
-            }, false);
-
-            tabcell = createElement("td", "", newrow3);
-            newinput = createElement("input", {
-                "id": "bl" + r,
-                "type": "checkbox",
-                "checked": blockBoerse[r],
-                "title": Global.availableRooms[r].name,
-                "style": "margin-right:0px;margin-left:1px;"
-            }, tabcell);
-            newinput.addEventListener("click", function () {
-                blockBoerse[this.id.replace("bl", "")] = this.checked;
-                GM_setValue(lng + "_" + server + "_" + username + "_blockBoerse", implode(blockBoerse));
-                click($("ex_navi").getElementsByTagName("div")[1]);
-            }, false);
+                tabcell = createElement("td", "", newrow3);
+                newinput = createElement("input", {
+                    "id": "bl" + r,
+                    "type": "checkbox",
+                    "checked": blockBoerse[r],
+                    "title": Global.availableRooms[r].name,
+                    "style": "margin-right:0px;margin-left:1px;"
+                }, tabcell);
+                newinput.addEventListener("click", function () {
+                    blockBoerse[this.id.replace("bl", "")] = this.checked;
+                    GM_setValue(lng + "_" + server + "_" + username + "_blockBoerse", implode(blockBoerse));
+                    click($("ex_navi").getElementsByTagName("div")[1]);
+                }, false);
+            }
         }
         var candtable = $("msgwindow").getElementsByTagName("table");
         candtable[0].style.width = "650px";
@@ -3351,16 +3400,18 @@ window.addEventListener("load", function () {
 
             var newdiv = createElement("div", {style: "position:absolute;top:0px;left:0px;width:412px;padding:10px;background-color:#999;-moz-border-radius:10px;"}, $("login_div"));
             var newbutton;
-            for (var v = 0; v < logindata.length; v++) if (logindata[v][1] != "0") {
-                newbutton = createElement("button", {
-                    type: "button",
-                    class: "cursorclickable",
-                    id: "autologin" + v,
-                    style: "width:200px;height:20px;margin:3px;"
-                }, newdiv, texte["server"] + " " + logindata[v][1] + "." + logindata[v][0] + ": " + logindata[v][2]);
-                newbutton.addEventListener("click", function () {
-                    submit_login(this.id.replace("autologin", ""));
-                }, false);
+            for (var v = 0; v < logindata.length; v++) {
+                if (logindata[v][1] != "0") {
+                    newbutton = createElement("button", {
+                        type: "button",
+                        class: "cursorclickable",
+                        id: "autologin" + v,
+                        style: "width:200px;height:20px;margin:3px;"
+                    }, newdiv, texte["server"] + " " + logindata[v][1] + "." + logindata[v][0] + ": " + logindata[v][2]);
+                    newbutton.addEventListener("click", function () {
+                        submit_login(this.id.replace("autologin", ""));
+                    }, false);
+                }
             }
             newdiv = null;
             newbutton = null;
