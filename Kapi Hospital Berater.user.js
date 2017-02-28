@@ -1,15 +1,15 @@
 // ==UserScript==
 // @name            Kapi Hospital Helper
 // @description     A UserScript that's made to help you play!
-// @date            19.07.2015
-// @version         2.4.8.9
+// @date            28.02.2017
+// @version         2.4.9.0
 // @author          IreuN
 // @include         http://*kapihospital.com/*
 // @grant           GM_getValue
 // @grant           GM_setValue
 // @grant           GM_addStyle
 // @grant           GM_xmlhttpRequest
-// @require         http://code.jquery.com/jquery-2.1.4.min.js
+// @require         https://code.jquery.com/jquery-3.1.1.min.js
 // @namespace       https://greasyfork.org/users/5507
 // @supportURL      https://github.com/ireun/Kapi-Hospital-Berater/issues
 // ==/UserScript==
@@ -18,7 +18,7 @@ window.addEventListener("load", function () {
 
     var info = "[Helper] ";
 
-    console.log( info + "Start");
+    console.log(info + "Start");
 
 // Special Characters - DE
     var ae_de = "\u00E4";      // ä
@@ -101,7 +101,7 @@ window.addEventListener("load", function () {
             lng = ccode[0];
             reg = new RegExp("http://s(\\d+)\\." + ccode[1] + "\\.kapihospital\\.com/(.*?)\\.php(.*)", "i");
             gamepages[ccode[1]] = "http://www" + ccode[2];
-            console.log( info + "Setting language: " + lng);
+            console.log(info + "Setting language: " + lng);
             loadLanguage(lng);
         }
     });
@@ -118,7 +118,7 @@ window.addEventListener("load", function () {
     var server = "";
     var page = "";
     var pageZusatz = "";
-    var developer = true;
+    var developer = false;
     var candtable = document.getElementsByTagName("table");
     var username = "";
 
@@ -133,8 +133,8 @@ window.addEventListener("load", function () {
     if (loc) {
         server = loc[1];
         page = loc[2];
-        pageZusatz = loc[3];
-        developer = (pageZusatz == "?dev");
+        pageaddon = loc[3];
+        //developer = (pageZusatz == "?dev");
         candtable = document.getElementsByTagName("table");
         username = GM_getValue(lng + "_" + server + "_username", "");
 
@@ -157,7 +157,7 @@ window.addEventListener("load", function () {
 
     function do_main() {
 
-        console.log( info + "Start do_main()");
+        console.log(info + "Start do_main()");
         //if (!username) document.location.href = "http://www"+gamepage;
         // CSS
         GM_addStyle("tr:hover{background-color:lightblue;}");
@@ -175,7 +175,7 @@ window.addEventListener("load", function () {
         GM_addStyle(".racklow{" + GM_getValue(lng + "_" + server + "_" + username + "_css_racklow", "background-color:orangered;") + "}");
         GM_addStyle(".cursorstandard{ cursor: default!important;}");
 
-        console.log( info + "Updatecheck");
+        console.log(info + "Updatecheck");
         if (GM_getValue("valUpdate", true)) {
             valLastUpdate = GM_getValue("valLastUpdate", "");
             if (valLastUpdate == "") {
@@ -183,7 +183,7 @@ window.addEventListener("load", function () {
                     method: "GET",
                     url: "https://greasyfork.org/scripts/5182-kapi-hospital-berater/code/Kapi%20Hospital%20Berater.meta.js",
                     onload: function (response) {
-                        keyusoversion = /uso:version\s+(\d+)/;
+                        keyusoversion = /version\s+(\d.*)/;
                         serverversion = keyusoversion.exec(response.responseText)[1];
                         GM_setValue("valLastUpdate", serverversion);
                     }
@@ -193,7 +193,7 @@ window.addEventListener("load", function () {
                     method: "GET",
                     url: "https://greasyfork.org/scripts/5182-kapi-hospital-berater/code/Kapi%20Hospital%20Berater.meta.js",
                     onload: function (response) {
-                        keyusoversion = /uso:version\s+(\d+)/;
+                        keyusoversion = /version\s+(\d.*)/;
                         serverversion = keyusoversion.exec(response.responseText)[1];
                         if (valLastUpdate != serverversion) {
                             GM_setValue("valLastUpdate", serverversion);
@@ -236,9 +236,13 @@ window.addEventListener("load", function () {
 
         valRackLimit = GM_getValue(lng + "_" + server + "_" + username + "_valRackLimit", 50);
         valMaxRackLimit = GM_getValue(lng + "_" + server + "_" + username + "_valMaxRackLimit", 100);
+        valMinRand = GM_getValue(lng + "_" + server + "_" + username + "_valMinRand", 1);
+        valMaxRand = GM_getValue(lng + "_" + server + "_" + username + "_valMaxRand", 3);
         valGlobalClockInTitle = GM_getValue(lng + "_" + server + "_" + username + "_valGlobalClockInTitle", true);
         questTime = GM_getValue(lng + "_" + server + "_" + username + "_questTime", 0);
         valStartQuestAutomatic = GM_getValue(lng + "_" + server + "_" + username + "_valStartQuestAutomatic", true);
+        valPickAutomatic = GM_getValue(lng + "_" + server + "_" + username + "_valPickAutomatic", false);
+        valSkipAnnouncement = GM_getValue(lng + "_" + server + "_" + username + "_valPickAutomatic", false);
 
         if (developer) {
             createElement("div", {
@@ -247,7 +251,7 @@ window.addEventListener("load", function () {
             }, all);
         }
 
-        console.log( info + "Points");
+        console.log(info + "Points");
         // punkte
         GM_xmlhttpRequest({
             method: "GET",
@@ -275,7 +279,7 @@ window.addEventListener("load", function () {
         });
 
         patientDiseases = {};
-        console.log( info + "patientDiseases");
+        console.log(info + "patientDiseases");
         // patientDiseases[patientId][diseaseNr]: heartbeat,cured,notreatment,comesnext,""=ill
         // patientDiseases[patientId][room]: current room (type)
         // patientDiseases[patientId][floor]: current floor
@@ -295,9 +299,9 @@ window.addEventListener("load", function () {
          }
          }*/
 
-        console.log( info + "For non Premium Players, read patient stats from Server");
+        console.log(info + "For non Premium Players, read patient stats from Server");
         if (!Global.ISPREMIUM) {
-            console.log( info + "User not premium");
+            console.log(info + "User not premium");
             var patids = Global.refPatients.values();
             /*for (var v = 0; v < patids.length; v++) {
              refreshPatient(patids[v]["id"], false);
@@ -305,7 +309,7 @@ window.addEventListener("load", function () {
         }
 
         if (developer) {
-            console.log( info + "You are a developer");
+            console.log(info + "You are a developer");
             $("garten_komplett").addEventListener("mouseover", function (event) {
                 $("help1").innerHTML = "";
                 var roomId = 0;
@@ -334,6 +338,8 @@ window.addEventListener("load", function () {
 
                     $("help1").innerHTML += "<br>"
                 }
+                console.log(roomId);
+
                 if (roomId != 0) {
                     var help = Global.refRooms.get("r" + roomId);
                     for (var v in help) {
@@ -432,7 +438,7 @@ window.addEventListener("load", function () {
          }
          miniiconSelectFloor();
          */
-        console.log( info + "Button list");
+        console.log(info + "Button list");
 
         // Button-Leiste
         newdiv = createElement("div", {style: "position:absolute;top:784px;display:inline;"}, maincontainer);
@@ -457,7 +463,7 @@ window.addEventListener("load", function () {
             style: "margin-left:3px;"
         }, newdiv, texte["options"]);
         newbutton.addEventListener("click", function () {
-            console.log( info + "Opening settings..");
+            console.log(info + "Opening settings..");
             buildInfoPanel("options");
         }, false);
         newbutton.addEventListener("mouseover", function () {
@@ -597,7 +603,7 @@ window.addEventListener("load", function () {
                                             //console.log("medprice >"+ medprice + "<" );
 
                                             price_overall += parseFloat((Global.availableMedics[0][k]["price"] * diff), 2);
-                                            console.log( info + "price_overall >" + price_overall + "<");
+                                            console.log(info + "price_overall >" + price_overall + "<");
 
                                             //medstoBuy.push( { "itemid":Global.availableMedics[0][k]["id"], "amount":diff } );
                                             //buytext += diff + " x " +Global.availableMedics[0][k]["name"] + ": " + medprice + Global._KH_CURRENCY + "\n";
@@ -717,7 +723,7 @@ window.addEventListener("load", function () {
             if (v == 1) {
                 var actpat;
 
-                // Autoschwester Button
+                // Autodispence Button
                 createElement("div", {
                     class: "cursorclickable c1_a_50 c1_" + 2 + "_50",
                     title: arrQuicklinks2[v][0]
@@ -727,11 +733,11 @@ window.addEventListener("load", function () {
 
                     for (var v = 0; v < rooms.length; v++) {
                         if (( rooms[v].roomid == 6 )) {
-                            console.log( info + "Checking room: " + rooms[v].topleft);
+                            console.log(info + "Checking room: " + rooms[v].topleft);
 
                             //If pateint has a room
                             if (rooms[v].patient != 0) {
-                                console.log( info + "Room " + rooms[v].topleft + " belongs to patient: " + rooms[v].patient);
+                                console.log(info + "Room " + rooms[v].topleft + " belongs to patient: " + rooms[v].patient);
                                 refreshPatient(rooms[v].patient, true);
                             }
 
@@ -741,7 +747,7 @@ window.addEventListener("load", function () {
                 }, false);
             }
 
-            //Dreckige R�ume s�ubern
+            //Clean rooms button
             if (v == 2) {
                 createElement("div", {
                     class: "cursorclickable c1_a_50 c1_" + 8 + "_50",
@@ -1123,6 +1129,7 @@ window.addEventListener("load", function () {
 
             if (valStartQuestAutomatic) {
                 if (!(questTime > now) && questcnt < 8) {
+                    console.log(info + questTime);
                     start_Quest();
                 }
             }
@@ -1180,7 +1187,18 @@ window.addEventListener("load", function () {
             Log("MOUSEOVER " + event.target.id);
             var patientId = 0;
             if (!isNaN(event.target.id.replace("r", ""))) {
-                var currRoom = Global.refRooms.get(event.target.id);
+                Log(info + "Evemt is: " + event);
+                Log(event.target.id);
+                var currRoom = 0;
+                if (!isNaN(event.target.id.replace("r", ""))) {
+                    currRoom = event.target.id.replace("r", "");
+                }
+                else if (!isNaN(event.target.id.replace("p", ""))) {
+                    currRoom = (Global.refPatients.get(event.target.id).room + "").replace("r", "");
+                }
+
+                currRoom = "r" + currRoom;
+
                 highlightPatients(currRoom.roomid);
                 patientId = currRoom.patient;
             }
@@ -1260,7 +1278,7 @@ window.addEventListener("load", function () {
         newbutton = null;
     }
 
-    console.log( info + "End do_main()");
+    console.log(info + "End do_main()");
 
     /*************************** end do_main() ******************************************/
 
@@ -1285,6 +1303,12 @@ window.addEventListener("load", function () {
                 texte["set_Update"] = "Update";
                 texte["set_RackLow"] = "Minimal rackamount";
                 texte["set_RackMax"] = "Automatic buying limit";
+                texte["set_Rand"] = "Picking range";
+                texte["info_Rand"] = "Picking rage for the lottery, in case of wrong number, it will not save itself. If You'd like to to always pick the same card, just type the same number in both field.";
+                texte["set_valPickAutomatic"] = "AutoLottery";
+                texte["info_valPickAutomatic"] = "Check this box, if You'd like the Helper to pick the lottery for You.";
+                texte["set_valSkipAnnouncement"] = "Skip announcements";
+                texte["info_valSkipAnnouncement"] = "Check this box, if You'd like the Helper to skip the announcements.";
                 texte["set_valGlobalClockInTitle"] = "Time in page title";
                 texte["set_valStartQuestAutomatic"] = "AutoQuest";
                 texte["info_AutoLogin"] = "Once username and password information is given, all accounts will be logged in";
@@ -1369,6 +1393,13 @@ window.addEventListener("load", function () {
                 texte["set_Update"] = "Update";
                 texte["set_RackLow"] = "Minimaler Lagerbestand";
                 texte["set_RackMax"] = "Maximaler Lagerbestand";
+                texte["set_Rand"] = "Picking range";
+                texte["info_Rand"] = "Picking rage for the lottery, in case of wrong number, it will not save itself. If You'd like to to always pick the same card, just type the same number in both field.";
+                texte["set_valPickAutomatic"] = "AutoLottery";
+                texte["info_valPickAutomatic"] = "Check this box, if You'd like the Helper to pick the lottery for You.";
+                texte["set_valSkipAnnouncement"] = "Skip announcements";
+                texte["info_valSkipAnnouncement"] = "Check this box, if You'd like the Helper to skip the announcements.";
+                texte["set_valGlobalClockInTitle"] = "Time in page title";
                 texte["set_valGlobalClockInTitle"] = "Globale Zeit im Titel";
                 texte["set_valStartQuestAutomatic"] = "Quests automatisch";
                 texte["info_AutoLogin"] = "Sobald Nutzerdaten und Passwort eingegeben sind, werden die Accounts wieder eingeloggt. Es m" + ue_de + "ssen Popups erlaubt werden bei mehreren Accounts.";
@@ -1451,8 +1482,14 @@ window.addEventListener("load", function () {
                 texte["set_Update"] = "Aktualizacja";
                 texte["set_RackLow"] = "Minimalna ilo" + s_pl + c_pl + " lekarstw w regale";
                 texte["set_RackMax"] = "Limit zakupu";
+                texte["set_Rand"] = "Przedział losowania";
+                texte["info_Rand"] = "Przedział losowania dla latorii, przy wpisaniu złej liczby ta się nie zapisze. Jeśli chcesz losować zawsze tą samą kartę wpisz w oba pola taką samą liczbę.";
+                texte["set_valPickAutomatic"] = "AutoLoteria";
+                texte["info_valPickAutomatic"] = "Zaznacz to pole, jeśli chcesz, żeby pomocnik losował za Ciebie.";
+                texte["set_valSkipAnnouncement"] = "Pomijanie ogłoszeń";
+                texte["info_valSkipAnnouncement"] = "Zaznacz to pole, jeśli chcesz, żeby bot pomijał ogłoszenia.";
                 texte["set_valGlobalClockInTitle"] = "Czas w tytule karty.";
-                texte["set_valStartQuestAutomatic"] = "AutoQuest.";
+                texte["set_valStartQuestAutomatic"] = "AutoQuest";
                 texte["info_AutoLogin"] = "Po wprowadzeniu nazwy u" + z_pl + "ytkownika i has" + l_pl + "a nast" + e_pl + "puje automatyczne logowanie. Pozwala to zachowa" + c_pl + " " + c_pl + "iaglosc grania. Przy wielu kontach musi by" + c_pl + "dozwolone wyskakiwanie okienek.";
                 texte["info_Update"] = "Automatycznie sprawdza czy jest nowsza wersja tego skryptu.";
                 texte["info_RackLow"] = "Produkt zostanie zaznaczony, gdy jego ilo" + s_pl + c_pl + " w regale spadnie poni" + z_pl + "ej tego poziomu";
@@ -1532,6 +1569,13 @@ window.addEventListener("load", function () {
                 texte["set_Update"] = "Aktualizace";
                 texte["set_RackLow"] = "Minim" + a_cz + "ln" + i_cz + " z" + a_cz + "soba l" + e_cz + "k" + u2_cz;
                 texte["set_RackMax"] = "Automatic buying limit";
+                texte["set_Rand"] = "Picking range";
+                texte["info_Rand"] = "Picking rage for the lottery, in case of wrong number, it will not save itself. If You'd like to to always pick the same card, just type the same number in both field.";
+                texte["set_valPickAutomatic"] = "AutoLottery";
+                texte["info_valPickAutomatic"] = "Check this box, if You'd like the Helper to pick the lottery for You.";
+                texte["set_valSkipAnnouncement"] = "Skip announcements";
+                texte["info_valSkipAnnouncement"] = "Check this box, if You'd like the Helper to skip the announcements.";
+                texte["set_valGlobalClockInTitle"] = "Time in page title";
                 texte["set_valGlobalClockInTitle"] = c_cz + "as v n" + a_cz + "zvu karty.";
                 texte["set_valStartQuestAutomatic"] = "AutoQuest";
                 texte["info_AutoLogin"] = "Jakmile zad" + a_cz + "te sv" + e_cz + " u" + z_cz + "ivatelsk" + e_cz + " jm" + e_cz + "no a heslo, v" + s_cz + "echny " + u_cz + c_cz + "ty budou p" + r_cz + "ihl" + a_cz + s_cz + "eny.";
@@ -1641,6 +1685,7 @@ window.addEventListener("load", function () {
             document.location.href = A.href;
         }
     }
+
 
     function mousedown(A) {
         var B = document.createEvent("MouseEvents");
@@ -1826,7 +1871,7 @@ window.addEventListener("load", function () {
     }
 
     function explode(str) {
-        //GM_log("Begin explode "+ str);
+        //console.log("Begin explode "+ str);
         if (str == "") {
             throw("Explode error Argument empty");
         }
@@ -1842,12 +1887,12 @@ window.addEventListener("load", function () {
         try {
             return eval('(' + str + ')');
         } catch (err) {
-            GM_log("Explode error : " + err);
+            console.log("Explode error : " + err);
             throw ("Explode error : " + err);
         }
     }
 
-    console.log( info + "Start implode(arr)");
+    console.log(info + "Start implode(arr)");
 
     function implode(arr) {//--- function written by Jan-Hans
         try {
@@ -1894,7 +1939,7 @@ window.addEventListener("load", function () {
 
             return line.substring(0, line.length - 1) + (("{[".indexOf(endChar) != -1) ? endChar : "") + ((type) ? "]" : "}");
         } catch (err) {
-            GM_log("Implode error : " + err);
+            console.log("Implode error : " + err);
             throw ("Implode error : " + err);
         }
     }
@@ -1906,13 +1951,13 @@ window.addEventListener("load", function () {
             }
 
             if (typeof(obj) == "object") {
-                //GM_log("______________________________ object");
+                //console.log("______________________________ object");
                 for (var v in obj) {
                     Log(obj[v], pre + v + " : ");
                 }
-                //GM_log("______________________________ object end");
+                //console.log("______________________________ object end");
             } else {
-                GM_log(pre + obj);
+                console.log(pre + obj);
             }
         }
     }
@@ -1946,6 +1991,7 @@ window.addEventListener("load", function () {
                 }, divInfo, texte["options"]);
                 newtable = createElement("table", {style: "width:100%;", border: "1"}, divInfo);
 
+                // Update
                 newtr = createElement("tr", "", newtable);
                 newtd = createElement("td", {align: "center"}, newtr);
                 var valUpdate = GM_getValue("valUpdate", true);
@@ -1962,6 +2008,7 @@ window.addEventListener("load", function () {
                 createElement("td", "", newtr, texte["set_Update"]);
                 createElement("td", "", newtr, texte["info_Update"]);
 
+                // Clock in title
                 newtr = createElement("tr", "", newtable);
                 newtd = createElement("td", {align: "center"}, newtr);
                 inp = createElement("input", {
@@ -1977,6 +2024,7 @@ window.addEventListener("load", function () {
                 createElement("td", "", newtr, texte["set_valGlobalClockInTitle"]);
                 createElement("td", "", newtr, texte["info_valGlobalClockInTitle"]);
 
+                // Rack Limit
                 newtr = createElement("tr", "", newtable);
                 newtd = createElement("td", {align: "center"}, newtr);
                 newinput = createElement("input", {
@@ -2002,6 +2050,7 @@ window.addEventListener("load", function () {
                 createElement("td", "", newtr, texte["set_RackLow"]);
                 createElement("td", "", newtr, texte["info_RackLow"]);
 
+                // Max Rack Limit
                 newtr = createElement("tr", "", newtable);
                 newtd = createElement("td", {align: "center"}, newtr);
                 newinput = createElement("input", {
@@ -2027,6 +2076,108 @@ window.addEventListener("load", function () {
                 createElement("td", "", newtr, texte["set_RackMax"]);
                 createElement("td", "", newtr, texte["info_RackMax"]);
 
+                //AutoLottery
+                newtr = createElement("tr", "", newtable);
+                newtd = createElement("td", {align: "center"}, newtr);
+                inp = createElement("input", {
+                    id: "inputvalPickAutomatic",
+                    type: "checkbox",
+                    class: "link",
+                    checked: valPickAutomatic
+                }, newtd);
+                inp.addEventListener("click", function () {
+                    valPickAutomatic = this.checked;
+                    GM_setValue(lng + "_" + server + "_" + username + "_valPickAutomatic", valPickAutomatic);
+                    if (!valPickAutomatic) {
+                        $("inputvalMinRand").disabled = true;
+                        $("inputvalMaxRand").disabled = true;
+                        $("lotterySettings").style = "opacity: 0.4";
+                    } else {
+                        $("inputvalMinRand").disabled = false;
+                        $("inputvalMaxRand").disabled = false;
+                        $("lotterySettings").style = "";
+                    }
+                }, false);
+                createElement("td", "", newtr, texte["set_valPickAutomatic"]);
+                createElement("td", "", newtr, texte["info_valPickAutomatic"]);
+
+                // Rolling the dice
+                newtr = createElement("tr", {
+                    id: "lotterySettings"
+                }, newtable);
+                newtd = createElement("td", {align: "center"}, newtr);
+
+                newinput = createElement("input", {
+                    id: "inputvalMinRand",
+                    value: valMinRand,
+                    maxlength: "1",
+                    size: "1px",
+                    style: "background-color:transparent;",
+                }, newtd);
+                newinput.addEventListener("keyup", function () {
+                    valMinRand = parseInt(this.value, 10);
+                    if (valMinRand > 3 || valMinRand < 1) {
+                        valMinRand = GM_getValue(lng + "_" + server + "_" + username + "_valMinRand", valMinRand)
+                    }
+                    if (valMinRand > valMaxRand) {
+                        valMinRand = valMaxRand;
+                    }
+                    if (!isNaN(valMinRand)) {
+                        GM_setValue(lng + "_" + server + "_" + username + "_valMinRand", valMinRand);
+                        valMinRand = GM_getValue(lng + "_" + server + "_" + username + "_valMinRand", valMinRand)
+                    }
+                    this.value = (isNaN(valMinRand) ? "" : valMinRand);
+                }, false);
+
+                newinput = createElement("input", {
+                    id: "inputvalMaxRand",
+                    value: valMaxRand,
+                    maxlength: "1",
+                    size: "1x",
+                    style: "background-color:transparent;"
+                }, newtd);
+                newinput.addEventListener("keyup", function () {
+                    valMaxRand = parseInt(this.value, 10);
+                    if (valMaxRand > 3 || valMaxRand < 1) {
+                        valMaxRand = GM_getValue(lng + "_" + server + "_" + username + "_valMaxRand", valMaxRand)
+                    }
+                    if (valMinRand > valMaxRand) {
+                        valMaxRand = valMinRand;
+                    }
+                    if (!isNaN(valMaxRand)) {
+                        GM_setValue(lng + "_" + server + "_" + username + "_valMaxRand", valMaxRand);
+                        valMaxRand = GM_getValue(lng + "_" + server + "_" + username + "_valMaxRand", valMaxRand)
+                    }
+                    this.value = (isNaN(valMaxRand) ? "" : valMaxRand);
+                }, false);
+
+                newinput.addEventListener("focus", function () {
+                    this.style.backgroundColor = "lightblue";
+                }, false);
+                newinput.addEventListener("blur", function () {
+                    this.style.backgroundColor = "transparent";
+                }, false);
+
+                createElement("td", "", newtr, texte["set_Rand"]);
+                createElement("td", "", newtr, texte["info_Rand"]);
+
+                //AutoAnnouncement
+                newtr = createElement("tr", "", newtable);
+                newtd = createElement("td", {align: "center"}, newtr);
+                inp = createElement("input", {
+                    id: "inputvalSkipAnnouncement",
+                    type: "checkbox",
+                    class: "link",
+                    checked: valSkipAnnouncement
+                }, newtd);
+                inp.addEventListener("click", function () {
+                    valSkipAnnouncement = this.checked;
+                    GM_setValue(lng + "_" + server + "_" + username + "_valSkipAnnouncement", valSkipAnnouncement);
+                }, false);
+                createElement("td", "", newtr, texte["set_valSkipAnnouncement"]);
+                createElement("td", "", newtr, texte["info_valSkipAnnouncement"]);
+
+                //AutoQuest
                 newtr = createElement("tr", "", newtable);
                 newtd = createElement("td", {align: "center"}, newtr);
                 inp = createElement("input", {
@@ -2041,6 +2192,7 @@ window.addEventListener("load", function () {
                 }, false);
                 createElement("td", "", newtr, texte["set_valStartQuestAutomatic"]);
                 createElement("td", "", newtr, texte["info_valStartQuestAutomatic"]);
+
 
                 //AutoLogin
                 createElement("div", {
@@ -2248,7 +2400,7 @@ window.addEventListener("load", function () {
                 id: "loginDelete" + v
             }, newtr);
             createElement("img", {
-                src: "https://cdn2.iconfinder.com/data/icons/windows-8-metro-style/128/delete.png",
+                src: "http://megaicons.net/static/img/icons_sizes/8/178/32/system-delete-icon.png",
                 class: "link2",
                 style: "width: 16px; height: 16px;"
             }, newtd);
@@ -2477,7 +2629,7 @@ window.addEventListener("load", function () {
                     for (var v = 0; v < rooms.length; v++) {
                         if (( rooms[v].cleanup ) && ( rooms[v].ends == 0 ) && ( rooms[v].roomid != 6 )) {
                             var croom = Global.refRooms.get("r" + rooms[v].topleft);
-                            console.log( info + "Cleaning room: " + rooms[v].topleft);
+                            console.log(info + "Cleaning room: " + rooms[v].topleft);
                             croom._onDrop(cleaner, "", "");
                         }
                     }
@@ -2670,6 +2822,7 @@ window.addEventListener("load", function () {
                     var help = Global.refPatients.get("p" + patientId);
                     if (!( $("treatment" + help["room"]) )) {
                         unsafeWindow.MedicalRecord._onclick(canddiv[v], patientId);
+                        console.log("Applying medicine number: " + v + "to patient with Id :" + patientId);
                         break;
                     }
                 }
@@ -2894,6 +3047,7 @@ window.addEventListener("load", function () {
     }
 
     function calcCurrDisease(patientId) { // returns current treatment
+        console.log(info + "PateintId is: " + patientId);
         var result = null;
         if (patientDiseases[patientId]) {
             for (var v in patientDiseases[patientId]) {
@@ -3093,8 +3247,10 @@ window.addEventListener("load", function () {
         Log("do_Quest");
         if ($("ga_running")) {
             if ($("ga_running").style.display != "none") {
-                questTime = now + unsafeWindow.Garage["ends"];
+                questTime = now + unsafeWindow.GarageOld["ends"];
                 GM_setValue(lng + "_" + server + "_" + username + "_questTime", questTime);
+                console.log("Current time is: " + now);
+                console.log("Quest time is: " + questTime);
             }
             else {
                 window.setTimeout(do_Quest, 200);
@@ -3103,34 +3259,34 @@ window.addEventListener("load", function () {
     }
 
     function start_Quest() {
-        console.log( info + "StartQuest");
+        console.log(info + "StartQuest");
         unsafeWindow.show_page("garage");
 
         window.setTimeout(function () {
             if ($("newswindow_badge")) {
                 //Success message
-                console.log( info + "Finished!");
+                console.log(info + "Finished!");
                 unsafeWindow.close_badge();
             }
 
             window.setTimeout(function () {
-                console.log( info + "Search window");
+                console.log(info + "Search window");
                 if ($("ga_new") && $("ga_new").style.display != "none") {
-                    console.log( info + "Creating new");
+                    console.log(info + "Creating new");
                     questcnt = $('ga_done').innerHTML[0];
-                    console.log( info + "Quest number: " + questcnt);
+                    console.log(info + "Quest number: " + questcnt);
 
                     if (questcnt < 8) {
-                        unsafeWindow.Garage.doJob();
+                        unsafeWindow.GarageOld.doJob();
                     }
                     else {
-                        console.log( info +"Eight quests done, job's done. ;)");
+                        console.log(info + "Eight quests done, job's done. ;)");
                     }
                 }
 
 
                 if ($("ga_running") && $("ga_running").style.display != "none") {
-                    console.log( info + "Still working..");
+                    console.log(info + "Still working..");
                 }
 
                 window.setTimeout(unsafeWindow.close_page, 500);
@@ -3140,7 +3296,7 @@ window.addEventListener("load", function () {
         }, 500);
     }
 
-    console.log( info + "Start do_mail()");
+    console.log(info + "Start do_mail()");
     function do_Mail() {
         var keyMsgShow = /showMessage\(['|\s]*(\d+)['|\s]*,'(.*?)'\)/;
         var keyMsgDelete = /deleteMessage\(['|\s]*(\d+)['|\s]*,\s*this,\s*'(.*?)'\)/;
@@ -3151,7 +3307,7 @@ window.addEventListener("load", function () {
             cand = candtable[0].getElementsByTagName("a");
             if (cand[0] && (help = keyMsgShow.exec(cand[0].href))) {
                 if (help[2] == "inbox") {
-                    console.log( info * "inbox");
+                    console.log(info * "inbox");
                     var msgIdIn = [];
                     for (var v = 0; v < cand.length; v++) {
                         help = keyMsgShow.exec(cand[v].href);
@@ -3215,7 +3371,7 @@ window.addEventListener("load", function () {
                     }
                 }
                 if ($("deleteContact")) {
-                    console.log( info + "Contacts");
+                    console.log(info + "Contacts");
                     var contacts = [];
                     cand = candtable[0].getElementsByTagName("tr");
                     for (var tr = 1; tr < cand.length - 3; tr++) {
@@ -3470,7 +3626,7 @@ window.addEventListener("load", function () {
     }
 
 //***********************************************************************************************************
-    console.log( info + "do_login");
+    console.log(info + "do_login");
     function do_login() {
         var loc = reg2.exec(document.location.href);
 
@@ -3524,9 +3680,21 @@ window.addEventListener("load", function () {
         }
     }
 
-    /*************************** end function declarations **************************/
+    // Rolling the dice
+    if (document.location.href.search("rubbellos.php") != -1 && valPickAutomatic) {
+        Rubbellos.rubbeln(getRandom(valMinRand, valMaxRand));
+        $("weiter_btn").onclick();
+    }
 
-    console.log( info + "Removing ads");
-    removeElement($("sky"));
+    // Skipping the announcements
+    if (document.location.href.search("readannouncement.php") != -1 && valSkipAnnouncement) {
+        document.location.href = $('continue').href;
+    }
+
+    // Adblock
+    if ($("sky") != null) {
+        console.log(info + "Removing ads");
+        removeElement($("sky"));
+    }
 
 }, false);
