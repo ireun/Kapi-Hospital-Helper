@@ -603,7 +603,7 @@ window.addEventListener("load", function () {
                                             medprice = number_format((Global.availableMedics[0][k]["price"] * diff), 2, ',', '.');
                                             //console.log("medprice >"+ medprice + "<" );
 
-                                            price_overall += parseFloat((Global.availableMedics[0][k]["price"] * diff), 2);
+                                            price_overall += parseFloat(Global.availableMedics[0][k]["price"] * diff);
                                             console.log(info + "price_overall >" + price_overall + "<");
 
                                             //medstoBuy.push( { "itemid":Global.availableMedics[0][k]["id"], "amount":diff } );
@@ -621,7 +621,7 @@ window.addEventListener("load", function () {
                                             }, tabcell);
                                             newinput.addEventListener("click", function () {
 
-                                                price = Global.availableMedics[0]["med" + this.id.split('#')[0]]["price"];
+                                                price = Global.availableMedics[0][this.id.split('#')[0]]["price"];
                                                 price *= parseInt(this.id.split('#')[1]);
 
                                                 if (this.checked) {
@@ -1272,7 +1272,7 @@ window.addEventListener("load", function () {
 
         // Rack
         Select("rackItems").addEventListener("dblclick", function (event) {
-            var shop = Global.availableMedics[0]["med" + event.target.getAttribute("medid")]["shop"];
+            var shop = Global.availableMedics[0][event.target.getAttribute("medid")]["shop"];
             if ((shop < 3) || city2Allowed) {
                 unsafeWindow.show_page("shop" + shop);
             } else {
@@ -1782,10 +1782,10 @@ window.addEventListener("load", function () {
                 var medid = checkboxes[i].id.split('#')[0];
                 var amount = Select('am_' + medid).value;
 
-                var medprice = number_format((Global.availableMedics[0]["med" + medid]["price"] * amount), 2, ',', '.');
+                var medprice = number_format((Global.availableMedics[0][medid]["price"] * amount), 2, ',', '.');
                 Select('prc' + medid).innerHTML = medprice + " " + Global._KH_CURRENCY;
 
-                overall += parseFloat((Global.availableMedics[0]["med" + medid]["price"] * amount), 2);
+                overall += parseFloat(Global.availableMedics[0][medid]["price"] * amount);
             }
         }
 
@@ -3211,7 +3211,7 @@ window.addEventListener("load", function () {
             calcPatientState(currPatientId);
         }
 
-        var maxprice = parseFloat(Select("med_price").getElementsByTagName("span")[0].innerHTML.split("-")[1].replace(Global._KH_THOUSANDSEPERATOR, "").replace(Global._KH_DECIMALSEPERATOR, "."), 10);
+        var maxprice = parseFloat(Select("med_price").getElementsByTagName("span")[0].innerHTML.split("-")[1].replace(Global._KH_THOUSANDSEPERATOR, "").replace(Global._KH_DECIMALSEPERATOR, "."));
         createElement("div", {"style": "position:absolute;top:380px;right:130px;color:red;"}, Select("ref_divdetailsbig"), "85%: " + hT_formatgr(0.85 * maxprice) + ", 90%: " + hT_formatgr(0.9 * maxprice) + ", 95%: " + hT_formatgr(0.95 * maxprice));
 
         var newimg = createElement("img", {
@@ -3583,12 +3583,12 @@ window.addEventListener("load", function () {
                     candtd[2].style.backgroundColor = "yellow";
                 }
             }
-            var priceMax = parseFloat(candtd[3].innerHTML.replace(regDelimThou, "").replace(regDelimDeci, "."), 10);
+            var priceMax = parseFloat(candtd[3].innerHTML.replace(regDelimThou, "").replace(regDelimDeci, "."));
             candtd[3].innerHTML = "&nbsp;" + number_format(priceMax, 2);
             candtd[3].style.textAlign = "right";
             candtd[4].style.textAlign = "right";
             candtd[5].style.textAlign = "right";
-            var price = parseFloat(candtd[4].innerHTML.replace(regDelimThou, "").replace(regDelimDeci, "."), 10);
+            var price = parseFloat(candtd[4].innerHTML.replace(regDelimThou, "").replace(regDelimDeci, "."));
             candtd[4].innerHTML = "&nbsp;" + number_format(price, 2);
             candtd[5].getElementsByTagName("a")[0].innerHTML = "&nbsp;" + number_format(100 * price / priceMax) + "%";
             candtd[5].getElementsByTagName("a")[0].addEventListener("click", function () {
