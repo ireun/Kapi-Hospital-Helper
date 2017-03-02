@@ -242,7 +242,7 @@ window.addEventListener("load", function () {
         questTime = GM_getValue(lng + "_" + server + "_" + username + "_questTime", 0);
         valStartQuestAutomatic = GM_getValue(lng + "_" + server + "_" + username + "_valStartQuestAutomatic", true);
         valPickAutomatic = GM_getValue(lng + "_" + server + "_" + username + "_valPickAutomatic", false);
-        valSkipAnnouncement = GM_getValue(lng + "_" + server + "_" + username + "_valPickAutomatic", false);
+        valSkipAnnouncement = GM_getValue(lng + "_" + server + "_" + username + "_valSkipAnnouncement", false);
 
         if (developer) {
             createElement("div", {
@@ -338,7 +338,8 @@ window.addEventListener("load", function () {
 
                     $("help1").innerHTML += "<br>"
                 }
-                console.log(roomId);
+                //TODO
+                // console.log(roomId);
 
                 if (roomId != 0) {
                     var help = Global.refRooms.get("r" + roomId);
@@ -1030,7 +1031,12 @@ window.addEventListener("load", function () {
                         //removeElement( $("mcont_"+currPatientId) );
                     }
 
-                    // 0=waitingroom,1=bed,2=nurse,3=in room,4=treatment,5=cured
+                    // 0=waitingroom
+                    // 1=bed
+                    // 2=nurse
+                    // 3=in room
+                    // 4=treatment
+                    // 5=cured
                     if (patientDiseases[currPatientId]["state"] != 5) {
                         if (patientDiseases[currPatientId]["state"] == 2) {
                             patientDiseases[currPatientId]["m"]++;
@@ -1187,8 +1193,9 @@ window.addEventListener("load", function () {
             Log("MOUSEOVER " + event.target.id);
             var patientId = 0;
             if (!isNaN(event.target.id.replace("r", ""))) {
-                Log(info + "Evemt is: " + event);
-                Log(event.target.id);
+                // TODO Unhide these
+                // log(info + "Evemt is: " + event);
+                // Log(event.target.id);
                 var currRoom = 0;
                 if (!isNaN(event.target.id.replace("r", ""))) {
                     currRoom = event.target.id.replace("r", "");
@@ -1957,7 +1964,8 @@ window.addEventListener("load", function () {
                 }
                 //console.log("______________________________ object end");
             } else {
-                console.log(pre + obj);
+                // TODO Unhide these
+                // console.log(pre + obj);
             }
         }
     }
@@ -3047,7 +3055,8 @@ window.addEventListener("load", function () {
     }
 
     function calcCurrDisease(patientId) { // returns current treatment
-        console.log(info + "PateintId is: " + patientId);
+        // TODO Unhide this
+        // console.log(info + "PateintId is: " + patientId);
         var result = null;
         if (patientDiseases[patientId]) {
             for (var v in patientDiseases[patientId]) {
@@ -3089,7 +3098,8 @@ window.addEventListener("load", function () {
     }
 
     function calcComesNext(patientId) {
-        Log("calcComesNext " + patientId);
+        // TODO Unhide this
+        // Log("calcComesNext " + patientId);
         if (patientDiseases[patientId]) {
             var currRoomId = null;
             for (var disease in patientDiseases[patientId]) {
@@ -3111,8 +3121,8 @@ window.addEventListener("load", function () {
     }
 
     function calcEndTreatment(patientId) {
-        Log("calcEndTreatment " + patientId);
-
+        //Log("calcEndTreatment " + patientId);
+        //TODO Unhide this
         if (patientDiseases[patientId]) {
             var cured = true;
 
