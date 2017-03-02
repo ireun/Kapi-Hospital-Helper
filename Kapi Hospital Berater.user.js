@@ -208,7 +208,7 @@ window.addEventListener("load", function () {
 
         var documentTitle = document.title;
         try {
-            var maincontainer = $("border4").parentNode;
+            var maincontainer = Select("border4").parentNode;
         } catch (err) {
             var maincontainer = all;
         }
@@ -264,7 +264,7 @@ window.addEventListener("load", function () {
                 var tz = tbdy.getElementsByTagName("tr");
 
 
-                $("pkt").addEventListener("mouseover", function () {
+                Select("pkt").addEventListener("mouseover", function () {
                     var punkte = parseInt(this.innerHTML.replace(/\./g, ""), 10);
 
                     for (var z = 0; z < tz.length; z++) {
@@ -310,8 +310,8 @@ window.addEventListener("load", function () {
 
         if (developer) {
             console.log(info + "You are a developer");
-            $("garten_komplett").addEventListener("mouseover", function (event) {
-                $("help1").innerHTML = "";
+            Select("garten_komplett").addEventListener("mouseover", function (event) {
+                Select("help1").innerHTML = "";
                 var roomId = 0;
                 var patientId = 0;
                 if (!isNaN(event.target.id.replace("r", ""))) {
@@ -326,17 +326,17 @@ window.addEventListener("load", function () {
                     var help = Global.refPatients.get("p" + patientId);
                     for (var v in help) {
                         if (typeof(help[v]) != "function") {
-                            $("help1").innerHTML += "<br>" + v + " : " + help[v];
+                            Select("help1").innerHTML += "<br>" + v + " : " + help[v];
                         }
                     }
-                    $("help1").innerHTML += "<br>";
+                    Select("help1").innerHTML += "<br>";
                     if (patientDiseases[patientId]) {
                         for (var v in patientDiseases[patientId]) {
-                            $("help1").innerHTML += "<br>" + v + " : " + patientDiseases[patientId][v];
+                            Select("help1").innerHTML += "<br>" + v + " : " + patientDiseases[patientId][v];
                         }
                     }
 
-                    $("help1").innerHTML += "<br>"
+                    Select("help1").innerHTML += "<br>"
                 }
                 //TODO
                 // console.log(roomId);
@@ -345,15 +345,15 @@ window.addEventListener("load", function () {
                     var help = Global.refRooms.get("r" + roomId);
                     for (var v in help) {
                         if (typeof(help[v]) != "function") {
-                            $("help1").innerHTML += "<br>" + v + " : " + help[v];
+                            Select("help1").innerHTML += "<br>" + v + " : " + help[v];
                         }
-                        //else $("help1").innerHTML += "<br>"+v+" : Fkt";
+                        //else Select("help1").innerHTML += "<br>"+v+" : Fkt";
                     }
-                    $("help1").innerHTML += "<br>";
+                    Select("help1").innerHTML += "<br>";
                     var help = Global.availableRooms[help["roomid"]];
                     for (var v in help) {
                         if (typeof(help[v]) != "function") {
-                            $("help1").innerHTML += "<br>" + v + " : " + help[v];
+                            Select("help1").innerHTML += "<br>" + v + " : " + help[v];
                         }
                     }
 
@@ -368,10 +368,10 @@ window.addEventListener("load", function () {
         }
 
         //Mediregal durchblaetterfunktion
-        $("racknavigation_right").removeAttribute("onclick");
-        $("racknavigation_left").removeAttribute("onclick");
+        Select("racknavigation_right").removeAttribute("onclick");
+        Select("racknavigation_left").removeAttribute("onclick");
 
-        $("racknavigation_left").addEventListener("click",
+        Select("racknavigation_left").addEventListener("click",
             function () {
                 var prev = unsafeWindow.Rack._curPage - 1;
                 var max = Math.ceil(unsafeWindow.Rack["_elements"].size() / 16);
@@ -384,7 +384,7 @@ window.addEventListener("load", function () {
             }, false);
 
 
-        $("racknavigation_right").addEventListener("click",
+        Select("racknavigation_right").addEventListener("click",
             function () {
                 var next = unsafeWindow.Rack._curPage + 1;
                 var max = Math.ceil(unsafeWindow.Rack["_elements"].size() / 16);
@@ -404,11 +404,11 @@ window.addEventListener("load", function () {
             werbecontainer.style.display = "";
             maincontainer.style.marginTop = "5px";
         }
-        if ($("getcoinsnow")) {
-            $("getcoinsnow").style.display = "none";
+        if (Select("getcoinsnow")) {
+            Select("getcoinsnow").style.display = "none";
         }
-        if ($("nicelink")) {
-            $("nicelink").style.display = "none";
+        if (Select("nicelink")) {
+            Select("nicelink").style.display = "none";
         }
         newdiv = document.getElementsByTagName("div");
         for (var v = 0; v < newdiv.length; v++) {
@@ -435,7 +435,7 @@ window.addEventListener("load", function () {
          newdiv1.addEventListener("click",function(){unsafeWindow.Map.jumpTo("floor"+this.id.replace("miniiconSelectFloor",""));miniiconSelectFloor();},false);
          }
          function miniiconSelectFloor(){
-         for(var v=1;v<=floors;v++) $("miniiconSelectFloor"+v).style.backgroundColor = (v==parseInt(Global.selectedFloor,10)?"blue":"");
+         for(var v=1;v<=floors;v++) Select("miniiconSelectFloor"+v).style.backgroundColor = (v==parseInt(Global.selectedFloor,10)?"blue":"");
          }
          miniiconSelectFloor();
          */
@@ -631,8 +631,8 @@ window.addEventListener("load", function () {
                                                     price_overall = parseFloat(price_overall) - parseFloat(price);
                                                 }
 
-                                                if ($('prover')) {
-                                                    $('prover').innerHTML = hT_format(price_overall);
+                                                if (Select('prover')) {
+                                                    Select('prover').innerHTML = hT_format(price_overall);
                                                 }
 
 
@@ -692,7 +692,7 @@ window.addEventListener("load", function () {
                             if (checkboxes[i].checked) {
                                 medstoBuy.push({
                                     "itemid": checkboxes[i].id.split('#')[0],
-                                    "amount": $('am_' + checkboxes[i].id.split('#')[0]).value
+                                    "amount": Select('am_' + checkboxes[i].id.split('#')[0]).value
                                 })
                             }
                         }
@@ -777,30 +777,30 @@ window.addEventListener("load", function () {
                 if (event.altKey) {
                     switch (event.keyCode) {
                         case 49:
-                            if ($("floor_jump_1")) {
+                            if (Select("floor_jump_1")) {
                                 closeInfoPanel();
-                                click($("floor_jump_1"));
+                                click(Select("floor_jump_1"));
                             }
                             event.preventDefault();
                             break; // Ebene 1
                         case 50:
-                            if ($("floor_jump_2")) {
+                            if (Select("floor_jump_2")) {
                                 closeInfoPanel();
-                                click($("floor_jump_2"));
+                                click(Select("floor_jump_2"));
                             }
                             event.preventDefault();
                             break; // Ebene 2
                         case 51:
-                            if ($("floor_jump_3")) {
+                            if (Select("floor_jump_3")) {
                                 closeInfoPanel();
-                                click($("floor_jump_3"));
+                                click(Select("floor_jump_3"));
                             }
                             event.preventDefault();
                             break; // Ebene 3
                         case 52:
-                            if ($("floor_jump_4")) {
+                            if (Select("floor_jump_4")) {
                                 closeInfoPanel();
-                                click($("floor_jump_4"));
+                                click(Select("floor_jump_4"));
                             }
                             event.preventDefault();
                             break; // Ebene 3
@@ -857,7 +857,7 @@ window.addEventListener("load", function () {
                             // Bed
                             if (currPatientId = parseInt(currRoom["patient"], 10)) {
                                 if (patientDiseases[currPatientId]) {
-                                    if (!$("p" + currPatientId)) {
+                                    if (!Select("p" + currPatientId)) {
                                         patientDiseases[currPatientId]["state"] = 2;
                                         patientDiseases[currPatientId]["floor"] = 1;
                                         patientDiseases[currPatientId]["room"] = 6;
@@ -867,24 +867,24 @@ window.addEventListener("load", function () {
                                     initPatient(currPatientId);
                                 }
 
-                                if ($("treatmentr" + currRoom["topleft"])) {
+                                if (Select("treatmentr" + currRoom["topleft"])) {
                                     if ((!roomTimes[Global.selectedFloor][currRoom["topleft"]]) || (currRoom["ends"] != roomTimes[Global.selectedFloor][currRoom["topleft"]][0])) {
                                         roomTimes[Global.selectedFloor][currRoom["topleft"]] = [currRoom["ends"], now + currRoom["ends"], 3];
                                     }
 
-                                    if (!$("timeinfo_" + currRoom["topleft"])) {
+                                    if (!Select("timeinfo_" + currRoom["topleft"])) {
                                         createElement("div", {
                                             id: "timeinfo_" + currRoom["topleft"],
                                             style: "position:absolute;top:0px;left:1px;background-color:white;"
-                                        }, $("r" + currRoom["topleft"]));
+                                        }, Select("r" + currRoom["topleft"]));
                                     }
 
                                     //console.log( time2str(roomTimes[Global.selectedFloor][currRoom["topleft"]][1]-now, 2) );
-                                    $("timeinfo_" + currRoom["topleft"]).innerHTML = time2str(roomTimes[Global.selectedFloor][currRoom["topleft"]][1] - now, 2);
+                                    Select("timeinfo_" + currRoom["topleft"]).innerHTML = time2str(roomTimes[Global.selectedFloor][currRoom["topleft"]][1] - now, 2);
                                 }
                                 else {
-                                    if ($("timeinfo_" + currRoom["topleft"])) {
-                                        removeElement($("timeinfo_" + currRoom.topleft));
+                                    if (Select("timeinfo_" + currRoom["topleft"])) {
+                                        removeElement(Select("timeinfo_" + currRoom.topleft));
                                     }
                                 }
 
@@ -903,16 +903,16 @@ window.addEventListener("load", function () {
                                     }
                                 }
 
-                                if (!$("timeinfo_" + currRoom["topleft"])) {
+                                if (!Select("timeinfo_" + currRoom["topleft"])) {
                                     createElement("div", {
                                         id: "timeinfo_" + currRoom["topleft"],
                                         style: "position:absolute;bottom:23px;left:13px;font-weight:bold;background-color:white;"
-                                    }, $("r" + currRoom["topleft"]));
+                                    }, Select("r" + currRoom["topleft"]));
                                 }
-                                $("timeinfo_" + currRoom["topleft"]).innerHTML = time2str(roomTimes[Global.selectedFloor][currRoom["topleft"]][1] - now);
+                                Select("timeinfo_" + currRoom["topleft"]).innerHTML = time2str(roomTimes[Global.selectedFloor][currRoom["topleft"]][1] - now);
 
                                 // treatment?
-                                if ($("gradient_r" + currRoom["topleft"])) {
+                                if (Select("gradient_r" + currRoom["topleft"])) {
                                     if (currRoom["state"] == 3) {
                                         if (currPatientId = parseInt(currRoom["patient"], 10)) {
                                             if (patientDiseases[currPatientId]) {
@@ -925,31 +925,31 @@ window.addEventListener("load", function () {
                                         }
 
                                         // Medis
-                                        if ($("alert" + currRoom.topleft)) {
+                                        if (Select("alert" + currRoom.topleft)) {
                                             var currDisease = null;
                                             if (currDisease = calcCurrDisease(currRoom["patient"])) {
-                                                if (!$("mediinfo_" + currRoom.topleft)) {
+                                                if (!Select("mediinfo_" + currRoom.topleft)) {
                                                     createElement("div", {
                                                         id: "mediinfo_" + currRoom.topleft,
                                                         style: "position:absolute;top:5px;left:5px;font-weight:bold;background-color:white;-moz-border-radius:5px;"
-                                                    }, $("r" + currRoom.topleft));
+                                                    }, Select("r" + currRoom.topleft));
                                                 }
-                                                $("mediinfo_" + currRoom.topleft).setAttribute("class", "m_a_30 m_" + medi[currDisease]["id"] + "_30");
+                                                Select("mediinfo_" + currRoom.topleft).setAttribute("class", "m_a_30 m_" + medi[currDisease]["id"] + "_30");
                                             }
                                         } else {
-                                            if ($("mediinfo_" + currRoom.topleft)) {
-                                                removeElement($("mediinfo_" + currRoom.topleft));
+                                            if (Select("mediinfo_" + currRoom.topleft)) {
+                                                removeElement(Select("mediinfo_" + currRoom.topleft));
                                             }
                                         }
                                     }
 
                                 } else {
                                     if (currRoom["state"] == 3) {
-                                        if ($("timeinfo_" + currRoom.topleft)) {
-                                            removeElement($("timeinfo_" + currRoom.topleft));
+                                        if (Select("timeinfo_" + currRoom.topleft)) {
+                                            removeElement(Select("timeinfo_" + currRoom.topleft));
                                         }
-                                        if ($("mediinfo_" + currRoom.topleft)) {
-                                            removeElement($("mediinfo_" + currRoom.topleft));
+                                        if (Select("mediinfo_" + currRoom.topleft)) {
+                                            removeElement(Select("mediinfo_" + currRoom.topleft));
                                         }
                                     }
                                 }
@@ -959,11 +959,11 @@ window.addEventListener("load", function () {
                                     calcGlobalTime = true;
                                 }
                                 roomTimes[Global.selectedFloor][currRoom["topleft"]] = [0, 0, currRoom["state"]];
-                                if ($("timeinfo_" + currRoom.topleft)) {
-                                    removeElement($("timeinfo_" + currRoom.topleft));
+                                if (Select("timeinfo_" + currRoom.topleft)) {
+                                    removeElement(Select("timeinfo_" + currRoom.topleft));
                                 }
-                                if ($("mediinfo_" + currRoom.topleft)) {
-                                    removeElement($("mediinfo_" + currRoom.topleft));
+                                if (Select("mediinfo_" + currRoom.topleft)) {
+                                    removeElement(Select("mediinfo_" + currRoom.topleft));
                                 }
                             }
                         }
@@ -1000,26 +1000,26 @@ window.addEventListener("load", function () {
             if (valGlobalClockInTitle) {
                 document.title = (roomTimes["global"][0] < nie ? time2str(roomTimes["global"][0] - now) : texte["fertig"].toUpperCase()) + " - " + roomTimes["emptyrooms"][0] + " - " + documentTitle;
             } else {
-                if (!$("globalclock")) {
+                if (!Select("globalclock")) {
                     createElement("div", {
                         id: "globalclock",
                         title: texte["GlobalTime"],
                         style: "position:absolute;top:0px;left:0px;font-weight:bold;background-color:white;"
                     }, all);
                 }
-                $("globalclock").innerHTML = (roomTimes["global"][0] < nie ? time2str(roomTimes["global"][0] - now) : texte["fertig"].toUpperCase()) + " - " + roomTimes["emptyrooms"][0];
+                Select("globalclock").innerHTML = (roomTimes["global"][0] < nie ? time2str(roomTimes["global"][0] - now) : texte["fertig"].toUpperCase()) + " - " + roomTimes["emptyrooms"][0];
             }
-            if (!$("floorclock")) {
+            if (!Select("floorclock")) {
                 createElement("div", {
                     id: "floorclock",
                     title: texte["FloorTime"],
                     style: "position:absolute;top:5px;left:20px;font-weight:bold;background-color:white;"
-                }, $("hospital_content"));
+                }, Select("hospital_content"));
             }
-            $("floorclock").innerHTML = ((roomTimes["allrooms"][Global.selectedFloor] > 0) ? (roomTimes["global"][Global.selectedFloor] < nie ? time2str(roomTimes["global"][Global.selectedFloor] - now) : texte["fertig"].toUpperCase()) : "---") + " - " + roomTimes["emptyrooms"][Global.selectedFloor];
+            Select("floorclock").innerHTML = ((roomTimes["allrooms"][Global.selectedFloor] > 0) ? (roomTimes["global"][Global.selectedFloor] < nie ? time2str(roomTimes["global"][Global.selectedFloor] - now) : texte["fertig"].toUpperCase()) : "---") + " - " + roomTimes["emptyrooms"][Global.selectedFloor];
 
             // Patients Divs
-            var canddiv = $("hospital_content").getElementsByClassName("patient");
+            var canddiv = Select("hospital_content").getElementsByClassName("patient");
             for (var pat = 0; pat < canddiv.length; pat++) {
                 currPatientId = parseInt(canddiv[pat].id.replace("p", ""), 10);
                 if (patientDiseases[currPatientId]) {
@@ -1027,8 +1027,8 @@ window.addEventListener("load", function () {
                     var classStr = canddiv[pat].getAttribute("class").replace(" allcured", "").replace(" unhealable", "").replace(" needminitreatment", "");
 
                     //dont remove, its flickring to much
-                    if ($("mcont_" + currPatientId)) {
-                        //removeElement( $("mcont_"+currPatientId) );
+                    if (Select("mcont_" + currPatientId)) {
+                        //removeElement( Select("mcont_"+currPatientId) );
                     }
 
                     // 0=waitingroom
@@ -1053,18 +1053,18 @@ window.addEventListener("load", function () {
                             patientDiseases[currPatientId]["state"] = 1;
 
                             //in bed
-                            if (!$("mcont_" + currPatientId)) {
+                            if (!Select("mcont_" + currPatientId)) {
                                 createElement("div", {
                                     id: "mcont_" + currPatientId,
                                     style: "float:right;background-color:white;margin-right:2px;"
                                 }, canddiv[pat]);
 
                                 for (var m = 0; m < patientDiseases[currPatientId]["m"]; m++) {
-                                    createElement("div", {style: "width: 7px; height: 7px; margin: 1px;background-color:green;"}, $("mcont_" + currPatientId));
+                                    createElement("div", {style: "width: 7px; height: 7px; margin: 1px;background-color:green;"}, Select("mcont_" + currPatientId));
                                 }
 
                                 for (; m < 4; m++) {
-                                    createElement("div", {style: "width: 7px; height: 7px; margin: 1px;background-color:red;"}, $("mcont_" + currPatientId));
+                                    createElement("div", {style: "width: 7px; height: 7px; margin: 1px;background-color:red;"}, Select("mcont_" + currPatientId));
                                 }
                             }
                         }
@@ -1098,7 +1098,7 @@ window.addEventListener("load", function () {
             }
 
             // waiting patients
-            canddiv = $("waitingroom").getElementsByClassName("waitingpatient");
+            canddiv = Select("waitingroom").getElementsByClassName("waitingpatient");
             for (var pat = 0; pat < canddiv.length; pat++) {
                 canddiv[pat].style.opacity = ((Global.refPatients.get(canddiv[pat].id).referred != 0) ? "0.4" : "1"); //verkaufte
                 var currPatientId = parseInt(canddiv[pat].id.replace("p", ""), 10);
@@ -1118,15 +1118,15 @@ window.addEventListener("load", function () {
             canddiv = null;
 
             // QuestClock
-            if (!$("questclock")) {
+            if (!Select("questclock")) {
                 createElement("div", {
                     id: "questclock",
                     title: texte["QuestTime"],
                     style: "position:absolute;bottom:0px;right:0px;font-weight:bold;background-color:white;"
-                }, $("waitingroom"));
+                }, Select("waitingroom"));
             }
 
-            $("questclock").innerHTML = ( (questTime > now) ? time2str(questTime - now) : texte["fertig"].toUpperCase() );
+            Select("questclock").innerHTML = ( (questTime > now) ? time2str(questTime - now) : texte["fertig"].toUpperCase() );
 
         }, 1000);
 
@@ -1143,7 +1143,7 @@ window.addEventListener("load", function () {
 
 
         window.setInterval(function () { // leaving patient
-            var cand = $("goingpatient").getElementsByClassName("patient");
+            var cand = Select("goingpatient").getElementsByClassName("patient");
             for (var v = 0; v < cand.length; v++) {
                 var currPatientId = parseInt(cand[v].id.replace("p", ""), 10);
                 if (patientDiseases[currPatientId]) {
@@ -1156,7 +1156,7 @@ window.addEventListener("load", function () {
         }, 500);
 
         window.setInterval(function () {
-            var cand = $("rackItems").getElementsByClassName("medamount");
+            var cand = Select("rackItems").getElementsByClassName("medamount");
             for (var v in cand) {
                 if (cand[v].nodeType === 1) {
                     var help = cand[v].getAttribute("class");
@@ -1174,7 +1174,7 @@ window.addEventListener("load", function () {
                 }
             }
             for (var pat in patientDiseases) {
-                if ((patientDiseases[pat]["state"] == 0) && (!$("p" + pat))) { // waiting+gone
+                if ((patientDiseases[pat]["state"] == 0) && (!Select("p" + pat))) { // waiting+gone
                     delete patientDiseases[pat];
                 }
             }
@@ -1189,7 +1189,7 @@ window.addEventListener("load", function () {
         }, all);
         hiddenPatientDiv = createElement("div", {id: "hiddenPatientDiv", style: "display:;"}, all);
 
-        $("garten_komplett").addEventListener("mouseover", function (event) {
+        Select("garten_komplett").addEventListener("mouseover", function (event) {
             Log("MOUSEOVER " + event.target.id);
             var patientId = 0;
             if (!isNaN(event.target.id.replace("r", ""))) {
@@ -1220,28 +1220,28 @@ window.addEventListener("load", function () {
                 //getPatientData(patientId);
 
                 if (Global.ISPREMIUM) {
-                    var patdetail = $("treatico");
+                    var patdetail = Select("treatico");
                     if (patdetail.childNodes.length > 0) {
                         patientDiseases[patientId]["m"] = 4;
                     }
                 }
             }
         }, false);
-        $("garten_komplett").addEventListener("mousemove", function (event) {
+        Select("garten_komplett").addEventListener("mousemove", function (event) {
             beraterDiseaseBubble.style.left = event.pageX + "px";
             beraterDiseaseBubble.style.top = event.pageY + "px";
         }, false);
-        $("garten_komplett").addEventListener("mouseout", function (event) {
+        Select("garten_komplett").addEventListener("mouseout", function (event) {
             beraterDiseaseBubble.style.display = "none";
             unhighlightPatients();
         }, false);
 
         // Frame Observer
         newswindowObserver = window.setInterval(function () {
-            if (($("newswindow").style.display != "none") && (!$("newswindowObserver"))) {
-                createElement("h1", {id: "newswindowObserver"}, $("newswindow"));
-                if ($("msgwindow")) {
-                    var help = $("msgwindow").getAttribute("style");
+            if ((Select("newswindow").style.display != "none") && (!Select("newswindowObserver"))) {
+                createElement("h1", {id: "newswindowObserver"}, Select("newswindow"));
+                if (Select("msgwindow")) {
+                    var help = Select("msgwindow").getAttribute("style");
                     if (help.search("medicalrecord_1.png") != -1) {
                         do_Patientenblatt();
                     }
@@ -1271,7 +1271,7 @@ window.addEventListener("load", function () {
         }, 200);
 
         // Rack
-        $("rackItems").addEventListener("dblclick", function (event) {
+        Select("rackItems").addEventListener("dblclick", function (event) {
             var shop = Global.availableMedics[0]["med" + event.target.getAttribute("medid")]["shop"];
             if ((shop < 3) || city2Allowed) {
                 unsafeWindow.show_page("shop" + shop);
@@ -1651,7 +1651,7 @@ window.addEventListener("load", function () {
         }
     }
 
-    function $(ID) {
+    function Select(ID) {
         return document.getElementById(ID)
     }
 
@@ -1774,23 +1774,23 @@ window.addEventListener("load", function () {
     }
 
     function calc_overall() {
-        var checkboxes = $('buyquest2').querySelectorAll('input[type="checkbox"]');
+        var checkboxes = Select('buyquest2').querySelectorAll('input[type="checkbox"]');
         var overall = 0.00;
 
         for (var i = 0; i < checkboxes.length; i++) {
             if (checkboxes[i].checked) {
                 var medid = checkboxes[i].id.split('#')[0];
-                var amount = $('am_' + medid).value;
+                var amount = Select('am_' + medid).value;
 
                 var medprice = number_format((Global.availableMedics[0]["med" + medid]["price"] * amount), 2, ',', '.');
-                $('prc' + medid).innerHTML = medprice + " " + Global._KH_CURRENCY;
+                Select('prc' + medid).innerHTML = medprice + " " + Global._KH_CURRENCY;
 
                 overall += parseFloat((Global.availableMedics[0]["med" + medid]["price"] * amount), 2);
             }
         }
 
-        if ($('prover')) {
-            $('prover').innerHTML = hT_format(overall);
+        if (Select('prover')) {
+            Select('prover').innerHTML = hT_format(overall);
         }
     }
 
@@ -1971,25 +1971,25 @@ window.addEventListener("load", function () {
     }
 
     function closeInfoPanel() {
-        $("infoPanel").setAttribute("name", "");
-        $("infoPanel").style.display = "none";
+        Select("infoPanel").setAttribute("name", "");
+        Select("infoPanel").style.display = "none";
     }
 
     function buildInfoPanel(mode) {
 
-        if (mode == $("infoPanel").getAttribute("name")) {
+        if (mode == Select("infoPanel").getAttribute("name")) {
             closeInfoPanel();
         }
         else {
-            $("infoPanel").setAttribute("name", mode);
-            $("infoPanel").innerHTML = "";
-            $("infoPanel").style.display = "block";
+            Select("infoPanel").setAttribute("name", mode);
+            Select("infoPanel").innerHTML = "";
+            Select("infoPanel").style.display = "block";
 
-            divInfo = createElement("div", {style: "position:absolute;left:20px;top:80px;width:570px;height:400px;overflow:auto;"}, $("infoPanel"));
+            divInfo = createElement("div", {style: "position:absolute;left:20px;top:80px;width:570px;height:400px;overflow:auto;"}, Select("infoPanel"));
             newdiv = createElement("img", {
                 class: "cursorclickable",
                 style: "font-size:10px;position:absolute;height:35px;width:35px;right:10px;top:2px;"
-            }, $("infoPanel"));
+            }, Select("infoPanel"));
             newdiv.addEventListener("click", closeInfoPanel, false);
 
             if (mode == "options") {
@@ -2097,13 +2097,13 @@ window.addEventListener("load", function () {
                     valPickAutomatic = this.checked;
                     GM_setValue(lng + "_" + server + "_" + username + "_valPickAutomatic", valPickAutomatic);
                     if (!valPickAutomatic) {
-                        $("inputvalMinRand").disabled = true;
-                        $("inputvalMaxRand").disabled = true;
-                        $("lotterySettings").style = "opacity: 0.4";
+                        Select("inputvalMinRand").disabled = true;
+                        Select("inputvalMaxRand").disabled = true;
+                        Select("lotterySettings").style = "opacity: 0.4";
                     } else {
-                        $("inputvalMinRand").disabled = false;
-                        $("inputvalMaxRand").disabled = false;
-                        $("lotterySettings").style = "";
+                        Select("inputvalMinRand").disabled = false;
+                        Select("inputvalMaxRand").disabled = false;
+                        Select("lotterySettings").style = "";
                     }
                 }, false);
                 createElement("td", "", newtr, texte["set_valPickAutomatic"]);
@@ -2276,7 +2276,7 @@ window.addEventListener("load", function () {
         }
 
         newtable = createElement("table", {align: "center"});
-        $("tableAutologin").parentNode.replaceChild(newtable, $("tableAutologin"));
+        Select("tableAutologin").parentNode.replaceChild(newtable, Select("tableAutologin"));
         newtable.id = "tableAutologin";
         newtable.addEventListener("change", saveLogin, false);
         newtr = createElement("tr", {}, newtable);
@@ -2620,15 +2620,15 @@ window.addEventListener("load", function () {
 
 // Cleaner Function
     function cleaningfunc() {
-        var cleaner = $("cleaner");
+        var cleaner = Select("cleaner");
         var cur_floor = Global.selectedFloor;
         var floor = 1;
 
-        for (var max_floor = 1; $("floor_jump_" + max_floor); max_floor++);
+        for (var max_floor = 1; Select("floor_jump_" + max_floor); max_floor++);
         max_floor--;
 
         function initfloor(nfloor) {
-            $('floor_jump_' + nfloor).click();
+            Select('floor_jump_' + nfloor).click();
 
             setTimeout(
                 function () {
@@ -2648,7 +2648,7 @@ window.addEventListener("load", function () {
                     }
                     else {
                         if (floor != cur_floor) {
-                            $('floor_jump_' + cur_floor).click();
+                            Select('floor_jump_' + cur_floor).click();
                         }
                     }
                 }, 1000);
@@ -2661,11 +2661,11 @@ window.addEventListener("load", function () {
         var cur_floor = Global.selectedFloor;
         var floor = 1;
 
-        for (var max_floor = 1; $("floor_jump_" + max_floor); max_floor++);
+        for (var max_floor = 1; Select("floor_jump_" + max_floor); max_floor++);
         max_floor--;
 
         function initmedi(nfloor) {
-            $('floor_jump_' + nfloor).click();
+            Select('floor_jump_' + nfloor).click();
 
             setTimeout(
                 function () {
@@ -2677,7 +2677,7 @@ window.addEventListener("load", function () {
                                 if ((Global.availableRooms[currRoom["roomid"]] ) && (Global.availableRooms[currRoom["roomid"]]["diseases"].length > 0 )) { // Behandlungsraum
 
                                     if (currRoom["state"] == 3) {
-                                        if ($("gradient_r" + currRoom["topleft"]) && $("alert" + currRoom.topleft)) {
+                                        if (Select("gradient_r" + currRoom["topleft"]) && Select("alert" + currRoom.topleft)) {
                                             // Medis
 
                                             var currDisease = null;
@@ -2685,8 +2685,8 @@ window.addEventListener("load", function () {
                                             //console.log(currDisease);
 
                                             if (currDisease) {
-                                                if ($("mediinfo_" + currRoom.topleft)) {
-                                                    //console.log( $('rackItem'+medi[currDisease]["id"] ) );
+                                                if (Select("mediinfo_" + currRoom.topleft)) {
+                                                    //console.log( Select('rackItem'+medi[currDisease]["id"] ) );
 
                                                     for (var i = 0; i < unsafeWindow.Rack["_elements"]; i++) {
                                                         if (unsafeWindow.Rack["_elements"][i]["product"] == medi[currDisease]["id"])
@@ -2721,14 +2721,14 @@ window.addEventListener("load", function () {
                          * error window is shown, close it and start again
                          * (its when disease array is not complete)
                          */
-                        if ($("dlg_message").style.display != "none" && $("btn_info")) {
-                            click($("btn_info"));
+                        if (Select("dlg_message").style.display != "none" && Select("btn_info")) {
+                            click(Select("btn_info"));
                             floor = 1;
                             initmedi(floor);
                         }
 
                         if (floor != cur_floor) {
-                            $('floor_jump_' + cur_floor).click();
+                            Select('floor_jump_' + cur_floor).click();
                         }
                     }
                 }
@@ -2828,7 +2828,7 @@ window.addEventListener("load", function () {
             for (var v = 0; v < canddiv.length; v++) {
                 if (canddiv[v].style.backgroundImage == "") {
                     var help = Global.refPatients.get("p" + patientId);
-                    if (!( $("treatment" + help["room"]) )) {
+                    if (!( Select("treatment" + help["room"]) )) {
                         unsafeWindow.MedicalRecord._onclick(canddiv[v], patientId);
                         console.log("Applying medicine number: " + v + "to patient with Id :" + patientId);
                         break;
@@ -2857,8 +2857,8 @@ window.addEventListener("load", function () {
 
         if (patientDiseases[patientId]["state"] != 5) {
 
-            if ($("p" + patientId)) {
-                if ($("p" + patientId).getAttribute("class").search("waitingpatient") != -1) {
+            if (Select("p" + patientId)) {
+                if (Select("p" + patientId).getAttribute("class").search("waitingpatient") != -1) {
                     patientDiseases[patientId]["state"] = 0;
                     patientDiseases[patientId]["room"] = 0;
                 }
@@ -3002,7 +3002,7 @@ window.addEventListener("load", function () {
 
     function highlightPatients(roomid) {
         // Patients
-        var canddiv = $("garten_komplett").getElementsByClassName("patient");
+        var canddiv = Select("garten_komplett").getElementsByClassName("patient");
 
         for (var v = 0; v < canddiv.length; v++) {
             canddiv[v].style.border = "";
@@ -3020,12 +3020,12 @@ window.addEventListener("load", function () {
         }
 
         // in Rooms
-        var canddiv = $("garten_komplett").getElementsByClassName("room");
+        var canddiv = Select("garten_komplett").getElementsByClassName("room");
         for (var v = 0; v < canddiv.length; v++) {
             canddiv[v].style.backgroundColor = "";
             var currPatientId = Global.refRooms.get(canddiv[v].id)["patient"];
             if (currPatientId) {
-                if (!$("p" + currPatientId)) {
+                if (!Select("p" + currPatientId)) {
                     if (patientDiseases[currPatientId]) {
                         if (patientDiseases[currPatientId]["room" + roomid]) {
                             canddiv[v].style.backgroundColor = "blue";
@@ -3041,12 +3041,12 @@ window.addEventListener("load", function () {
 
     function unhighlightPatients() {
         Log("unhighlightPatients");
-        var canddiv = $("garten_komplett").getElementsByClassName("patient");
+        var canddiv = Select("garten_komplett").getElementsByClassName("patient");
 
         for (var v = 0; v < canddiv.length; v++) {
             canddiv[v].style.border = "";
         }
-        var canddiv = $("garten_komplett").getElementsByClassName("room");
+        var canddiv = Select("garten_komplett").getElementsByClassName("room");
 
         for (var v = 0; v < canddiv.length; v++) {
             canddiv[v].style.backgroundColor = "";
@@ -3158,11 +3158,11 @@ window.addEventListener("load", function () {
     }
 
     function do_Patientenblatt() {
-        var currPatientId = parseInt((/MedicalRecord\.\_onclick\(this, (\d+)/).exec($("msgwindow").innerHTML)[1], 10);
+        var currPatientId = parseInt((/MedicalRecord\.\_onclick\(this, (\d+)/).exec(Select("msgwindow").innerHTML)[1], 10);
         var currPatient = Global.refPatients.get("p" + currPatientId);
 
         // diseases
-        var canddiv = $("msgwindow").getElementsByTagName("div");
+        var canddiv = Select("msgwindow").getElementsByTagName("div");
 
         for (var v = 0; v < canddiv.length - 1; v++) {
             if (canddiv[v].id == "medi_diseases") {
@@ -3193,7 +3193,7 @@ window.addEventListener("load", function () {
             }
         }
         // nurse
-        var canddiv = $("msgwindow").getElementsByClassName("minitreatment");
+        var canddiv = Select("msgwindow").getElementsByClassName("minitreatment");
         patientDiseases[currPatientId]["m"] = 4;
 
         for (var v = 0; v < canddiv.length; v++) {
@@ -3211,27 +3211,27 @@ window.addEventListener("load", function () {
             calcPatientState(currPatientId);
         }
 
-        var maxprice = parseFloat($("med_price").getElementsByTagName("span")[0].innerHTML.split("-")[1].replace(Global._KH_THOUSANDSEPERATOR, "").replace(Global._KH_DECIMALSEPERATOR, "."), 10);
-        createElement("div", {"style": "position:absolute;top:380px;right:130px;color:red;"}, $("ref_divdetailsbig"), "85%: " + hT_formatgr(0.85 * maxprice) + ", 90%: " + hT_formatgr(0.9 * maxprice) + ", 95%: " + hT_formatgr(0.95 * maxprice));
+        var maxprice = parseFloat(Select("med_price").getElementsByTagName("span")[0].innerHTML.split("-")[1].replace(Global._KH_THOUSANDSEPERATOR, "").replace(Global._KH_DECIMALSEPERATOR, "."), 10);
+        createElement("div", {"style": "position:absolute;top:380px;right:130px;color:red;"}, Select("ref_divdetailsbig"), "85%: " + hT_formatgr(0.85 * maxprice) + ", 90%: " + hT_formatgr(0.9 * maxprice) + ", 95%: " + hT_formatgr(0.95 * maxprice));
 
         var newimg = createElement("img", {
             "style": "position:absolute;top:440px;left:219px;width:16px;height:16px;",
             "src": "http://pics.kapihospital.de/addressbook.gif",
             "class": "cursorclickable",
             "title": "Adressbuch"
-        }, $("ref_divdetailsbig"));
+        }, Select("ref_divdetailsbig"));
         newimg.addEventListener("click", function () {
             var newdiv = createElement("div", {
                 "id": "refAdressBook",
                 "style": "top:70px;width:265px;height:350px;position:absolute;z-index:30;right:0px;background:url('http://pics.kapihospital.de/addressbook_newmsg.gif') no-repeat scroll left top transparent;overflow:visible;"
-            }, $("ref_divdetails"));
+            }, Select("ref_divdetails"));
             var newdiv1 = createElement("div", {
                 "style": "position:absolute;left:12px;top:5px;z-index:2;width:15px;height:10px;",
                 "class": "cursorclickable",
                 "title": "schlie" + sz_de + "en"
             }, newdiv);
             newdiv1.addEventListener("click", function () {
-                removeElement($("refAdressBook"));
+                removeElement(Select("refAdressBook"));
             }, false);
             createElement("div", {"style": "z-index:1;position:absolute;width:165px;top:15px;left:45px;right:15px;text-align:center;font-weight:bold;font-size:medium;"}, newdiv, "Adressbuch");
             newdiv1 = createElement("div", {"style": "position:absolute;width:180px;height:225px;top:50px;left:45px;right:0px;overflow-y:auto;overflow-x:hidden;"}, newdiv);
@@ -3240,8 +3240,8 @@ window.addEventListener("load", function () {
             for (var v = 0; v < contacts.length; v++) {
                 newdiv1 = createElement("div", {"class": "cursorclickable"}, createElement("td", {}, createElement("tr", {}, newtable)), contacts[v]);
                 newdiv1.addEventListener("click", function () {
-                    $("ref_recipient").value = this.innerHTML;
-                    removeElement($("refAdressBook"));
+                    Select("ref_recipient").value = this.innerHTML;
+                    removeElement(Select("refAdressBook"));
                 }, false);
             }
             newdiv = null;
@@ -3255,8 +3255,8 @@ window.addEventListener("load", function () {
 
     function do_Quest() {
         Log("do_Quest");
-        if ($("ga_running")) {
-            if ($("ga_running").style.display != "none") {
+        if (Select("ga_running")) {
+            if (Select("ga_running").style.display != "none") {
                 questTime = now + unsafeWindow.GarageOld["ends"];
                 GM_setValue(lng + "_" + server + "_" + username + "_questTime", questTime);
                 console.log("Current time is: " + now);
@@ -3273,7 +3273,7 @@ window.addEventListener("load", function () {
         unsafeWindow.show_page("garage");
 
         window.setTimeout(function () {
-            if ($("newswindow_badge")) {
+            if (Select("newswindow_badge")) {
                 //Success message
                 console.log(info + "Finished!");
                 unsafeWindow.close_badge();
@@ -3281,9 +3281,9 @@ window.addEventListener("load", function () {
 
             window.setTimeout(function () {
                 console.log(info + "Search window");
-                if ($("ga_new") && $("ga_new").style.display != "none") {
+                if (Select("ga_new") && Select("ga_new").style.display != "none") {
                     console.log(info + "Creating new");
-                    questcnt = $('ga_done').innerHTML[0];
+                    questcnt = Select('ga_done').innerHTML[0];
                     console.log(info + "Quest number: " + questcnt);
 
                     if (questcnt < 8) {
@@ -3295,7 +3295,7 @@ window.addEventListener("load", function () {
                 }
 
 
-                if ($("ga_running") && $("ga_running").style.display != "none") {
+                if (Select("ga_running") && Select("ga_running").style.display != "none") {
                     console.log(info + "Still working..");
                 }
 
@@ -3310,7 +3310,7 @@ window.addEventListener("load", function () {
     function do_Mail() {
         var keyMsgShow = /showMessage\(['|\s]*(\d+)['|\s]*,'(.*?)'\)/;
         var keyMsgDelete = /deleteMessage\(['|\s]*(\d+)['|\s]*,\s*this,\s*'(.*?)'\)/;
-        var candtable = $("msgwindow").getElementsByTagName("table");
+        var candtable = Select("msgwindow").getElementsByTagName("table");
         var cand = null;
         var help = null;
         if (candtable[0]) {
@@ -3349,7 +3349,7 @@ window.addEventListener("load", function () {
                     }
                 }
             } else {
-                cand = $("msgNavigation").getElementsByTagName("input");
+                cand = Select("msgNavigation").getElementsByTagName("input");
                 if (cand.length > 1) {
                     // InMessage
                     help = keyMsgDelete.exec(cand[cand.length - 2].getAttribute("onclick"));
@@ -3367,7 +3367,7 @@ window.addEventListener("load", function () {
                                     "value": "Previous message",
                                     "onclick": "javascript:Messages.showMessage(" + msgIdIn[c - 1] + ",'inbox');",
                                     "class": "cursorclickable msg_input"
-                                }, $("msgNavigation"));
+                                }, Select("msgNavigation"));
                             }
                             if (c < msgIdIn.length - 1) {
                                 createElement("input", {
@@ -3375,12 +3375,12 @@ window.addEventListener("load", function () {
                                     "value": "Next message",
                                     "onclick": "javascript:Messages.showMessage(" + msgIdIn[c + 1] + ",'inbox');",
                                     "class": "cursorclickable msg_input"
-                                }, $("msgNavigation"));
+                                }, Select("msgNavigation"));
                             }
                         }
                     }
                 }
-                if ($("deleteContact")) {
+                if (Select("deleteContact")) {
                     console.log(info + "Contacts");
                     var contacts = [];
                     cand = candtable[0].getElementsByTagName("tr");
@@ -3410,10 +3410,10 @@ window.addEventListener("load", function () {
     }
 
     function do_Notepad() {
-        removeElement($("premiumicon"));
-        $("msg_body").disabled = "";
-        $("msg_body").value = GM_getValue(lng + "_" + server + "_" + username + "_notepad", "");
-        $("msg_body").addEventListener("keyup", function () {
+        removeElement(Select("premiumicon"));
+        Select("msg_body").disabled = "";
+        Select("msg_body").value = GM_getValue(lng + "_" + server + "_" + username + "_notepad", "");
+        Select("msg_body").addEventListener("keyup", function () {
             GM_setValue(lng + "_" + server + "_" + username + "_notepad", this.value);
         }, false);
     }
@@ -3421,18 +3421,18 @@ window.addEventListener("load", function () {
     function do_Patientenboerse() {
         Log("do_Patientenboerse");
 
-        createElement("div", {style: "z-index:0;position:absolute;top:0px;right:0px;height:500px;width:250px;background-image: url('http://pics.kapihospital.de/bg_exchange2.jpg');background-position:250px 0px;"}, $("msgwindow"));
-        $("msgwindow").style.width = "750px";
-        $("ex_bubble").style.width = "";
-        $("ex_bubble").style.zIndex = "1";
+        createElement("div", {style: "z-index:0;position:absolute;top:0px;right:0px;height:500px;width:250px;background-image: url('http://pics.kapihospital.de/bg_exchange2.jpg');background-position:250px 0px;"}, Select("msgwindow"));
+        Select("msgwindow").style.width = "750px";
+        Select("ex_bubble").style.width = "";
+        Select("ex_bubble").style.zIndex = "1";
 
-        /*var newdiv = createElement("div",{style:"position:absolute;bottom:-70px;left:20px;background-color: white;"},$("msgwindow"));*/
+        /*var newdiv = createElement("div",{style:"position:absolute;bottom:-70px;left:20px;background-color: white;"},Select("msgwindow"));*/
         var newtab = createElement("table", {
             border: "1px",
             cellspacing: "0px",
             cellpadding: "0px",
             style: "text-align:center;position:absolute;bottom:-120px;left:-100px;width:750px;background-color: white;"
-        }, $("msgwindow"));
+        }, Select("msgwindow"));
 
         var valShowUncurable = GM_getValue(lng + "_" + server + "_" + username + "_valShowUncurable", false);
         var highlightBoerse = {};
@@ -3458,7 +3458,7 @@ window.addEventListener("load", function () {
         }, tabcell);
         newinput.addEventListener("click", function () {
             GM_setValue(lng + "_" + server + "_" + username + "_valShowUncurable", this.checked);
-            click($("ex_navi").getElementsByTagName("div")[1]);
+            click(Select("ex_navi").getElementsByTagName("div")[1]);
         }, false);
 
         createElement("span", {}, tabcell, texte["showUncurable"]);
@@ -3497,7 +3497,7 @@ window.addEventListener("load", function () {
                 newinput.addEventListener("click", function () {
                     highlightBoerse[this.id.replace("hl", "")] = this.checked;
                     GM_setValue(lng + "_" + server + "_" + username + "_highlightBoerse", implode(highlightBoerse));
-                    click($("ex_navi").getElementsByTagName("div")[1]);
+                    click(Select("ex_navi").getElementsByTagName("div")[1]);
                 }, false);
 
                 tabcell = createElement("td", "", newrow2);
@@ -3511,7 +3511,7 @@ window.addEventListener("load", function () {
                 newinput.addEventListener("click", function () {
                     highlightBoerse1[this.id.replace("hl1", "")] = this.checked;
                     GM_setValue(lng + "_" + server + "_" + username + "_highlightBoerse1", implode(highlightBoerse1));
-                    click($("ex_navi").getElementsByTagName("div")[1]);
+                    click(Select("ex_navi").getElementsByTagName("div")[1]);
                 }, false);
 
                 tabcell = createElement("td", "", newrow3);
@@ -3525,11 +3525,11 @@ window.addEventListener("load", function () {
                 newinput.addEventListener("click", function () {
                     blockBoerse[this.id.replace("bl", "")] = this.checked;
                     GM_setValue(lng + "_" + server + "_" + username + "_blockBoerse", implode(blockBoerse));
-                    click($("ex_navi").getElementsByTagName("div")[1]);
+                    click(Select("ex_navi").getElementsByTagName("div")[1]);
                 }, false);
             }
         }
-        var candtable = $("msgwindow").getElementsByTagName("table");
+        var candtable = Select("msgwindow").getElementsByTagName("table");
         candtable[0].style.width = "650px";
         candtable[0].setAttribute("class", "hoveryellow");
         var candtr = candtable[0].getElementsByTagName("tr");
@@ -3593,8 +3593,8 @@ window.addEventListener("load", function () {
             candtd[5].getElementsByTagName("a")[0].innerHTML = "&nbsp;" + number_format(100 * price / priceMax) + "%";
             candtd[5].getElementsByTagName("a")[0].addEventListener("click", function () {
                 clickYes = window.setInterval(function () {
-                    if (($("dlg_message").style.display != "none") && ($("btn_yes"))) {
-                        click($("btn_yes"));
+                    if ((Select("dlg_message").style.display != "none") && (Select("btn_yes"))) {
+                        click(Select("btn_yes"));
                         clearInterval(clickYes);
                     }
                 }, 50);
@@ -3604,7 +3604,7 @@ window.addEventListener("load", function () {
             createElement("td", {style: "text-align:right;"}, candtr[tr], "&nbsp;" + (price > priceMax ? "---" : number_format((priceMax - price) * 3600 / restlicheZeit)));
         }
 
-        var canddiv = $("ex_navi").getElementsByTagName("div");
+        var canddiv = Select("ex_navi").getElementsByTagName("div");
         canddiv[1].addEventListener("mouseover", function () {
             this.style.backgroundColor = "blue";
             click(this);
@@ -3619,15 +3619,15 @@ window.addEventListener("load", function () {
     }
 
     function do_Shop() {
-        var cand = $("dropzonesource").getElementsByTagName("div");
+        var cand = Select("dropzonesource").getElementsByTagName("div");
         for (var v in cand) {
             if (cand[v].addEventListener) {
                 cand[v].addEventListener("mousedown", function () {
-                    $("dropzonetarget").style.border = "2px solid red";
+                    Select("dropzonetarget").style.border = "2px solid red";
                 }, false);
 
                 cand[v].addEventListener("mouseup", function () {
-                    $("dropzonetarget").style.border = "";
+                    Select("dropzonetarget").style.border = "";
                 }, false);
             }
         }
@@ -3656,21 +3656,21 @@ window.addEventListener("load", function () {
             }
 
             unsafeWindow.showDiv("login_div");
-            $("login_div").style.zIndex = "20";
-            $("login_div").getElementsByClassName("kh_btn")[0].addEventListener("click", function () {
-                var currServer = $("l_server").value;
-                var currUser = $("l_loginname").value.toLowerCase();
+            Select("login_div").style.zIndex = "20";
+            Select("login_div").getElementsByClassName("kh_btn")[0].addEventListener("click", function () {
+                var currServer = Select("l_server").value;
+                var currUser = Select("l_loginname").value.toLowerCase();
                 GM_setValue(lng + "_" + currServer + "_username", currUser);
             }, false);
 
             function submit_login(currUserNr) {
-                $("l_server").value = logindata[currUserNr][1];
-                $("l_loginname").value = logindata[currUserNr][2];
-                $("l_password").value = logindata[currUserNr][3];
-                $("login_div").getElementsByClassName("kh_btn")[0].click();
+                Select("l_server").value = logindata[currUserNr][1];
+                Select("l_loginname").value = logindata[currUserNr][2];
+                Select("l_password").value = logindata[currUserNr][3];
+                Select("login_div").getElementsByClassName("kh_btn")[0].click();
             }
 
-            var newdiv = createElement("div", {style: "position:absolute;top:0px;left:0px;width:412px;padding:10px;background-color:#999;-moz-border-radius:10px;"}, $("login_div"));
+            var newdiv = createElement("div", {style: "position:absolute;top:0px;left:0px;width:412px;padding:10px;background-color:#999;-moz-border-radius:10px;"}, Select("login_div"));
             var newbutton;
             for (var v = 0; v < logindata.length; v++) {
                 if (logindata[v][1] != "0") {
@@ -3693,18 +3693,18 @@ window.addEventListener("load", function () {
     // Rolling the dice
     if (document.location.href.search("rubbellos.php") != -1 && valPickAutomatic) {
         Rubbellos.rubbeln(getRandom(valMinRand, valMaxRand));
-        $("weiter_btn").onclick();
+        Select("weiter_btn").onclick();
     }
 
     // Skipping the announcements
     if (document.location.href.search("readannouncement.php") != -1 && valSkipAnnouncement) {
-        document.location.href = $('continue').href;
+        document.location.href = Select('continue').href;
     }
 
     // Adblock
-    if ($("sky") != null) {
+    if (Select("sky") != null) {
         console.log(info + "Removing ads");
-        removeElement($("sky"));
+        removeElement(Select("sky"));
     }
 
 }, false);
