@@ -255,14 +255,14 @@ window.addEventListener("load", function () {
         // punkte
         GM_xmlhttpRequest({
             method: "GET",
-            url: "service.help.php?mode=level",
+            url: "http://s" + server + "." + lng + ".kapihospital.com/service.help.php?mode=level",
+            Cookie: document.cookie,
             // synchronous: true,
             onload: function (response) {
                 var text = JSON.parse(response.responseText);
                 var dom = (new DOMParser()).parseFromString(text["message"], "text/xml");
                 var tbdy = dom.getElementsByTagName("tbody").item(0);
                 var tz = tbdy.getElementsByTagName("tr");
-
 
                 Select("pkt").addEventListener("mouseover", function () {
                     var punkte = parseInt(this.innerHTML.replace(/\./g, ""), 10);
@@ -601,7 +601,7 @@ window.addEventListener("load", function () {
                                         //console.log(Global.availableMedics[0][k]);
                                         if (( diff = valMaxRackLimit - parseInt(unsafeWindow.Rack["_elements"][i]["amount"], 10) ) > 0) {
                                             medprice = number_format((Global.availableMedics[0][k]["price"] * diff), 2, ',', '.');
-                                            //console.log("medprice >"+ medprice + "<" );
+                                            //console.log(info + "medprice >"+ medprice + "<" );
 
                                             price_overall += parseFloat(Global.availableMedics[0][k]["price"] * diff);
                                             console.log(info + "price_overall >" + price_overall + "<");
@@ -1878,7 +1878,7 @@ window.addEventListener("load", function () {
     }
 
     function explode(str) {
-        //console.log("Begin explode "+ str);
+        //console.log(info + "Begin explode "+ str);
         if (str == "") {
             throw("Explode error Argument empty");
         }
@@ -1894,7 +1894,7 @@ window.addEventListener("load", function () {
         try {
             return eval('(' + str + ')');
         } catch (err) {
-            console.log("Explode error : " + err);
+            console.log(info + "Explode error : " + err);
             throw ("Explode error : " + err);
         }
     }
@@ -1946,8 +1946,8 @@ window.addEventListener("load", function () {
 
             return line.substring(0, line.length - 1) + (("{[".indexOf(endChar) != -1) ? endChar : "") + ((type) ? "]" : "}");
         } catch (err) {
-            console.log("Implode error : " + err);
-            throw ("Implode error : " + err);
+            console.log(info + "Implode error : " + err);
+            throw (info + "Implode error : " + err);
         }
     }
 
@@ -1958,11 +1958,11 @@ window.addEventListener("load", function () {
             }
 
             if (typeof(obj) == "object") {
-                //console.log("______________________________ object");
+                //console.log(info + "______________________________ object");
                 for (var v in obj) {
                     Log(obj[v], pre + v + " : ");
                 }
-                //console.log("______________________________ object end");
+                //console.log(info + "______________________________ object end");
             } else {
                 // TODO Unhide these
                 // console.log(pre + obj);
@@ -2120,7 +2120,7 @@ window.addEventListener("load", function () {
                     value: valMinRand,
                     maxlength: "1",
                     size: "1px",
-                    style: "background-color:transparent;",
+                    style: "background-color:transparent;"
                 }, newtd);
                 newinput.addEventListener("keyup", function () {
                     valMinRand = parseInt(this.value, 10);
@@ -2740,7 +2740,7 @@ window.addEventListener("load", function () {
 
     function initPatient(patientId) {
         if (!patientDiseases[patientId]) {
-            //console.log("initPatient "+patientId);
+            //console.log(info + "initPatient "+patientId);
             patientDiseases[patientId] = {};
             patientDiseases[patientId]["m"] = 0;
             patientDiseases[patientId]["floor"] = 1;
@@ -2761,6 +2761,7 @@ window.addEventListener("load", function () {
     }
 
     function refreshPatient(patientId, with_nurse) {
+        console.log(info + "refreshPatient with id: " + patientId);
         if (!patientDiseases[patientId]) {
             initPatient(patientId);
         }
@@ -2830,7 +2831,7 @@ window.addEventListener("load", function () {
                     var help = Global.refPatients.get("p" + patientId);
                     if (!( Select("treatment" + help["room"]) )) {
                         unsafeWindow.MedicalRecord._onclick(canddiv[v], patientId);
-                        console.log("Applying medicine number: " + v + "to patient with Id :" + patientId);
+                        console.log(info + "Applying medicine number: " + v + "to patient with Id :" + patientId);
                         break;
                     }
                 }
@@ -2986,11 +2987,14 @@ window.addEventListener("load", function () {
     }
 
     function getPatientInfos(id, with_nurse) {
-        var answ = GM_xmlhttpRequest({
+        console.log(info + "getPatientInfos with id: " + id);
+        GM_xmlhttpRequest({
             method: "GET",
-            url: "medicalrecord.php?patient=" + id,
-            // synchronous: true,
+            url: "http://s" + server + "." + lng + ".kapihospital.com/medicalrecord.php?patient=" + id,
+            Cookie: document.cookie,
+            //synchronous: true,
             onload: function (response) {
+                console.log(response);
                 var text = JSON.parse(response.responseText);
                 updPatientState(id, jQuery(text["message"]), with_nurse);
             },
@@ -3254,13 +3258,13 @@ window.addEventListener("load", function () {
     }
 
     function do_Quest() {
-        Log("do_Quest");
+        console.log(info + "do_Quest");
         if (Select("ga_running")) {
             if (Select("ga_running").style.display != "none") {
                 questTime = now + unsafeWindow.GarageOld["ends"];
                 GM_setValue(lng + "_" + server + "_" + username + "_questTime", questTime);
-                console.log("Current time is: " + now);
-                console.log("Quest time is: " + questTime);
+                console.log(info + "Current time is: " + now);
+                console.log(info + "Quest time is: " + questTime);
             }
             else {
                 window.setTimeout(do_Quest, 200);
@@ -3306,8 +3310,8 @@ window.addEventListener("load", function () {
         }, 500);
     }
 
-    console.log(info + "Start do_mail()");
     function do_Mail() {
+        console.log(info + "Start do_mail()");
         var keyMsgShow = /showMessage\(['|\s]*(\d+)['|\s]*,'(.*?)'\)/;
         var keyMsgDelete = /deleteMessage\(['|\s]*(\d+)['|\s]*,\s*this,\s*'(.*?)'\)/;
         var candtable = Select("msgwindow").getElementsByTagName("table");
@@ -3419,7 +3423,7 @@ window.addEventListener("load", function () {
     }
 
     function do_Patientenboerse() {
-        Log("do_Patientenboerse");
+        console.log(info + "do_Patientenboerse");
 
         createElement("div", {style: "z-index:0;position:absolute;top:0px;right:0px;height:500px;width:250px;background-image: url('http://pics.kapihospital.de/bg_exchange2.jpg');background-position:250px 0px;"}, Select("msgwindow"));
         Select("msgwindow").style.width = "750px";
@@ -3635,9 +3639,9 @@ window.addEventListener("load", function () {
         cand = null;
     }
 
-//***********************************************************************************************************
-    console.log(info + "do_login");
+
     function do_login() {
+        console.log(info + "do_login");
         var loc = reg2.exec(document.location.href);
 
         //Auto backing to login page
