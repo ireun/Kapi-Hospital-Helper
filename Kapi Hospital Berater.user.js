@@ -20,7 +20,7 @@ window.addEventListener("load", function () {
 
     console.log(info + "Start");
 
-// Special Characters - DE
+    // Special Characters - DE
     var ae_de = "\u00E4";      // ä
     var oe_de = "\u00F6";      // ö
     var ue_de = "\u00FC";      // ü
@@ -29,7 +29,7 @@ window.addEventListener("load", function () {
     var Ue_de = "\u00DC";      // Ü
     var sz_de = "\u00DF";      // ß
 
-// Special Characters - PL
+    // Special Characters - PL
     var a_pl = "\u0105";    // ą
     var c_pl = "\u0107";    // ć
     var e_pl = "\u0119";    // ę
@@ -40,7 +40,7 @@ window.addEventListener("load", function () {
     var z_pl = "\u017C";    // ź
     var x_pl = "\u017A";    // ż
 
-// Special Characters - CZ
+    // Special Characters - CZ
     var a_cz = "\u00E1";    // á
     var c_cz = "\u010D";    // č
     var d_cz = "\u010F";    // ď
@@ -57,7 +57,7 @@ window.addEventListener("load", function () {
     var u2_cz = "\u016F";   // ů
     var u3_cz = "\u00DA";   // Ú
 
-// global definitions
+    // global definitions
     var texte = {};
     var medi = {};
 
@@ -98,14 +98,15 @@ window.addEventListener("load", function () {
 
     ccode.forEach(function (ccode) {
         if (document.location.href.search(ccode[1] + ".kapihospital.com") != -1) {
-            lng = ccode[0];
+            lng = ccode[0];//Object.keys(gamepages)[0]; //
             reg = new RegExp("http://s(\\d+)\\." + ccode[1] + "\\.kapihospital\\.com/(.*?)\\.php(.*)", "i");
             gamepages[ccode[1]] = "http://www" + ccode[2];
             console.log(info + "Setting language: " + lng);
+            //console.log("Setting language: ", gamepages, Object.keys(gamepages)[0]);
             loadLanguage(lng);
         }
     });
-//***********************************************************************************************************
+    //***********************************************************************************************************
 
     var scriptUrl = "https://greasyfork.org/scripts/5182-kapi-hospital-berater";
     var Global = unsafeWindow.Global;
@@ -153,7 +154,7 @@ window.addEventListener("load", function () {
     }
 
 
-//***********************************************************************************************************
+    //***********************************************************************************************************
 
     function do_main() {
 
@@ -325,7 +326,7 @@ window.addEventListener("load", function () {
                 if (patientId != 0) {
                     var help = Global.refPatients.get("p" + patientId);
                     for (var v in help) {
-                        if (typeof(help[v]) != "function") {
+                        if (typeof (help[v]) != "function") {
                             Select("help1").innerHTML += "<br>" + v + " : " + help[v];
                         }
                     }
@@ -344,7 +345,7 @@ window.addEventListener("load", function () {
                 if (roomId != 0) {
                     var help = Global.refRooms.get("r" + roomId);
                     for (var v in help) {
-                        if (typeof(help[v]) != "function") {
+                        if (typeof (help[v]) != "function") {
                             Select("help1").innerHTML += "<br>" + v + " : " + help[v];
                         }
                         //else Select("help1").innerHTML += "<br>"+v+" : Fkt";
@@ -352,7 +353,7 @@ window.addEventListener("load", function () {
                     Select("help1").innerHTML += "<br>";
                     var help = Global.availableRooms[help["roomid"]];
                     for (var v in help) {
-                        if (typeof(help[v]) != "function") {
+                        if (typeof (help[v]) != "function") {
                             Select("help1").innerHTML += "<br>" + v + " : " + help[v];
                         }
                     }
@@ -422,11 +423,11 @@ window.addEventListener("load", function () {
             id: "berater_miniicons ",
             style: "color:white;height:50px;position:absolute;width:13px;z-index:10;top:186px;left:5px;"
         }, maincontainer);
-        newdiv1 = createElement("div", {class: "miniicon hoverblue cursorclickable", style: "border:0;"}, newdiv, "P");
+        newdiv1 = createElement("div", { class: "miniicon hoverblue cursorclickable", style: "border:0;" }, newdiv, "P");
         newdiv1.addEventListener("click", function () {
             buildInfoPanel("patients");
         }, false);
-        createElement("div", {style: "height:10px;"}, newdiv);
+        createElement("div", { style: "height:10px;" }, newdiv);
 
         /*
          var floors = 2;
@@ -442,7 +443,7 @@ window.addEventListener("load", function () {
         console.log(info + "Button list");
 
         // Button-Leiste
-        newdiv = createElement("div", {style: "position:absolute;top:784px;display:inline;"}, maincontainer);
+        newdiv = createElement("div", { style: "position:absolute;top:784px;display:inline;" }, maincontainer);
         newbutton = createElement("button", {
             type: "button",
             class: "cursorclickable",
@@ -457,6 +458,22 @@ window.addEventListener("load", function () {
         newbutton.addEventListener("mouseout", function () {
             this.style.backgroundColor = "";
         }, false);
+
+        newbutton = createElement("button", {
+            type: "button",
+            class: "cursorclickable",
+            style: "margin-left:3px;"
+        }, newdiv, "GG EZ");
+        newbutton.addEventListener("click", function () {
+            window.open(scriptUrl);
+        }, false);
+        newbutton.addEventListener("mouseover", function () {
+            this.style.backgroundColor = "#cc9";
+        }, false);
+        newbutton.addEventListener("mouseout", function () {
+            this.style.backgroundColor = "";
+        }, false);
+
         newbutton = createElement("button", {
             id: "berateroptionen",
             type: "button",
@@ -504,7 +521,7 @@ window.addEventListener("load", function () {
             [[texte["badboy"]], "badboy", 3, 2]
         ];
 
-        newdiv = createElement("div", {id: "quicklinks"}, all);
+        newdiv = createElement("div", { id: "quicklinks" }, all);
 
         var day = (new Date()).getDay();
         var city2Allowed = (Global.ISPREMIUM || (day == 3) || (day == 6));
@@ -534,12 +551,12 @@ window.addEventListener("load", function () {
 
                 }
             }
-            createElement("div", {style: "clear:both;"}, newdiv);
-            createElement("div", {style: "height:20px;width:100px;"}, newdiv);
+            createElement("div", { style: "clear:both;" }, newdiv);
+            createElement("div", { style: "height:20px;width:100px;" }, newdiv);
         }
 
-        var breaker = createElement("div", {style: "height:20px;width:100px;"}, newdiv);
-        createElement("hr", {style: "height:2px;color:blue; background: blue; width:100%;"}, breaker);
+        var breaker = createElement("div", { style: "height:20px;width:100px;" }, newdiv);
+        createElement("hr", { style: "height:2px;color:blue; background: blue; width:100%;" }, breaker);
 
         // Autobuttons
         var arrQuicklinks2 = [
@@ -589,9 +606,9 @@ window.addEventListener("load", function () {
                         style: "text-align:left;width:100%;"
                     }, dialogdiv2);
                     tabrow = createElement("tr", "", newtab);
-                    createElement("td", {style: "text-align:center;"}, tabrow, texte["Buying"]);
-                    createElement("td", {style: "text-align:center;"}, tabrow, texte["Dsignation"]);
-                    createElement("td", {style: "text-align:center;"}, tabrow, texte["Price"]);
+                    createElement("td", { style: "text-align:center;" }, tabrow, texte["Buying"]);
+                    createElement("td", { style: "text-align:center;" }, tabrow, texte["Dsignation"]);
+                    createElement("td", { style: "text-align:center;" }, tabrow, texte["Price"]);
 
                     for (var i = 0; i < unsafeWindow.Rack["_elements"].length; i++) {
                         for (var k in Global.availableMedics[0]) {
@@ -599,7 +616,7 @@ window.addEventListener("load", function () {
                                 if (Global.availableMedics[0][k]["shop"] != 0) {
                                     if (Global.availableMedics[0][k]["shop"] < 3 || city2Allowed) {
                                         //console.log(Global.availableMedics[0][k]);
-                                        if (( diff = valMaxRackLimit - parseInt(unsafeWindow.Rack["_elements"][i]["amount"], 10) ) > 0) {
+                                        if ((diff = valMaxRackLimit - parseInt(unsafeWindow.Rack["_elements"][i]["amount"], 10)) > 0) {
                                             medprice = number_format((Global.availableMedics[0][k]["price"] * diff), 2, ',', '.');
                                             //console.log(info + "medprice >"+ medprice + "<" );
 
@@ -610,7 +627,7 @@ window.addEventListener("load", function () {
                                             //buytext += diff + " x " +Global.availableMedics[0][k]["name"] + ": " + medprice + Global._KH_CURRENCY + "\n";
 
                                             tabrow = createElement("tr", "", newtab);
-                                            tabcell = createElement("td", {style: "text-align:center;"}, tabrow);
+                                            tabcell = createElement("td", { style: "text-align:center;" }, tabrow);
 
                                             newinput = createElement("input", {
                                                 "id": Global.availableMedics[0][k]["id"] + "#" + diff,
@@ -733,7 +750,7 @@ window.addEventListener("load", function () {
                     rooms = Global.refRooms.values();
 
                     for (var v = 0; v < rooms.length; v++) {
-                        if (( rooms[v].roomid == 6 )) {
+                        if ((rooms[v].roomid == 6)) {
                             console.log(info + "Checking room: " + rooms[v].topleft);
 
                             //If pateint has a room
@@ -767,8 +784,8 @@ window.addEventListener("load", function () {
             }
         }
 
-        createElement("div", {style: "clear:both;"}, newdiv);
-        createElement("div", {style: "height:20px;width:100px;"}, newdiv);
+        createElement("div", { style: "clear:both;" }, newdiv);
+        createElement("div", { style: "height:20px;width:100px;" }, newdiv);
 
 
         // Hotkeys
@@ -852,7 +869,7 @@ window.addEventListener("load", function () {
              */
             if (Global.nonEmptyFields[0]) {
                 for (var v = 0; v < cand.length; v++) {
-                    if ((currRoom = Global.refRooms.get(cand[v].id) )) {
+                    if ((currRoom = Global.refRooms.get(cand[v].id))) {
                         if (currRoom["roomid"] == 6) {
                             // Bed
                             if (currPatientId = parseInt(currRoom["patient"], 10)) {
@@ -890,7 +907,7 @@ window.addEventListener("load", function () {
 
                             }
                         }
-                        else if ((Global.availableRooms[currRoom["roomid"]] ) && (Global.availableRooms[currRoom["roomid"]]["diseases"].length > 0)) { // Behandlungsraum
+                        else if ((Global.availableRooms[currRoom["roomid"]]) && (Global.availableRooms[currRoom["roomid"]]["diseases"].length > 0)) { // Behandlungsraum
                             roomTimes["allrooms"][Global.selectedFloor]++;
 
                             if (currRoom["state"] == 3 || currRoom["state"] == 6) {
@@ -1060,11 +1077,13 @@ window.addEventListener("load", function () {
                                 }, canddiv[pat]);
 
                                 for (var m = 0; m < patientDiseases[currPatientId]["m"]; m++) {
-                                    createElement("div", {style: "width: 7px; height: 7px; margin: 1px;background-color:green;"}, Select("mcont_" + currPatientId));
+                                    console.log("RESULT: ", patientDiseases[currPatientId]["m"]);
+                                    createElement("div", { style: "width: 7px; height: 7px; margin: 1px;background-color:green;" }, Select("mcont_" + currPatientId));
                                 }
 
                                 for (; m < 4; m++) {
-                                    createElement("div", {style: "width: 7px; height: 7px; margin: 1px;background-color:red;"}, Select("mcont_" + currPatientId));
+                                    console.log("RESULT m: ", currPatientId, patientDiseases[currPatientId]);
+                                    createElement("div", { style: "width: 7px; height: 7px; margin: 1px;background-color:red;" }, Select("mcont_" + currPatientId));
                                 }
                             }
                         }
@@ -1126,7 +1145,7 @@ window.addEventListener("load", function () {
                 }, Select("waitingroom"));
             }
 
-            Select("questclock").innerHTML = ( (questTime > now) ? time2str(questTime - now) : texte["fertig"].toUpperCase() );
+            Select("questclock").innerHTML = ((questTime > now) ? time2str(questTime - now) : texte["fertig"].toUpperCase());
 
         }, 1000);
 
@@ -1187,7 +1206,7 @@ window.addEventListener("load", function () {
             id: "beraterDiseaseBubble",
             style: "z-index:2000;position:absolute;top:0px;left:0px;background-color:#CCC;-moz-border-radius:10px;border:2px solid black;padding:3px;margin-left:40px;"
         }, all);
-        hiddenPatientDiv = createElement("div", {id: "hiddenPatientDiv", style: "display:;"}, all);
+        hiddenPatientDiv = createElement("div", { id: "hiddenPatientDiv", style: "display:;" }, all);
 
         Select("garten_komplett").addEventListener("mouseover", function (event) {
             Log("MOUSEOVER " + event.target.id);
@@ -1239,7 +1258,7 @@ window.addEventListener("load", function () {
         // Frame Observer
         newswindowObserver = window.setInterval(function () {
             if ((Select("newswindow").style.display != "none") && (!Select("newswindowObserver"))) {
-                createElement("h1", {id: "newswindowObserver"}, Select("newswindow"));
+                createElement("h1", { id: "newswindowObserver" }, Select("newswindow"));
                 if (Select("msgwindow")) {
                     var help = Select("msgwindow").getAttribute("style");
                     if (help.search("medicalrecord_1.png") != -1) {
@@ -1693,7 +1712,6 @@ window.addEventListener("load", function () {
         }
     }
 
-
     function mousedown(A) {
         var B = document.createEvent("MouseEvents");
 
@@ -1795,9 +1813,9 @@ window.addEventListener("load", function () {
     }
 
     function time2str(time, mode) {
-        str = "";
+        var str = "";
         time = Math.max(0, time);
-        tmp = "";
+        var tmp = "";
 
         //seconds
         if (!mode || mode == 2) {
@@ -1880,7 +1898,7 @@ window.addEventListener("load", function () {
     function explode(str) {
         //console.log(info + "Begin explode "+ str);
         if (str == "") {
-            throw("Explode error Argument empty");
+            throw ("Explode error Argument empty");
         }
 
         if (str == "undefined") {
@@ -1908,7 +1926,7 @@ window.addEventListener("load", function () {
             var NoKey = Boolean(false);
 
             if (typeof arr != "object") {
-                throw("Argument not a Object or Array" + typeof arr + "<br>");
+                throw ("Argument not a Object or Array" + typeof arr + "<br>");
             }
 
             var type = (arr instanceof Array); //true->array | false->object
@@ -1953,11 +1971,11 @@ window.addEventListener("load", function () {
 
     function Log(obj, pre) {
         if (developer) {
-            if (typeof(pre) == "undefined") {
+            if (typeof (pre) == "undefined") {
                 pre = "";
             }
 
-            if (typeof(obj) == "object") {
+            if (typeof (obj) == "object") {
                 //console.log(info + "______________________________ object");
                 for (var v in obj) {
                     Log(obj[v], pre + v + " : ");
@@ -1985,7 +2003,7 @@ window.addEventListener("load", function () {
             Select("infoPanel").innerHTML = "";
             Select("infoPanel").style.display = "block";
 
-            divInfo = createElement("div", {style: "position:absolute;left:20px;top:80px;width:570px;height:400px;overflow:auto;"}, Select("infoPanel"));
+            divInfo = createElement("div", { style: "position:absolute;left:20px;top:80px;width:570px;height:400px;overflow:auto;" }, Select("infoPanel"));
             newdiv = createElement("img", {
                 class: "cursorclickable",
                 style: "font-size:10px;position:absolute;height:35px;width:35px;right:10px;top:2px;"
@@ -1997,11 +2015,11 @@ window.addEventListener("load", function () {
                     align: "center",
                     style: "line-height:30px;font-weight:bold;"
                 }, divInfo, texte["options"]);
-                newtable = createElement("table", {style: "width:100%;", border: "1"}, divInfo);
+                newtable = createElement("table", { style: "width:100%;", border: "1" }, divInfo);
 
                 // Update
                 newtr = createElement("tr", "", newtable);
-                newtd = createElement("td", {align: "center"}, newtr);
+                newtd = createElement("td", { align: "center" }, newtr);
                 var valUpdate = GM_getValue("valUpdate", true);
                 inp = createElement("input", {
                     id: "inputvalUpdate",
@@ -2018,7 +2036,7 @@ window.addEventListener("load", function () {
 
                 // Clock in title
                 newtr = createElement("tr", "", newtable);
-                newtd = createElement("td", {align: "center"}, newtr);
+                newtd = createElement("td", { align: "center" }, newtr);
                 inp = createElement("input", {
                     id: "inputvalGlobalClockInTitle",
                     type: "checkbox",
@@ -2034,7 +2052,7 @@ window.addEventListener("load", function () {
 
                 // Rack Limit
                 newtr = createElement("tr", "", newtable);
-                newtd = createElement("td", {align: "center"}, newtr);
+                newtd = createElement("td", { align: "center" }, newtr);
                 newinput = createElement("input", {
                     id: "inputvalRackLimit",
                     value: valRackLimit,
@@ -2060,7 +2078,7 @@ window.addEventListener("load", function () {
 
                 // Max Rack Limit
                 newtr = createElement("tr", "", newtable);
-                newtd = createElement("td", {align: "center"}, newtr);
+                newtd = createElement("td", { align: "center" }, newtr);
                 newinput = createElement("input", {
                     id: "inputvalMaxRackLimit",
                     value: valMaxRackLimit,
@@ -2086,7 +2104,7 @@ window.addEventListener("load", function () {
 
                 //AutoLottery
                 newtr = createElement("tr", "", newtable);
-                newtd = createElement("td", {align: "center"}, newtr);
+                newtd = createElement("td", { align: "center" }, newtr);
                 inp = createElement("input", {
                     id: "inputvalPickAutomatic",
                     type: "checkbox",
@@ -2113,7 +2131,7 @@ window.addEventListener("load", function () {
                 newtr = createElement("tr", {
                     id: "lotterySettings"
                 }, newtable);
-                newtd = createElement("td", {align: "center"}, newtr);
+                newtd = createElement("td", { align: "center" }, newtr);
 
                 newinput = createElement("input", {
                     id: "inputvalMinRand",
@@ -2171,7 +2189,7 @@ window.addEventListener("load", function () {
 
                 //AutoAnnouncement
                 newtr = createElement("tr", "", newtable);
-                newtd = createElement("td", {align: "center"}, newtr);
+                newtd = createElement("td", { align: "center" }, newtr);
                 inp = createElement("input", {
                     id: "inputvalSkipAnnouncement",
                     type: "checkbox",
@@ -2187,7 +2205,7 @@ window.addEventListener("load", function () {
 
                 //AutoQuest
                 newtr = createElement("tr", "", newtable);
-                newtd = createElement("td", {align: "center"}, newtr);
+                newtd = createElement("td", { align: "center" }, newtr);
                 inp = createElement("input", {
                     id: "inputvalStartQuestAutomatic",
                     type: "checkbox",
@@ -2207,12 +2225,12 @@ window.addEventListener("load", function () {
                     align: "center",
                     style: "line-height:30px;margin-top:20px;font-weight:bold;"
                 }, divInfo, texte["autoLogin"]);
-                newtable = createElement("table", {id: "tableAutologin", align: "center"}, divInfo);
+                newtable = createElement("table", { id: "tableAutologin", align: "center" }, divInfo);
 
                 buildLoginTable(false);
 
-                newdiv = createElement("div", {align: "center"}, divInfo);
-                newinput = createElement("input", {type: "checkbox", class: "cursorclickable", checked: false}, newdiv);
+                newdiv = createElement("div", { align: "center" }, divInfo);
+                newinput = createElement("input", { type: "checkbox", class: "cursorclickable", checked: false }, newdiv);
                 newinput.addEventListener("click", function () {
                     buildLoginTable(this.checked);
                 }, false);
@@ -2229,13 +2247,13 @@ window.addEventListener("load", function () {
                     align: "center",
                     style: "line-height:30px;margin-top:20px;font-weight:bold;"
                 }, divInfo, "CSS");
-                newtable = createElement("table", {align: "center"}, divInfo);
+                newtable = createElement("table", { align: "center" }, divInfo);
                 for (var v in cssArr) {
                     newtr = createElement("tr", "", newtable);
                     createElement("td", "", newtr, v);
                     newtd = createElement("td", "", newtr);
                     var help = GM_getValue(lng + "_" + server + "_" + username + "_" + v, cssArr[v][1]);
-                    newinput = createElement("input", {id: v, value: help, style: "width:300px;"}, newtd);
+                    newinput = createElement("input", { id: v, value: help, style: "width:300px;" }, newtd);
                     newinput.addEventListener("keyup", function () {
                         if (this.value == "") {
                             this.value = cssArr[this.id][1];
@@ -2252,7 +2270,7 @@ window.addEventListener("load", function () {
                     for (var w = 0; w < cssArr[v][0].length; w++) {
                         help = cssArr[cssArr[v][0][w]][1] + help;
                     }
-                    newdiv = createElement("div", {style: help}, newtd, "test");
+                    newdiv = createElement("div", { style: help }, newtd, "test");
                 }
             }
 
@@ -2275,7 +2293,7 @@ window.addEventListener("load", function () {
             logindata = [];
         }
 
-        newtable = createElement("table", {align: "center"});
+        newtable = createElement("table", { align: "center" });
         Select("tableAutologin").parentNode.replaceChild(newtable, Select("tableAutologin"));
         newtable.id = "tableAutologin";
         newtable.addEventListener("change", saveLogin, false);
@@ -2296,7 +2314,7 @@ window.addEventListener("load", function () {
             newinp.addEventListener("change", function () {
                 logindata[this.id.replace("loginActive", "")][4] = this.checked;
             }, false);
-            newinp = createElement("input", {id: "loginServer" + v, style: "width:20px", maxlength: "2"}, newtd);
+            newinp = createElement("input", { id: "loginServer" + v, style: "width:20px", maxlength: "2" }, newtd);
 
             if (isNaN(logindata[v][1])) {
                 logindata[v][1] = "0";
@@ -2318,9 +2336,9 @@ window.addEventListener("load", function () {
                 }
             }, false);
 
-            newselect = createElement("select", {id: "loginLng" + v}, newtd);
+            newselect = createElement("select", { id: "loginLng" + v }, newtd);
             for (var w in gamepages) {
-                createElement("option", {value: w}, newselect, w);
+                createElement("option", { value: w }, newselect, w);
             }
             newselect.value = logindata[v][0];
             newselect.addEventListener("change", function () {
@@ -2448,20 +2466,20 @@ window.addEventListener("load", function () {
     function buildPatientsTable(mode, showCured, minipic) {
         divInfo.innerHTML = "";
         patients = Global.refPatients.values();
-        newtable = createElement("table", {border: "1", width: "100%"}, divInfo);
+        newtable = createElement("table", { border: "1", width: "100%" }, divInfo);
         newtablehead = createElement("thead", "", newtable);
-        newtablebody = createElement("tbody", {style: "overflow-y:auto;overflow-x:hidden;height:365px;"}, newtable);
+        newtablebody = createElement("tbody", { style: "overflow-y:auto;overflow-x:hidden;height:365px;" }, newtable);
 
         newtr = createElement("tr", "", newtablehead);
-        newth = createElement("th", {colspan: "5"}, newtr);
-        newspan = createElement("span", {style: "margin-right:3px"}, newth);
-        newinput = createElement("input", {type: "checkbox", checked: showCured, class: "cursorclickable"}, newspan);
+        newth = createElement("th", { colspan: "5" }, newtr);
+        newspan = createElement("span", { style: "margin-right:3px" }, newth);
+        newinput = createElement("input", { type: "checkbox", checked: showCured, class: "cursorclickable" }, newspan);
         newinput.addEventListener("click", function () {
             buildPatientsTable(mode, this.checked, minipic);
         }, false);
         createElement("span", "", newspan, texte["zeigeGeheilteKrankheiten"]);
-        newspan = createElement("span", {style: "margin-right:3px"}, newth);
-        newinput = createElement("input", {type: "checkbox", checked: minipic, class: "cursorclickable"}, newspan);
+        newspan = createElement("span", { style: "margin-right:3px" }, newth);
+        newinput = createElement("input", { type: "checkbox", checked: minipic, class: "cursorclickable" }, newspan);
         newinput.addEventListener("click", function () {
             buildPatientsTable(mode, showCured, this.checked);
         }, false);
@@ -2499,8 +2517,8 @@ window.addEventListener("load", function () {
                                 }, newtablebody);
                                 newtr.addEventListener("click", closeInfoPanel, false);
                                 createElement("td", "", newtr, pat);
-                                createElement("td", {colspan: "2"}, newtr, Global.availableRooms[6]["name"]);
-                                newtd = createElement("td", {style: "padding-right:30px"}, newtr);
+                                createElement("td", { colspan: "2" }, newtr, Global.availableRooms[6]["name"]);
+                                newtd = createElement("td", { style: "padding-right:30px" }, newtr);
                                 plotPatient(newtd, pat, showCured, minipic);
                             }
                             break;
@@ -2516,7 +2534,7 @@ window.addEventListener("load", function () {
                                 createElement("td", "", newtr, pat);
                                 createElement("td", "", newtr, patientDiseases[pat]["floor"]);
                                 createElement("td", "", newtr, Global.availableRooms[patientDiseases[pat]["room"]]["name"]);
-                                newtd = createElement("td", {style: "padding-right:30px"}, newtr);
+                                newtd = createElement("td", { style: "padding-right:30px" }, newtr);
                                 plotPatient(newtd, pat, showCured, minipic);
                             }
                             break;
@@ -2529,15 +2547,15 @@ window.addEventListener("load", function () {
                                 }, newtablebody);
                                 newtr.addEventListener("click", closeInfoPanel, false);
                                 createElement("td", "", newtr, pat);
-                                createElement("td", {colspan: "2"}, newtr, texte["waitingroom"]);
-                                newtd = createElement("td", {style: "padding-right:30px"}, newtr);
+                                createElement("td", { colspan: "2" }, newtr, texte["waitingroom"]);
+                                newtd = createElement("td", { style: "padding-right:30px" }, newtr);
                                 plotPatient(newtd, pat, showCured, minipic);
                             }
                             break;
                     }
                 }
                 newtr = createElement("tr", "", newtablebody);
-                createElement("td", {colspan: "4"}, newtr, "");
+                createElement("td", { colspan: "4" }, newtr, "");
             }
         } else if (mode == 2) {
             var sumDiseases = {};
@@ -2581,7 +2599,7 @@ window.addEventListener("load", function () {
             }
 
             newtr = createElement("tr", "", newtablebody);
-            newtd = createElement("td", {title: texte["Beschreibung2"]}, newtr, texte["Beschreibung"]);
+            newtd = createElement("td", { title: texte["Beschreibung2"] }, newtr, texte["Beschreibung"]);
             newtd = createElement("td", "", newtr, texte["frei"]);
             newtd = createElement("td", "", newtr, texte["inBehandlung"]);
             newtd = createElement("td", "", newtr, texte["waitingroom"]);
@@ -2594,12 +2612,12 @@ window.addEventListener("load", function () {
 
                 for (var v = 0; v < 4; v++) {
                     var totalTime = 0;
-                    newtd = createElement("td", {style: (v == 3 ? "padding-right:30px;" : "")}, newtr);
+                    newtd = createElement("td", { style: (v == 3 ? "padding-right:30px;" : "") }, newtr);
 
                     for (var disease in sumDiseases[r]) {
-                        if (sumDiseases[r][disease][2 * v + ( 1 - showCured )] > 0) {
-                            newdiv = createElement("div", {style: "float:left;margin-right:2px;"}, newtd);
-                            createElement("div", {class: "d_a_30 d_" + disease + "_30"}, newdiv);
+                        if (sumDiseases[r][disease][2 * v + (1 - showCured)] > 0) {
+                            newdiv = createElement("div", { style: "float:left;margin-right:2px;" }, newtd);
+                            createElement("div", { class: "d_a_30 d_" + disease + "_30" }, newdiv);
                             createElement("div", "", newdiv, time2str(Global.availableDiseases[0][disease]["basetime"], 1));
                             createElement("div", "", newdiv, sumDiseases[r][disease][2 * v + 1] + "/" + sumDiseases[r][disease][2 * v]);
                             totalTime += sumDiseases[r][disease][2 * v + 1] * Global.availableDiseases[0][disease]["basetime"];
@@ -2608,17 +2626,17 @@ window.addEventListener("load", function () {
 
                     totalTotalTime += totalTime;
                     if (v == 3) {
-                        newdiv = createElement("div", {style: "margin-right:2px;font-weight:bold;padding-top:20px;"}, newtd, time2str(totalTotalTime, 1));
+                        newdiv = createElement("div", { style: "margin-right:2px;font-weight:bold;padding-top:20px;" }, newtd, time2str(totalTotalTime, 1));
                     }
                     else {
-                        newdiv = createElement("div", {style: "margin-right:2px;font-weight:bold;padding-top:20px;"}, newtd, time2str(totalTime, 1));
+                        newdiv = createElement("div", { style: "margin-right:2px;font-weight:bold;padding-top:20px;" }, newtd, time2str(totalTime, 1));
                     }
                 }
             }
         }
     }
 
-// Cleaner Function
+    // Cleaner Function
     function cleaningfunc() {
         var cleaner = Select("cleaner");
         var cur_floor = Global.selectedFloor;
@@ -2635,7 +2653,7 @@ window.addEventListener("load", function () {
                     rooms = Global.rooms;
 
                     for (var v = 0; v < rooms.length; v++) {
-                        if (( rooms[v].cleanup ) && ( rooms[v].ends == 0 ) && ( rooms[v].roomid != 6 )) {
+                        if ((rooms[v].cleanup) && (rooms[v].ends == 0) && (rooms[v].roomid != 6)) {
                             var croom = Global.refRooms.get("r" + rooms[v].topleft);
                             console.log(info + "Cleaning room: " + rooms[v].topleft);
                             croom._onDrop(cleaner, "", "");
@@ -2672,9 +2690,9 @@ window.addEventListener("load", function () {
                     rooms = Global.rooms;
 
                     for (var v = 0; v < rooms.length; v++) {
-                        if (( currRoom = Global.refRooms.get("r" + rooms[v].topleft) )) {
+                        if ((currRoom = Global.refRooms.get("r" + rooms[v].topleft))) {
                             if (currRoom["roomid"] != 6) {
-                                if ((Global.availableRooms[currRoom["roomid"]] ) && (Global.availableRooms[currRoom["roomid"]]["diseases"].length > 0 )) { // Behandlungsraum
+                                if ((Global.availableRooms[currRoom["roomid"]]) && (Global.availableRooms[currRoom["roomid"]]["diseases"].length > 0)) { // Behandlungsraum
 
                                     if (currRoom["state"] == 3) {
                                         if (Select("gradient_r" + currRoom["topleft"]) && Select("alert" + currRoom.topleft)) {
@@ -2829,7 +2847,7 @@ window.addEventListener("load", function () {
             for (var v = 0; v < canddiv.length; v++) {
                 if (canddiv[v].style.backgroundImage == "") {
                     var help = Global.refPatients.get("p" + patientId);
-                    if (!( Select("treatment" + help["room"]) )) {
+                    if (!(Select("treatment" + help["room"]))) {
                         unsafeWindow.MedicalRecord._onclick(canddiv[v], patientId);
                         console.log(info + "Applying medicine number: " + v + "to patient with Id :" + patientId);
                         break;
@@ -2865,7 +2883,7 @@ window.addEventListener("load", function () {
                 }
                 else {
                     if (help2) {
-                        patientDiseases[patientId]["state"] = ( help2["roomid"] == 6 ) ? 1 : 3;
+                        patientDiseases[patientId]["state"] = (help2["roomid"] == 6) ? 1 : 3;
                         patientDiseases[patientId]["room"] = help2["roomid"];
                     }
                     else {
@@ -2888,12 +2906,13 @@ window.addEventListener("load", function () {
     }
 
     function plotPatient(target, currPatientId, showCured, minipic) { //(target) , (target,showCured)
+        console.log("THIS IS plotPatient");
         if (!isNaN(currPatientId)) {
-            if (typeof(showCured) != "boolean") {
+            if (typeof (showCured) != "boolean") {
                 showCured = true;
             }
         } else {
-            if (typeof(currPatientId) == "boolean") {
+            if (typeof (currPatientId) == "boolean") {
                 showCured = currPatientId;
             }
             else {
@@ -2903,7 +2922,7 @@ window.addEventListener("load", function () {
             currPatientId = parseInt(target.getAttribute("name"), 10);
         }
 
-        if (typeof(minipic) != "boolean") {
+        if (typeof (minipic) != "boolean") {
             minipic = false;
         }
 
@@ -2920,17 +2939,17 @@ window.addEventListener("load", function () {
         for (var disease in patientDiseases[currPatientId]) {
             if (!isNaN(disease)) {
                 if (showCured || patientDiseases[currPatientId][disease] != "cured") {
-                    newdiv = createElement("div", {style: "float:left;"}, target);
+                    newdiv = createElement("div", { style: "float:left;" }, target);
                     if (minipic) {
                         if (patientDiseases[currPatientId][disease] == "cured") {
-                            newdiv1 = createElement("div", {
+                            var newdiv1 = createElement("div", {
                                 class: "d_a_15 d_" + disease + "_15",
                                 style: "opacity:0.5;"
                             }, newdiv);
-                            createElement("div", {class: "treatment_icon_15 treatment_icon_15_1"}, newdiv1);
+                            createElement("div", { class: "treatment_icon_15 treatment_icon_15_1" }, newdiv1);
                         }
                         else {
-                            newdiv1 = createElement("div", {class: "d_a_15 d_" + disease + "_15"}, newdiv);
+                            newdiv1 = createElement("div", { class: "d_a_15 d_" + disease + "_15" }, newdiv);
                         }
                     }
                     else {
@@ -2939,14 +2958,14 @@ window.addEventListener("load", function () {
                                 class: "d_a_30 d_" + disease + "_30",
                                 style: "opacity:0.3;"
                             }, newdiv);
-                            createElement("div", {class: "treatmenticons " + patientDiseases[currPatientId][disease] + "s"}, newdiv1);
+                            createElement("div", { class: "treatmenticons " + patientDiseases[currPatientId][disease] + "s" }, newdiv1);
                         }
                         else if (patientDiseases[currPatientId][disease]) {
-                            newdiv1 = createElement("div", {class: "d_a_30 d_" + disease + "_30"}, newdiv);
-                            createElement("div", {class: "treatmenticons " + patientDiseases[currPatientId][disease] + "s"}, newdiv1);
+                            newdiv1 = createElement("div", { class: "d_a_30 d_" + disease + "_30" }, newdiv);
+                            createElement("div", { class: "treatmenticons " + patientDiseases[currPatientId][disease] + "s" }, newdiv1);
                         }
                         else {
-                            newdiv1 = createElement("div", {class: "d_a_30 d_" + disease + "_30"}, newdiv);
+                            newdiv1 = createElement("div", { class: "d_a_30 d_" + disease + "_30" }, newdiv);
                         }
 
                         if (patientDiseases[currPatientId][disease] != "cured") {
@@ -2965,25 +2984,54 @@ window.addEventListener("load", function () {
         // nurse
         if (patientDiseases[currPatientId]["m"] == 4) {
             if (minipic) {
-                newdiv = createElement("div", {style: "position:relative;float:left;"}, target);
-                createElement("div", {class: "treatment_icon_15 treatment_icon_15_1"}, newdiv);
-            } else {
-                newdiv = createElement("div", {style: "position:relative;float:left;margin-left:30px;"}, target);
-                createElement("div", {class: "pat_dis1 treatmenticonpa"}, newdiv);
-                createElement("div", {class: "treatmenticons cureds"}, newdiv);
-                newdiv2 = createElement("div", "", newdiv, time2str(restlicheZeit, 1));
+                newdiv = createElement("div", { style: "position:relative;float:left;" }, target);
+                createElement("div", { class: "treatment_icon_15 treatment_icon_15_1" }, newdiv);
+            }
+            else {
+                newdiv = createElement("div", { style: "position:relative;float:left;margin-left:30px;" }, target);
+                createElement("div", { class: "pat_dis1 treatmenticonpa" }, newdiv);
+                createElement("div", { class: "treatmenticons cureds" }, newdiv);
+                var newdiv2 = createElement("div", "", newdiv, time2str(restlicheZeit, 1));
                 newdiv2.style.fontWeight = "bold";
+                console.log("THIS IF", patientDiseases[currPatientId], minipic);
             }
         }
         else {
             if (!minipic) {
-                newdiv = createElement("div", {style: "position:relative;float:left;margin-left:30px;"}, target);
-                createElement("div", {class: "pat_dis1 treatmenticonpa"}, newdiv);
+                newdiv = createElement("div", { style: "position:relative;float:left;margin-left:30px;" }, target);
+                createElement("div", { class: "pat_dis1 treatmenticonpa" }, newdiv);
                 newdiv2 = createElement("div", "", newdiv, time2str(restlicheZeit, 1));
                 newdiv2.style.fontWeight = "bold";
+                //console.log("THIS ELSE", patientDiseases[currPatientId], minipic);
+                //console.log("SERVER:", server, "LANG:", lng);
+
+                //console.log("getFullPatientInfos", getFullPatientInfos(currPatientId));
+                //var s = getFullPatientInfos(currPatientId);
+                //var med = $('#med_price');
+                //getFullPatientInfos(currPatientId);
+                //console.log(getTest(currPatientId)+" "+$('#med_price span').html());
+                $('#forHtml').html("HELLO WORLD");
             }
         }
         newdiv = null;
+    }
+
+    function getTest() {
+        var data = { "message": "<div\n        id=\"ref_divdetailsbig\"\n        class=\"msgwindow\"\n        style=\"z-index:10;display:none;background:url('http:\/\/pics.kapihospital.de\/bg_referral_02.jpg') no-repeat;\"\n>\n    <div\n            class=\"closebutton cursorclickable\"\n            title=\"\u0437\u0430\u043a\u0440\u044b\u0442\u044c\"\n            id=\"msg_head_close1\"\n            onclick=\"Referral.closeDetails();\"\n    ><\/div>\n    <div\n            class=\"msgwindow\"\n            id=\"ref_divdetails\"\n    ><\/div>\n<\/div>\n<div id=\"msgwindow\" class=\"msgwindow\" style=\"background:url('http:\/\/pics.kapihospital.de\/medicalrecord_1.png') no-repeat;\">\n    <div\n            id=\"medi_navi_first\"\n            onclick=\"MedicalRecord.show(1);\"\n            style=\"display:block;z-index:2;position:absolute;top:0;height:20px;left:0;width:420px;\"\n            class=\"cursorclickable\"\n    ><\/div>\n    <div\n            id=\"medi_navi_second\"\n            onclick=\"MedicalRecord.show(2);\"\n            style=\"display:block;z-index:2;position:absolute;top:0;height:20px;right:0;width:180px;\"\n            class=\"cursorclickable\"\n    ><\/div>\n    <div\n            id=\"medi_bling_first\"\n            onclick=\"MedicalRecord.show(1);\"\n            style=\"z-index:2;position:absolute;top:1px;height:20px;left:34px;width:65px;background-image:url('http:\/\/pics.kapihospital.de\/medicalrecord_1a.gif');display:none;\"\n            class=\"cursorclickable\"\n    ><\/div>\n    <div\n            id=\"medi_blingt_second\"\n            onclick=\"MedicalRecord.show(2);\"\n            style=\"display:block;z-index:2;position:absolute;top:0;height:20px;left:503px;width:65px;background-image:url('http:\/\/pics.kapihospital.de\/medicalrecord_2a.gif');\"\n            class=\"cursorclickable\"\n    ><\/div>\n    <div\n            class=\"closebutton cursorclickable\"\n            title=\"\u0437\u0430\u043a\u0440\u044b\u0442\u044c\"\n            id=\"msg_head_close\"\n            style=\"right: 0; top: 30px;\"\n            onclick=\"close_page();\"\n    ><\/div>\n    <div id=\"patientDetails\">\n        <div\n                id=\"medi_patientname\"\n                style=\"\n\t\t\t\tposition: absolute;\n\t\t\t\theight: 20px;\n\t\t\t\tcolor: black;\n\t\t\t\tfont-weight: bold;\n\t\t\t\ttext-align: center;\n\t\t\t\tfont-size: large;\n\t\t\t\ttop: 40px;\n\t\t\t\tleft: 65px;\n\t\t\t\twidth: 465px;\n\t\t\t\"\n        >\u0415\u0440\u043e\u0444\u0435\u0439 \u0410\u0440\u0443\u0442\u043e\u0432\n        <\/div>\n        <div\n                id=\"medi_patientimage\"\n                style=\"position: absolute; width: 70px; height: 90px; left: 67px; top: 74px; background-repeat:no-repeat; background-image:url('http:\/\/portraits.kapihospital.de\/f\/6\/0\/f604122653cbf25b3dbc7f2773dc15e0.png');\">\n            <div id=\"mr_cdc_pat_over\" style=\"display:none;background-image:url('http:\/\/pics.kapihospital.de\/cdc_pat_over.png');\"><\/div>\n        <\/div>\n        <div\n                id=\"medi_patientdoba\"\n                style=\"position: absolute; height: 20px; top: 74px; left: 150px; color: black; width: 350px; text-align: left;\"\n        >\u0414\u0435\u043d\u044c \u0440\u043e\u0436\u0434\u0435\u043d\u0438\u044f <span id=\"dob\" style=\"position:absolute;left:120px;\">10.09.1949<\/span><\/div>\n        <div id=\"patientDetailsSub1\">\n            <div\n                    id=\"medi_patientpoba\"\n                    style=\"position: absolute; height: 20px; top: 94px; left: 150px; color: black; width: 350px; text-align: left;\"\n            >\u041c\u0435\u0441\u0442\u043e \u0440\u043e\u0436\u0434\u0435\u043d\u0438\u044f <span id=\"pob\" style=\"position:absolute;left:120px;\">\u041f\u043e\u043a\u0440\u043e\u0432\u0441\u043a<\/span>\n            <\/div>\n            <div\n                    id=\"medi_patientoccupation\"\n                    style=\"\n\t\t\t\t\tposition: absolute;\n\t\t\t\t\theight: 20px;\n\t\t\t\t\ttop: 114px;\n\t\t\t\t\tleft: 150px;\n\t\t\t\t\tcolor: black;\n\t\t\t\t\twidth: 390px;\n\t\t\t\t\ttext-align: left;\n\t\t\t\t\toverflow-y:hidden;\n\t\t\t\t\"\n            >\u041f\u0440\u043e\u0444\u0435\u0441\u0441\u0438\u044f <span id=\"occupation\" style=\"position:absolute;left:120px;\" title=\"\u0417\u0432\u0443\u043a\u043e\u0440\u0435\u0436\u0438\u0441\u0441\u0435\u0440\">\u0417\u0432\u0443\u043a\u043e\u0440\u0435\u0436\u0438\u0441\u0441\u0435\u0440<\/span>\n            <\/div>\n            <div\n                    id=\"medi_patientheight\"\n                    style=\"position: absolute; height: 20px; top: 134px; left: 150px; color: black; width: 350px; text-align: left;\"\n            >\u0420\u043e\u0441\u0442 <span id=\"occupation\" style=\"position:absolute;left:120px;\">193 \u0441\u043c<\/span>\n                <span id=\"occupation\" style=\"position:absolute;left:220px;\">\u0412\u0435\u0441 90 \u043a\u0433<\/span>\n            <\/div>\n            <div\n                    id=\"medi_patienthobbies\"\n                    style=\"position: absolute; height: 36px; top: 154px; left: 150px; color: black; width: 390px; text-align: left;overflow:hidden;\"\n            >\u0423\u0432\u043b\u0435\u0447\u0435\u043d\u0438\u0435 <span id=\"occupation\" style=\"position:absolute;left:120px;\">\u043a\u0443\u0440\u0438\u0442\u044c \u0411\u0435\u043b\u043e\u043c\u043e\u0440\u043a\u0430\u043d\u0430\u043b<\/span>\n            <\/div>\n        <\/div>\n        <div id=\"patientDetailsSub2\" style=\"display:none;\">\n            <div\n                    id=\"medi_patientmedsr\"\n                    style=\"position: absolute; height: 20px; top: 94px; left: 150px; color: black; width: 350px;text-align: left;\"\n            >\u041c\u0435\u0434\u0438\u043a\u0430\u043c\u0435\u043d\u0442\u044b \u0434\u043e\u0441\u0442. <span id=\"medsr\" style=\"position:absolute;left:120px;\">0<\/span>\n            <\/div>\n            <div\n                    id=\"medi_patientsince\"\n                    style=\"position: absolute; height: 20px; top: 114px; left: 150px; color: black; width: 400px; text-align: left;\"\n            >\u0414\u0430\u0442\u0430 \u043f\u043e\u0441\u0442\u0443\u043f\u043b\u0435\u043d\u0438\u044f <span id=\"since\" style=\"position:absolute;left:120px;\">19.07.2021 23:39, \u043f\u0440\u0438\u043c\u0435\u0440\u043d\u043e 15 \u0447. \u0441\u043f\u0443\u0441\u0442\u044f<\/span>\n            <\/div>\n            <div\n                    id=\"medi_patientmoodt\"\n                    style=\"position: absolute; height: 20px; top: 144px; left: 150px; color: black; width: 350px; text-align: left;\"\n            >\u0414\u043e\u0432\u043e\u043b\u044c\u0441\u0442\u0432\u043e\n            <\/div>\n            <div id=\"medi_patientmoodi\" style=\"top:134px;left:270px;\" class=\"mood_a mood_5\"><\/div>\n            <div\n                    id=\"medi_patientmoodp\"\n                    style=\"position: absolute; height: 20px; top: 144px; left: 305px; color: black; width: 150px; text-align: left;\"\n            >(47%)\n            <\/div>\n            <div\n                    id=\"medi_patientremai\"\n                    style=\"display:none;position: absolute; height: 20px; top: 164px; left: 150px; color: black; width: 350px; text-align: left;\"\n            >\u041e\u0441\u0442\u0430\u0432\u0448\u0435\u0435\u0441\u044f \u0432\u0440\u0435\u043c\u044f: <span id=\"medi_treat\" style=\"left:120px;\">##REST_TIME_TIMER##<\/span><\/div>\n        <\/div>\n    <\/div>\n    <div id=\"medi_first\">\n        <div id=\"tut27_1\" class=\"tut9 tut9_4\" style=\"display:none;top: 190px; left: 249px;\">\n            <div class=\"innertut\">\n                <p id=\"tut27_1_1\" class=\"tut9_2_1\"><b>\u0412\u0435\u043b\u043d\u0435\u0441-\u043f\u043e\u0442\u0440\u0435\u0431\u043d\u043e\u0441\u0442\u0438!<\/b><br>\u041e\u0439, \u0443 \u044d\u0442\u043e\u0433\u043e \u043f\u0430\u0446\u0438\u0435\u043d\u0442\u0430 \u0435\u0449\u0451 \u0431\u043e\u043b\u044c\u0448\u0435 \u043f\u043e\u0442\u0440\u0435\u0431\u043d\u043e\u0441\u0442\u0435\u0439! \u041e\u043d\u0438 \u0443\u0437\u043d\u0430\u0432\u0430\u0435\u043c\u044b \u043f\u043e \u044d\u0442\u043e\u043c\u0443 \u0441\u0438\u043c\u0432\u043e\u043b\u0443. \u041d\u0430\u0436\u043c\u0438 \u043d\u0430 \u043d\u0435\u0433\u043e, \u0447\u0442\u043e\u0431\u044b \u043e\u0442\u043f\u0440\u0430\u0432\u0438\u0442\u044c \u043f\u0430\u0446\u0438\u0435\u043d\u0442\u0430 \u043d\u0430 \u0432\u0435\u043b\u043d\u0435\u0441-\u044d\u0442\u0430\u0436.<\/p>\n            <\/div>\n        <\/div>\n        <div id=\"tut14_1\" class=\"tut9 tut9_2\" style=\"display:none;top: 20px; left: 100px;\">\n            <div class=\"innertut\" style=\"top:80px;\">\n                <p id=\"tut_14_1_1\" class=\"tut9_2_1\"><b>\u0417\u0430\u0440\u0430\u0431\u043e\u0442\u0430\u0439 \u0431\u043e\u043b\u044c\u0448\u0435 \u0434\u0435\u043d\u0435\u0433 \u0437\u0430 \u0441\u0447\u0435\u0442 \u043c\u0438\u043d\u0438-\u043b\u0435\u0447\u0435\u043d\u0438\u0439!<\/b><br><br>\u041e\u0431\u0440\u0430\u0442\u0438 \u0432\u043d\u0438\u043c\u0430\u043d\u0438\u0435 \u043d\u0430 \u0432\u0442\u043e\u0440\u0443\u044e \u0441\u0442\u0440\u0430\u043d\u0438\u0446\u0443 \u0431\u043e\u043b\u044c\u043d\u0438\u0447\u043d\u043e\u0433\u043e \u0436\u0443\u0440\u043d\u0430\u043b\u0430, \u0442\u0430\u043c \u043e\u0436\u0438\u0434\u0430\u044e\u0442 \u0442\u0435\u0431\u044f 4 \u043c\u0438\u043d\u0438-\u043b\u0435\u0447\u0435\u043d\u0438\u044f, \u043a\u043e\u0442\u043e\u0440\u044b\u0435 \u043f\u043e\u0434\u043d\u0438\u043c\u0430\u044e\u0442 \u043d\u0430\u0441\u0442\u0440\u043e\u0435\u043d\u0438\u0435 \u043f\u0430\u0446\u0438\u0435\u043d\u0442\u0430.<\/p>\n            <\/div>\n        <\/div>\n        <div id=\"diseases\" class=\"mr_diseases\" style=\"display:block\">\n            \n\t\t\t<div id=\"s1\" style=\"position:absolute;top:0px;left:0px;width:240px;height:55px;color:black;\">\n\t\t\t\t<div id=\"s1img\" class=\"d_a_50 d_11_50\"  style=\"margin-top:11px\" title=\"\u043f\u0440\u043e\u0446\u0435\u0434\u0443\u0440\u043d\u0430\u044f\">\n\t\t\t\t\t\n\t\t\t\t<\/div>\n\t\t\t\t<div style=\"margin-left:55px;margin-top:8px\">\n\t\t\t\t\t<div id=\"s1name\" style=\"left:55px;font-weight:bold;min-height:26px;\">\u0412\u043e\u0441\u043f\u0430\u043b\u0435\u043d\u0438\u0435 \u0443\u0445\u0430<\/div>\n\t\t\t\t\t<div id=\"s1time\" style=\"left:55px;\">\u0432\u0440\u0435\u043c\u044f: <span style=\"color:black\">02:00:00<\/span><\/div>\n\t\t\t\t\t<div id=\"s1state\" style=\"left:55px;\"><span>\u043d\u0435 \u043e\u0441\u043c\u043e\u0442\u0440\u0435\u043d\/\u0430<\/span><\/div>\n\t\t\t\t\n\t\t\t\t<\/div>\n\t\t\t<\/div>\n\t\t\t<div id=\"s2\" style=\"position:absolute;top:0px;left:245px;width:240px;height:55px;color:black;\">\n\t\t\t\t<div id=\"s2img\" class=\"d_a_50 d_12_50\"  style=\"margin-top:11px\" title=\"\u043f\u0440\u043e\u0446\u0435\u0434\u0443\u0440\u043d\u0430\u044f\">\n\t\t\t\t\t\n\t\t\t\t<\/div>\n\t\t\t\t<div style=\"margin-left:55px;margin-top:8px\">\n\t\t\t\t\t<div id=\"s2name\" style=\"left:55px;font-weight:bold;min-height:26px;\">\u0421\u0438\u043d\u0434\u0440\u043e\u043c \u0433\u043d\u043e\u043c\u0430 \u041d\u0430\u043f\u043e\u043b\u0435\u043e\u043d\u0430<\/div>\n\t\t\t\t\t<div id=\"s2time\" style=\"left:55px;\">\u0432\u0440\u0435\u043c\u044f: <span style=\"color:black\">02:40:00<\/span><\/div>\n\t\t\t\t\t<div id=\"s2state\" style=\"left:55px;\"><span>\u043d\u0435 \u043e\u0441\u043c\u043e\u0442\u0440\u0435\u043d\/\u0430<\/span><\/div>\n\t\t\t\t\n\t\t\t\t<\/div>\n\t\t\t<\/div>\n\t\t\t<div id=\"s3\" style=\"position:absolute;top:65px;left:0px;width:240px;height:55px;color:black;\">\n\t\t\t\t<div id=\"s3img\" class=\"d_a_50 d_48_50\"  style=\"margin-top:11px\" title=\"\u043e\u0440\u0442\u043e\u043f\u0435\u0434\u0438\u044f\">\n\t\t\t\t\t\n\t\t\t\t<\/div>\n\t\t\t\t<div style=\"margin-left:55px;margin-top:8px\">\n\t\t\t\t\t<div id=\"s3name\" style=\"left:55px;font-weight:bold;min-height:26px;\">\u0423\u0441\u044b\u0445\u0430\u043d\u0438\u0435 \u0441\u0442\u043e\u043f\u044b<\/div>\n\t\t\t\t\t<div id=\"s3time\" style=\"left:55px;\">\u0432\u0440\u0435\u043c\u044f: <span style=\"color:black\">02:30:00<\/span><\/div>\n\t\t\t\t\t<div id=\"s3state\" style=\"left:55px;\"><span>\u043d\u0435 \u043e\u0441\u043c\u043e\u0442\u0440\u0435\u043d\/\u0430<\/span><\/div>\n\t\t\t\t\n\t\t\t\t<\/div>\n\t\t\t<\/div>\n        <\/div>\n        <div id=\"cdc_diseases\" class=\"mr_cdc_diseases\" style=\"display:none\">\n            <div\n                    id=\"mr_cdc_medicon\"\n                    style=\"background-image:url('http:\/\/pics.kapihospital.de\/cdc_medicon.jpg');\"\n                    onmouseover=\"CDC.showMed();\"\n                    onmouseout=\"CDC.hideMed();\">\n            <\/div>\n            <div id=\"mr_cdc_med\" style=\"display:none;background-image:url('http:\/\/pics.kapihospital.de\/cdcm_1.jpg');\"><\/div>\n            <div id=\"mr_cdc_image\" style=\"background-image:url('http:\/\/pics.kapihospital.de\/cdc_1.jpg');\">\n                ##CDC_TICK_ICON##\n                <div id=\"mr_cdc_time\" style=\"background-image:url('http:\/\/pics.kapihospital.de\/cdc_timer.gif');\">\n                    <span id=\"medi_counter_1\">##CDC_TIMER_TIME##<\/span>\n                <\/div>\n            <\/div>\n            <div id=\"mr_cdc_text\">\n                ##CDC_TEXT##\n            <\/div>\n        <\/div>\n        <div id=\"med_price\" style=\"position: absolute; top: 375px; left: 65px; width: 468px; height: 65px; color: black;\">\n            <div style=\"position: absolute; color: gray; font-size: smaller; bottom: 5px; left: 0;\">ID: 150787052<\/div>\n            <div style=\"display:block;position:absolute;bottom:10px;right:10px;\">\n                \u043f\u043b\u0430\u0442\u0438\u0442 <span style=\"color:red;font-weight:bold;font-size:x-large;\">152,70 h\u0422 - 190,88 h\u0422<\/span>\n            <\/div>\n            <div style=\"display:none;position:absolute;bottom:-30px;right:10px;\">\n                \u043f\u043b\u0430\u0442\u0438\u0442 <span style=\"color:red;font-weight:bold;font-size:x-large;\">190,88 h\u0422<\/span>\n            <\/div>\n        <\/div>\n        <div id=\"cdc_points\" style=\"display:none;top: 445px;right: 90px;\">\n            \u041e\u0447\u043a\u0438: 99 - 119\n        <\/div>\n    <\/div>\n    <div id=\"medi_second\" style=\"display:none\">\n        <div style=\"width:600px; height: 500px; position:absolute;overflow-x:hidden;overflow-y:auto;\">\n            <div\n                    id=\"nurse_bubble_container\"\n                    style=\"position: absolute; color: black; overflow: hidden; top: 205px; left: 270px;width: 277px;height: 263px;\"\n            >\n                <div class=\"floatSpacerPersonal floatSpacer_medicalRecordNormal\"><\/div>\n                <div class=\"floatPersonal float_medicalRecordNormal\"><\/div>\n                <div id=\"nurse_bubble\"><b>\u041d\u0430\u0436\u043c\u0438 \u0441\u043b\u0435\u0432\u0430 \u043d\u0430 \u0447\u0435\u0442\u044b\u0440\u0435 \u043a\u043b\u0435\u0442\u043a\u0438, \u0447\u0442\u043e\u0431\u044b \u043f\u0440\u043e\u0432\u0435\u0441\u0442\u0438 \u0441\u043e\u043e\u0442\u0432\u0435\u0442\u0441\u0442\u0432\u0443\u044e\u0449\u0438\u0435 \u043c\u0438\u043d\u0438-\u043b\u0435\u0447\u0435\u043d\u0438\u044f.<\/b><br><br>\u041d\u0430 \u0440\u0430\u0431\u043e\u0442\u0443 \u0443\u0439\u0434\u0451\u0442 \u0434\u0432\u0435 \u043c\u0438\u043d\u0443\u0442\u044b, \u0430 \u0434\u043e\u0432\u043e\u043b\u044c\u0441\u0442\u0432\u043e \u0432\u043e\u0437\u0440\u0430\u0441\u0442\u0451\u0442 \u043d\u0430 5 \u043f\u0440\u043e\u0446\u0435\u043d\u0442\u043e\u0432. \u0427\u0435\u043c \u0434\u043e\u0432\u043e\u043b\u044c\u043d\u0435\u0435, \u0442\u0435\u043c \u0431\u043e\u043b\u044c\u0448\u0435 \u0434\u0435\u043d\u0435\u0433.<br><br>\u041f\u0443\u0441\u0442\u044c \u043f\u0440\u043e\u0444\u0435\u0441\u0441\u0438\u043e\u043d\u0430\u043b \u0440\u0430\u0431\u043e\u0442\u0430\u0435\u0442 \u0438 \u043f\u0440\u043e\u0432\u043e\u0434\u0438\u0442 \u0432\u0441\u0435 \u043c\u0438\u043d\u0438-\u043b\u0435\u0447\u0435\u043d\u0438\u044f!<br><br><b>\u041d\u0430\u043d\u044f\u0442\u044c \u0441\u0435\u0439\u0447\u0430\u0441!<\/b><\/div>\n            <\/div>\n            <div class=\"medicalRecordPersonal medicalRecordNormal\"><\/div>\n            <div id=\"medi_patientremai\" style=\"position: absolute; height: 20px; top: 164px; left: 150px; color: black; width: 350px;\n\t\t\ttext-align: left;\"><\/div>\n            <div\n                    id=\"medi_s_t1\"\n                    class=\"minitreatment \"\n                    onmouseover=\"MedicalRecord.showHint(this, 'http:\/\/pics.kapihospital.de\/medi_s_t0.jpg', '\u0418\u0437\u043c\u0435\u0440\u0438\u0442\u044c \u0442\u0435\u043c\u043f\u0435\u0440\u0430\u0442\u0443\u0440\u0443');\"\n                    onmouseout=\"MedicalRecord.closeHint(this);\"\n                    onclick=\"MedicalRecord._onclick(this, 150787052);\"\n            ><\/div>\n            <div\n                    id=\"medi_s_t2\"\n                    class=\"minitreatment \"\n                    onmouseover=\"MedicalRecord.showHint(this, 'http:\/\/pics.kapihospital.de\/medi_s_t0.jpg', '\u0420\u0430\u0437\u043d\u0435\u0441\u0442\u0438 \u043f\u0438\u0449\u0443');\"\n                    onmouseout=\"MedicalRecord.closeHint(this);\"\n                    onclick=\"MedicalRecord._onclick(this, 150787052);\"><\/div>\n            <div\n                    id=\"medi_s_t3\"\n                    class=\"minitreatment \"\n                    onmouseover=\"MedicalRecord.showHint(this, 'http:\/\/pics.kapihospital.de\/medi_s_t0.jpg', '\u041f\u0435\u0440\u0435\u0431\u0438\u043d\u0442\u043e\u0432\u0430\u0442\u044c');\"\n                    onmouseout=\"MedicalRecord.closeHint(this);\"\n                    onclick=\"MedicalRecord._onclick(this, 150787052);\"\n            ><\/div>\n            <div\n                    id=\"medi_s_t4\"\n                    class=\"minitreatment \"\n                    onmouseover=\"MedicalRecord.showHint(this, 'http:\/\/pics.kapihospital.de\/medi_s_t0.jpg', '\u0418\u0437\u043c\u0435\u0440\u0438\u0442\u044c \u0434\u0430\u0432\u043b\u0435\u043d\u0438\u0435');\"\n                    onmouseout=\"MedicalRecord.closeHint(this);\"\n                    onclick=\"MedicalRecord._onclick(this, 150787052);\"\n            ><\/div>\n            <input type=\"hidden\" id=\"pnuid\" value=\"aa850d7b\"\/>\n            <div\n                    id=\"powernurse_div\"\n                    style=\"position: absolute; height: 50px; bottom: 40px; left: 60px; width: 360px;\"\n                    onmouseover=\"MedicalRecord.showPowerNurseNotice('<b>\u0412\u0441\u0435 \u043c\u0438\u043d\u0438-\u043f\u0440\u043e\u0446\u0435\u0434\u0443\u0440\u044b \u044f \u0432\u043e\u0437\u044c\u043c\u0443 \u043d\u0430 \u0441\u0435\u0431\u044f!<\/b><br><br>\u041a\u0430\u043a \u0441\u0443\u043f\u0435\u0440-\u0441\u0435\u0441\u0442\u0440\u0430 \u044f \u043e\u0442\u0432\u0435\u0447\u0430\u044e \u0437\u0430 \u0432\u0441\u0435 \u043c\u0438\u043d\u0438-\u043b\u0435\u0447\u0435\u043d\u0438\u044f. \u042f \u0430\u0432\u0442\u043e\u043c\u0430\u0442\u0438\u0447\u0435\u0441\u043a\u0438 \u043d\u0430\u0447\u0438\u043d\u0430\u044e \u0434\u0435\u0439\u0441\u0442\u0432\u043e\u0432\u0430\u0442\u044c, \u043a\u0430\u043a \u0442\u043e\u043b\u044c\u043a\u043e \u0442\u044b \u0443\u043b\u043e\u0436\u0438\u0448\u044c \u043f\u0430\u0446\u0438\u0435\u043d\u0442\u0430 \u0432 \u0431\u043e\u043b\u044c\u043d\u0438\u0447\u043d\u0443\u044e \u043a\u043e\u0439\u043a\u0443.<br><br><b>\u041d\u0430\u043d\u044f\u0442\u044c \u0441\u0435\u0439\u0447\u0430\u0441!<\/b>');\"\n                    onmouseout=\"MedicalRecord.closeHint(this);\"\n            >\n                \u0421\u0443\u043f\u0435\u0440-\u0441\u0435\u0441\u0442\u0440\u0430 \u0443 \u0442\u0435\u0431\u044f \u043f\u043e\u043a\u0430 \u043d\u0435 \u0440\u0430\u0431\u043e\u0442\u0430\u0435\u0442<br\/>\n                <select id=\"personal_booking\" style=\"color:black;\" class=\"cursorclickable\">\n                    \n\t\t\t<option value=\"1\">7 \u0434\u043d\u0435\u0439 \u0437\u0430 5 Coins<\/option>\n\t\t\t<option value=\"2\">14 \u0434\u043d\u0435\u0439 \u0437\u0430 9 Coins (10 %\u044d\u043a\u043e\u043d\u043e\u043c\u0438\u044f!)<\/option>\n\t\t\t<option value=\"3\">28 \u0434\u043d\u0435\u0439 \u0437\u0430 15 Coins (25 %\u044d\u043a\u043e\u043d\u043e\u043c\u0438\u044f!)<\/option>\n\t\t\t<option value=\"4\">180 \u0434\u043d\u0435\u0439 \u0437\u0430 90 Coins (30 %\u044d\u043a\u043e\u043d\u043e\u043c\u0438\u044f!)<\/option>\n\t\t\n                <\/select>\n                <input type=\"button\" class=\"cursorclickable kh_btn\" value=\"\u0437\u0430\u043a\u0430\u0437\u0430\u0442\u044c\" onclick=\"MedicalRecord.getPersonal();\"\/>\n            <\/div>\n            <div id=\"tut31_1\" class=\"tut9 tut9_4\"\n                 style=\"display:none;left: 200px; top: 20px;background-position: -28px -47px;width: 316px;height: 203px;\">\n                <div class=\"innertut\" style=\"top: 17px; left: 43px;\">\n                    <p id=\"tut31_1_1\" class=\"tut9_2_1\"><b>\u041d\u0430\u0447\u0430\u0442\u044c \u043c\u0438\u043d\u0438-\u043f\u0440\u043e\u0446\u0435\u0434\u0443\u0440\u044b!<\/b><br><br>\u0412\u044b\u0431\u0435\u0440\u0438 \u043e\u0434\u043d\u0443 \u0438\u0437 \u0447\u0435\u0442\u044b\u0440\u0451\u0445 \u043c\u0438\u043d\u0438-\u043f\u0440\u043e\u0446\u0435\u0434\u0443\u0440 \u0438 \u043d\u0430\u0447\u043d\u0438 \u043f\u0440\u043e\u0446\u0435\u0434\u0443\u0440, \u043d\u0430\u0436\u0430\u0432 \u043d\u0430 \u043d\u0435\u0451! \u0415\u0441\u043b\u0438 \u0442\u044b \u0432\u044b\u043f\u043e\u043b\u043d\u0438\u043b \u0432\u0441\u0435 4 \u043f\u0440\u043e\u0446\u0435\u0434\u0443\u0440\u044b, \u0442\u044b \u0434\u043e\u0441\u0442\u0438\u0433\u0430\u0435\u0448\u044c \u043c\u0430\u043a\u0441\u0438\u043c\u0430\u043b\u044c\u043d\u043e\u0435 \u0443\u0434\u043e\u0432\u043b\u0435\u0442\u0432\u043e\u0440\u0451\u043d\u043d\u043e\u0441\u0442\u044c \u043f\u0430\u0446\u0438\u0435\u043d\u0442\u0430.<\/p>\n                <\/div>\n            <\/div>\n        <\/div>\n    <\/div>\n    <div id=\"tut_info\" style=\"display:none;\"><div id=\"tut_info\" style=\"position:absolute;width:140px;height:160px;top:220px;left:350px;background-image:url(http:\/\/pics.kapihospital.de\/tut_doc1.2.png);\"><div id=\"tut_doc_msg\" style=\"position:absolute;top:5px;left:7px;width:126px;height:93px;color:black;overflow-x:hidden;overflow-y:auto;\">\u0417\u0430\u043a\u0440\u043e\u0439 \u0431\u043e\u043b\u044c\u043d\u0438\u0447\u043d\u044b\u0439 \u0436\u0443\u0440\u043d\u0430\u043b, \u0447\u0442\u043e\u0431\u044b \u043f\u0440\u043e\u0434\u043e\u043b\u0436\u0438\u0442\u044c \u0443\u0447\u0435\u0431\u043d\u044b\u0439 \u043f\u0435\u0440\u0438\u043e\u0434.<\/div><\/div><\/div>\n<\/div>\n<div style=\"width: 400px; position: absolute; left: 100px; height: 40px; bottom: 20px;\" id=\"medi_navigation\">\n    <div id=\"referralExchangeMessage\" style=\"##SHOW_REFERRAL_EXCHANGE_MESSAGE##;text-align:center;\"><\/div>\n    <div\n            id=\"medi_kick\"\n            class=\"medicalrecordnavi cursorclickable\"\n            style=\"display:block;left:0px;\"\n            onclick=\"Dialog.confirmation('\u0422\u044b \u0434\u0435\u0439\u0441\u0442\u0432\u0438\u0442\u0435\u043b\u044c\u043d\u043e \u0445\u043e\u0447\u0435\u0448\u044c \u0432\u044b\u043f\u0440\u043e\u0432\u043e\u0434\u0438\u0442\u044c \u043f\u0430\u0446\u0438\u0435\u043d\u0442\u0430 &lt;b&gt;\u0415\u0440\u043e\u0444\u0435\u0439 \u0410\u0440\u0443\u0442\u043e\u0432&lt;\/b&gt;? \u0417\u0430 \u044d\u0442\u043e \u043d\u0435 \u043f\u043e\u043b\u0443\u0447\u0438\u0448\u044c \u0434\u0435\u043d\u0435\u0433.', function() {dischargePatient(150787052);\n\t\t\t\treturn true;})\"\n            title=\"\u0432\u044b\u043f\u0440\u043e\u0432\u043e\u0434\u0438\u0442\u044c [\u0417\u0430 \u044d\u0442\u043e \u0442\u044b \u043d\u0435 \u043f\u043e\u043b\u0443\u0447\u0438\u0448\u044c \u0434\u0435\u043d\u0435\u0433 \u043e\u0442 \u0415\u0440\u043e\u0444\u0435\u0439 \u0410\u0440\u0443\u0442\u043e\u0432!]\"\n    ><\/div>\n    <div\n            id=\"wellnessclick\"\n            onclick=\"Wellness.sendToCenter(150787052);\"\n            class=\"cursorclickable\"\n            style=\"display:none;background-image:url('http:\/\/pics.kapihospital.de\/roxxo.png');\"\n            title=\"\u0415\u0440\u043e\u0444\u0435\u0439 \u0410\u0440\u0443\u0442\u043e\u0432 \u043d\u0443\u0436\u0434\u0430\u0435\u0442\u0441\u044f \u0432 \u0432\u0435\u043b\u043d\u0435\u0441-\u043f\u0440\u043e\u0446\u0435\u0434\u0443\u0440\u0435! \u041d\u0430\u0436\u043c\u0438 \u0441\u044e\u0434\u0430 \u0438 \u043e\u0442\u043f\u0440\u0430\u0432\u044c \u043f\u0430\u0446\u0438\u0435\u043d\u0442\u0430 \u043d\u0430 \u0432\u0435\u043b\u043d\u0435\u0441-\u044d\u0442\u0430\u0436!\"\n    ><\/div>\n    <div\n            id=\"medi_wunder\"\n            class=\"medicalrecordnavi cursorclickable faithHealerAnimated\"\n            style=\"display:none;z-index:2;left:150px;\"\n            onclick=\"Dialog.confirmation('\u0422\u044b \u0445\u043e\u0447\u0435\u0448\u044c \u0432\u044b\u0437\u0432\u0430\u0442\u044c \u0427\u0443\u0434\u043e-\u043b\u0435\u043a\u0430\u0440\u044f? \u042d\u0442\u043e \u0431\u0443\u0434\u0435\u0442 \u0441\u0442\u043e\u0438\u0442\u044c &lt;b&gt;1&lt;\/b&gt; Coins. \u041f\u043e\u0441\u043b\u0435 \u0435\u0433\u043e \u043b\u0435\u0447\u0435\u0431\u043d\u044b\u0445 \u043f\u0440\u043e\u0446\u0435\u0434\u0443\u0440 \u043f\u0430\u0446\u0438\u0435\u043d\u0442 \u043c\u043e\u043c\u0435\u043d\u0442\u0430\u043b\u044c\u043d\u043e \u0432\u044b\u0437\u0434\u043e\u0440\u0430\u0432\u043b\u0438\u0432\u0430\u0435\u0442. \u0422\u044b \u043c\u043e\u0436\u0435\u0448\u044c \u0432\u044b\u0437\u044b\u0432\u0430\u0442\u044c \u0427\u0443\u0434\u043e-\u043b\u0435\u043a\u0430\u0440\u044f \u0434\u043e 10 \u0440\u0430\u0437 \u0432 \u0434\u0435\u043d\u044c. \u0421 \u043a\u0430\u0436\u0434\u044b\u043c \u043d\u043e\u0432\u044b\u043c \u0432\u044b\u0437\u043e\u0432\u043e\u043c \u0432 \u043e\u043d \u0442\u0440\u0435\u0431\u0443\u0435\u0442, \u043e\u0434\u043d\u0430\u043a\u043e, \u0431\u043e\u043b\u044c\u0448\u0435 \u0434\u0435\u043d\u0435\u0433.', function() {Global.refPatients.get('p150787052').miracleHealer('6074b9d3'); return true;});\"\n            title=\"\u0412\u044b\u0437\u0432\u0430\u0442\u044c \u0427\u0443\u0434\u043e-\u043b\u0435\u043a\u0430\u0440\u044f! (\u043c\u0430\u043a\u0441. 10)\"\n    ><\/div>\n    <div style=\"display:none;z-index:2;position:absolute;left:185px;top:25px;\">\n        <img src=\"http:\/\/pics.kapihospital.de\/coinsdot.png\" class=\"cursorclickable\" style=\"width:10px;height:10px;\" onclick=\"show_page(coins);\" alt=\"\u041a \u043c\u0430\u0433\u0430\u0437\u0438\u043d\u0443 Coins\" title=\"\u041a \u043c\u0430\u0433\u0430\u0437\u0438\u043d\u0443 Coins\" \/>\n    <\/div>\n    <div id=\"naviReferral\" style=\"display:block\">\n        <div\n                id=\"medi_lounge\"\n                class=\"medicalrecordnavi cursorclickable\"\n                style=\"display:none;left:240px;\"\n                onclick=\"Referral.sendToLoungePerId(150787052);\"\n                title=\"\u041e\u0442\u043f\u0440\u0430\u0432\u0438\u0442\u044c \u043f\u0430\u0446\u0438\u0435\u043d\u0442\u0430 \u0415\u0440\u043e\u0444\u0435\u0439 \u0410\u0440\u0443\u0442\u043e\u0432 \u0432 \u0437\u0430\u043b \u043e\u0436\u0438\u0434\u0430\u043d\u0438\u044f\"\n        ><\/div>\n        <div\n                id=\"medi_referral\"\n                class=\"medicalrecordnavi cursorclickable\"\n                style=\"display:block;right:0px;\"\n                onclick=\"Referral.writeReferral('150787052');\"\n                title=\"\u0415\u0440\u043e\u0444\u0435\u0439 \u0410\u0440\u0443\u0442\u043e\u0432 \u043d\u0430\u043f\u0440\u0430\u0432\u0438\u0442\u044c\"\n        ><\/div>\n        <div\n                id=\"medi_exchange\"\n                class=\"medicalrecordnavi cursorclickable\"\n                style=\"left:300px;\"\n                onclick=\"Exchange.newOffer(150787052);\"\n                title=\"\u0415\u0440\u043e\u0444\u0435\u0439 \u0410\u0440\u0443\u0442\u043e\u0432 \u043f\u043e\u0441\u0442\u0430\u0432\u0438\u0442\u044c \u043d\u0430 \u0431\u0438\u0440\u0436\u0443\"\n        ><\/div>\n    <\/div>\n<\/div>", "js": "MedicalRecord.bgPage1 = 'medicalrecord_1.png';MedicalRecord.bgPage2 = 'medicalrecord_2.2.png';MedicalRecord.miniTreatmentHint = '<b>\u041d\u0430\u0436\u043c\u0438 \u0441\u043b\u0435\u0432\u0430 \u043d\u0430 \u0447\u0435\u0442\u044b\u0440\u0435 \u043a\u043b\u0435\u0442\u043a\u0438, \u0447\u0442\u043e\u0431\u044b \u043f\u0440\u043e\u0432\u0435\u0441\u0442\u0438 \u0441\u043e\u043e\u0442\u0432\u0435\u0442\u0441\u0442\u0432\u0443\u044e\u0449\u0438\u0435 \u043c\u0438\u043d\u0438-\u043b\u0435\u0447\u0435\u043d\u0438\u044f.<\/b><br><br>\u041d\u0430 \u0440\u0430\u0431\u043e\u0442\u0443 \u0443\u0439\u0434\u0451\u0442 \u0434\u0432\u0435 \u043c\u0438\u043d\u0443\u0442\u044b, \u0430 \u0434\u043e\u0432\u043e\u043b\u044c\u0441\u0442\u0432\u043e \u0432\u043e\u0437\u0440\u0430\u0441\u0442\u0451\u0442 \u043d\u0430 5 \u043f\u0440\u043e\u0446\u0435\u043d\u0442\u043e\u0432. \u0427\u0435\u043c \u0434\u043e\u0432\u043e\u043b\u044c\u043d\u0435\u0435, \u0442\u0435\u043c \u0431\u043e\u043b\u044c\u0448\u0435 \u0434\u0435\u043d\u0435\u0433.<br><br>\u041f\u0443\u0441\u0442\u044c \u043f\u0440\u043e\u0444\u0435\u0441\u0441\u0438\u043e\u043d\u0430\u043b \u0440\u0430\u0431\u043e\u0442\u0430\u0435\u0442 \u0438 \u043f\u0440\u043e\u0432\u043e\u0434\u0438\u0442 \u0432\u0441\u0435 \u043c\u0438\u043d\u0438-\u043b\u0435\u0447\u0435\u043d\u0438\u044f!<br><br><b>\u041d\u0430\u043d\u044f\u0442\u044c \u0441\u0435\u0439\u0447\u0430\u0441!<\/b>';", "error": false, "ident": "514e3fc" };
+        return Object(data)["message"];
+    }
+
+    function getFullPatientInfos(id) {
+        console.log(info + "getPatientInfos with id: " + id);
+        var result = "";
+        var find_me = "";
+        $.get("http://s1.ru.kapihospital.com/medicalrecord.php?patient=" + id, function () {
+            //return Object(data)["message"];
+            //console.log("Платит", $('#med_price span').html());
+        }).done(function (data) {
+            console.log(Object(data)["message"]);
+            console.log($('#med_price'));
+        });
     }
 
     function getPatientInfos(id, with_nurse) {
@@ -3024,7 +3072,7 @@ window.addEventListener("load", function () {
         }
 
         // in Rooms
-        var canddiv = Select("garten_komplett").getElementsByClassName("room");
+        canddiv = Select("garten_komplett").getElementsByClassName("room");
         for (var v = 0; v < canddiv.length; v++) {
             canddiv[v].style.backgroundColor = "";
             var currPatientId = Global.refRooms.get(canddiv[v].id)["patient"];
@@ -3216,7 +3264,7 @@ window.addEventListener("load", function () {
         }
 
         var maxprice = parseFloat(Select("med_price").getElementsByTagName("span")[0].innerHTML.split("-")[1].replace(Global._KH_THOUSANDSEPERATOR, "").replace(Global._KH_DECIMALSEPERATOR, "."));
-        createElement("div", {"style": "position:absolute;top:380px;right:130px;color:red;"}, Select("ref_divdetailsbig"), "85%: " + hT_formatgr(0.85 * maxprice) + ", 90%: " + hT_formatgr(0.9 * maxprice) + ", 95%: " + hT_formatgr(0.95 * maxprice));
+        createElement("div", { "style": "position:absolute;top:380px;right:130px;color:red;" }, Select("ref_divdetailsbig"), "85%: " + hT_formatgr(0.85 * maxprice) + ", 90%: " + hT_formatgr(0.9 * maxprice) + ", 95%: " + hT_formatgr(0.95 * maxprice));
 
         var newimg = createElement("img", {
             "style": "position:absolute;top:440px;left:219px;width:16px;height:16px;",
@@ -3237,12 +3285,12 @@ window.addEventListener("load", function () {
             newdiv1.addEventListener("click", function () {
                 removeElement(Select("refAdressBook"));
             }, false);
-            createElement("div", {"style": "z-index:1;position:absolute;width:165px;top:15px;left:45px;right:15px;text-align:center;font-weight:bold;font-size:medium;"}, newdiv, "Adressbuch");
-            newdiv1 = createElement("div", {"style": "position:absolute;width:180px;height:225px;top:50px;left:45px;right:0px;overflow-y:auto;overflow-x:hidden;"}, newdiv);
-            var newtable = createElement("table", {"cellspacing": "0"}, newdiv1);
+            createElement("div", { "style": "z-index:1;position:absolute;width:165px;top:15px;left:45px;right:15px;text-align:center;font-weight:bold;font-size:medium;" }, newdiv, "Adressbuch");
+            newdiv1 = createElement("div", { "style": "position:absolute;width:180px;height:225px;top:50px;left:45px;right:0px;overflow-y:auto;overflow-x:hidden;" }, newdiv);
+            var newtable = createElement("table", { "cellspacing": "0" }, newdiv1);
             contacts = explode(GM_getValue(lng + "_" + server + "_" + username + "_contacts", "[]"));
             for (var v = 0; v < contacts.length; v++) {
-                newdiv1 = createElement("div", {"class": "cursorclickable"}, createElement("td", {}, createElement("tr", {}, newtable)), contacts[v]);
+                newdiv1 = createElement("div", { "class": "cursorclickable" }, createElement("td", {}, createElement("tr", {}, newtable)), contacts[v]);
                 newdiv1.addEventListener("click", function () {
                     Select("ref_recipient").value = this.innerHTML;
                     removeElement(Select("refAdressBook"));
@@ -3295,6 +3343,7 @@ window.addEventListener("load", function () {
                     }
                     else {
                         console.log(info + "Eight quests done, job's done. ;)");
+                        GarageOld.doJob();
                     }
                 }
 
@@ -3425,7 +3474,7 @@ window.addEventListener("load", function () {
     function do_Patientenboerse() {
         console.log(info + "do_Patientenboerse");
 
-        createElement("div", {style: "z-index:0;position:absolute;top:0px;right:0px;height:500px;width:250px;background-image: url('http://pics.kapihospital.de/bg_exchange2.jpg');background-position:250px 0px;"}, Select("msgwindow"));
+        createElement("div", { style: "z-index:0;position:absolute;top:0px;right:0px;height:500px;width:250px;background-image: url('http://pics.kapihospital.de/bg_exchange2.jpg');background-position:250px 0px;" }, Select("msgwindow"));
         Select("msgwindow").style.width = "750px";
         Select("ex_bubble").style.width = "";
         Select("ex_bubble").style.zIndex = "1";
@@ -3453,7 +3502,7 @@ window.addEventListener("load", function () {
         var blockBoerse = explode(GM_getValue(lng + "_" + server + "_" + username + "_blockBoerse", "{}"));
         //var newdiv1 = createElement("div",{style:"display:block;"},newdiv);
         var tabrow = createElement("tr", "", newtab);
-        var tabcell = createElement("td", {colspan: "20"}, tabrow);
+        var tabcell = createElement("td", { colspan: "20" }, tabrow);
 
         var newinput = createElement("input", {
             "id": "valShowUncurable",
@@ -3480,9 +3529,9 @@ window.addEventListener("load", function () {
          var newdiv2 = createElement("div",{style:"display:block;background-color:yellow;"},newdiv);
          var newdiv3 = createElement("div",{style:"display:block;background-color:#900;"},newdiv);
          */
-        var newrow1 = createElement("tr", {style: "background-color:green;"}, newtab);
-        var newrow2 = createElement("tr", {style: "background-color:yellow;"}, newtab);
-        var newrow3 = createElement("tr", {style: "background-color:#900;"}, newtab);
+        var newrow1 = createElement("tr", { style: "background-color:green;" }, newtab);
+        var newrow2 = createElement("tr", { style: "background-color:yellow;" }, newtab);
+        var newrow3 = createElement("tr", { style: "background-color:#900;" }, newtab);
 
         tabcell = createElement("td", "", newrow1, "Hervorheben 1");
         tabcell = createElement("td", "", newrow2, "Hervorheben 2");
@@ -3539,8 +3588,8 @@ window.addEventListener("load", function () {
         var candtr = candtable[0].getElementsByTagName("tr");
         var candtd = candtr[0].getElementsByTagName("td");
         candtd[5].innerHTML = "Kaufen";
-        createElement("td", {style: "text-align:right;"}, candtr[0], "Differenz");
-        createElement("td", {style: "text-align:right;"}, candtr[0], "Restzeit");
+        createElement("td", { style: "text-align:right;" }, candtr[0], "Differenz");
+        createElement("td", { style: "text-align:right;" }, candtr[0], "Restzeit");
         createElement("td", "", candtr[0], "");
         for (var tr = 1; tr < candtr.length; tr++) {
             candtr[tr].setAttribute("onmouseover", "");
@@ -3603,9 +3652,9 @@ window.addEventListener("load", function () {
                     }
                 }, 50);
             }, false);
-            createElement("td", {style: "text-align:right;"}, candtr[tr], "&nbsp;" + (price > priceMax ? "+" : "") + number_format(price - priceMax, 2));
-            createElement("td", {style: "text-align:right;"}, candtr[tr], "&nbsp;" + time2str(restlicheZeit, 1) + "h");
-            createElement("td", {style: "text-align:right;"}, candtr[tr], "&nbsp;" + (price > priceMax ? "---" : number_format((priceMax - price) * 3600 / restlicheZeit)));
+            createElement("td", { style: "text-align:right;" }, candtr[tr], "&nbsp;" + (price > priceMax ? "+" : "") + number_format(price - priceMax, 2));
+            createElement("td", { style: "text-align:right;" }, candtr[tr], "&nbsp;" + time2str(restlicheZeit, 1) + "h");
+            createElement("td", { style: "text-align:right;" }, candtr[tr], "&nbsp;" + (price > priceMax ? "---" : number_format((priceMax - price) * 3600 / restlicheZeit)));
         }
 
         var canddiv = Select("ex_navi").getElementsByTagName("div");
@@ -3639,7 +3688,6 @@ window.addEventListener("load", function () {
         cand = null;
     }
 
-
     function do_login() {
         console.log(info + "do_login");
         var loc = reg2.exec(document.location.href);
@@ -3656,7 +3704,7 @@ window.addEventListener("load", function () {
                 var logindata = explode(GM_getValue("logindata", "[]"));
             }
             catch (err) {
-                var logindata = [];
+                logindata = [];
             }
 
             unsafeWindow.showDiv("login_div");
@@ -3674,7 +3722,7 @@ window.addEventListener("load", function () {
                 Select("login_div").getElementsByClassName("kh_btn")[0].click();
             }
 
-            var newdiv = createElement("div", {style: "position:absolute;top:0px;left:0px;width:412px;padding:10px;background-color:#999;-moz-border-radius:10px;"}, Select("login_div"));
+            var newdiv = createElement("div", { style: "position:absolute;top:0px;left:0px;width:412px;padding:10px;background-color:#999;-moz-border-radius:10px;" }, Select("login_div"));
             var newbutton;
             for (var v = 0; v < logindata.length; v++) {
                 if (logindata[v][1] != "0") {
@@ -3712,3 +3760,32 @@ window.addEventListener("load", function () {
     }
 
 }, false);
+
+// Мои скрипты
+$(document).keyup(function (e) {
+    if (e.key === "Escape" || e.keyCode === 27 || e.key === "q" || e.key === "й") {
+        close_page();
+        $('#dlg_message').css({ "display": "none", "background-color": "white", "position": "absolute", "z-index": "2001", "width": "400px", "height": "200px", "text-align": "center" });
+        $('#dlg_background').css({ "display": "none" });
+    }
+    if (e.key === "ArrowLeft" || e.keyCode === 37 || e.key === "a" || e.key === "ф") {
+        MedicalRecord.show(1);
+    }
+    if (e.key === "ArrowRight" || e.keyCode === 39 || e.key === "d" || e.key === "в") {
+        MedicalRecord.show(2);
+    }
+    if (e.keyCode > 48 && e.keyCode < 58) {
+        Map.jumpTo('floor' + e.key);
+    }
+});
+
+$('#fade_span2').on('click', function () {
+    close_page();
+});
+
+$(function () {
+    $('#dlg_background').on('click', function () {
+        $('#dlg_message').css({ "display": "none", "background-color": "white", "position": "absolute", "z-index": "2001", "width": "400px", "height": "200px", "text-align": "center" });
+        $('#dlg_background').css({ "display": "none" });
+    });
+});
