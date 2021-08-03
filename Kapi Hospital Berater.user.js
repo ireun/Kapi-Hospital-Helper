@@ -3760,7 +3760,6 @@ window.addEventListener("load", function () {
     }
 
 }, false);
-
 // Мои скрипты
 $(document).keyup(function (e) {
     if (e.key === "Escape" || e.keyCode === 27 || e.key === "q" || e.key === "й") {
@@ -3774,9 +3773,32 @@ $(document).keyup(function (e) {
     if (e.key === "ArrowRight" || e.keyCode === 39 || e.key === "d" || e.key === "в") {
         MedicalRecord.show(2);
     }
-    if (e.keyCode > 48 && e.keyCode < 58) {
-        Map.jumpTo('floor' + e.key);
+
+    if (e.keyCode) {
+        switch (e.key) {
+            // Переход между койками
+            case "1": document.getElementById("r1").click(); break;
+            case "2": document.getElementById("r2").click(); break;
+            case "3": document.getElementById("r3").click(); break;
+            case "4": document.getElementById("r4").click(); break;
+            case "5": document.getElementById("r5").click(); break;
+            case "6": document.getElementById("r6").click(); break;
+            case "7": document.getElementById("r12").click(); break;
+            case "8": document.getElementById("r13").click(); break;
+            case "9": document.getElementById("r14").click(); break;
+            case "0": document.getElementById("r15").click(); break;
+            case "-": document.getElementById("r16").click(); break;
+            case "=": document.getElementById("r17").click(); break;
+            // Переход между этажами
+            case "z": case "я": Map.jumpTo('floor1'); break;
+            case "x": case "ч": Map.jumpTo('floor2'); break;
+            case "c": case "с": Map.jumpTo('floor3'); break;
+            case "v": case "м": Map.jumpTo('floor4'); break;
+            case "b": case "и": Map.jumpTo('floor5'); break;
+
+        }
     }
+    console.log(e.keyCode, e.key);
 });
 
 $('#fade_span2').on('click', function () {
