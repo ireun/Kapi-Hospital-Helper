@@ -13,7 +13,7 @@
 // @namespace       https://greasyfork.org/users/5507
 // @supportURL      https://github.com/ireun/Kapi-Hospital-Berater/issues
 // ==/UserScript==
-
+//
 window.addEventListener("load", function () {
 
     var info = "[Helper] ";
