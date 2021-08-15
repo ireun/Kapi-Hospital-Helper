@@ -16,7 +16,7 @@
 //
 window.addEventListener("load", function () {
 
-    var info = "[Helper] ";
+    var info = "[Helper] Kapi Hospital ";
 
     console.log(info + "Start");
 
