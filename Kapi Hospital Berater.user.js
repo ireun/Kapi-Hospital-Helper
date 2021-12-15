@@ -4,7 +4,7 @@
 // @date            28.02.2017
 // @version         2.4.9.0
 // @author          IreuN
-// @include         http://*kapihospital.com/*
+// @include         https://*kapihospital.com/*
 // @grant           GM_getValue
 // @grant           GM_setValue
 // @grant           GM_addStyle
@@ -61,7 +61,7 @@ window.addEventListener("load", function () {
     var texte = {};
     var medi = {};
 
-    var reg2 = /http:\/\/(s\d+\.|www\.|)kapihospital\.com\/(.*)/i;
+    var reg2 = /https:\/\/(s\d+\.|www\.|)kapihospital\.com\/(.*)/i;
     var delimThou = ".";
     var regDelimThou = /\./g;
     var delimDeci = ",";
@@ -99,7 +99,7 @@ window.addEventListener("load", function () {
     ccode.forEach(function (ccode) {
         if (document.location.href.search(ccode[1] + ".kapihospital.com") != -1) {
             lng = ccode[0];//Object.keys(gamepages)[0]; //
-            reg = new RegExp("http://s(\\d+)\\." + ccode[1] + "\\.kapihospital\\.com/(.*?)\\.php(.*)", "i");
+            reg = new RegExp("https://s(\\d+)\\." + ccode[1] + "\\.kapihospital\\.com/(.*?)\\.php(.*)", "i");
             gamepages[ccode[1]] = "http://www" + ccode[2];
             console.log(info + "Setting language: " + lng);
             //console.log("Setting language: ", gamepages, Object.keys(gamepages)[0]);
@@ -229,6 +229,37 @@ window.addEventListener("load", function () {
         roomTimes["allrooms"] = [0, 0];
         roomTimes["emptyrooms"] = [0, 0];
 
+        var cleaner = [
+            "https://s1.ru.kapihospital.com/service.room.php?mode=cleaner&position=52&level=1",
+            "https://s1.ru.kapihospital.com/service.room.php?mode=cleaner&position=56&level=1",
+            "https://s1.ru.kapihospital.com/service.room.php?mode=cleaner&position=60&level=1",
+            "https://s1.ru.kapihospital.com/service.room.php?mode=cleaner&position=64&level=1",
+            "https://s1.ru.kapihospital.com/service.room.php?mode=cleaner&position=103&level=1",
+            "https://s1.ru.kapihospital.com/service.room.php?mode=cleaner&position=106&level=1",
+            "https://s1.ru.kapihospital.com/service.room.php?mode=cleaner&position=109&level=1",
+            "https://s1.ru.kapihospital.com/service.room.php?mode=cleaner&position=109&level=1",
+            "https://s1.ru.kapihospital.com/service.room.php?mode=cleaner&position=113&level=1",
+            "https://s1.ru.kapihospital.com/service.room.php?mode=cleaner&position=117&level=1",
+            "https://s1.ru.kapihospital.com/service.room.php?mode=cleaner&position=154&level=1",
+            "https://s1.ru.kapihospital.com/service.room.php?mode=cleaner&position=157&level=1",
+            "https://s1.ru.kapihospital.com/service.room.php?mode=cleaner&position=160&level=1",
+            "https://s1.ru.kapihospital.com/service.room.php?mode=cleaner&position=164&level=1",
+            "https://s1.ru.kapihospital.com/service.room.php?mode=cleaner&position=168&level=1",
+            "https://s1.ru.kapihospital.com/service.room.php?mode=cleaner&position=86&level=2",
+            "https://s1.ru.kapihospital.com/service.room.php?mode=cleaner&position=89&level=2",
+            "https://s1.ru.kapihospital.com/service.room.php?mode=cleaner&position=92&level=2",
+            "https://s1.ru.kapihospital.com/service.room.php?mode=cleaner&position=95&level=2",
+            "https://s1.ru.kapihospital.com/service.room.php?mode=cleaner&position=64&level=2",
+            "https://s1.ru.kapihospital.com/service.room.php?mode=cleaner&position=137&level=2",
+            "https://s1.ru.kapihospital.com/service.room.php?mode=cleaner&position=141&level=2",
+            "https://s1.ru.kapihospital.com/service.room.php?mode=cleaner&position=145&level=2",
+            "https://s1.ru.kapihospital.com/service.room.php?mode=cleaner&position=115&level=2",
+            "https://s1.ru.kapihospital.com/service.room.php?mode=cleaner&position=115&level=2",
+            "https://s1.ru.kapihospital.com/service.room.php?mode=cleaner&position=166&level=2"
+        ];
+        cleaner.forEach(function callback(currentValue) {
+            $.get( currentValue, function( data ) { console.log(data); });
+        });
 
         for (var v in Global.availableMedics[0]) {
             medi[Global.availableMedics[0][v]["diseases"]] = Global.availableMedics[0][v];
@@ -1042,7 +1073,7 @@ window.addEventListener("load", function () {
                 if (patientDiseases[currPatientId]) {
                     patientDiseases[currPatientId]["floor"] = Global.refPatients.get("p" + currPatientId)["floor"];
                     var classStr = canddiv[pat].getAttribute("class").replace(" allcured", "").replace(" unhealable", "").replace(" needminitreatment", "");
-
+                    //console.log("ВОТ ПАЦИЕНТ", patientDiseases[currPatientId]);
                     //dont remove, its flickring to much
                     if (Select("mcont_" + currPatientId)) {
                         //removeElement( Select("mcont_"+currPatientId) );
@@ -2906,7 +2937,6 @@ window.addEventListener("load", function () {
     }
 
     function plotPatient(target, currPatientId, showCured, minipic) { //(target) , (target,showCured)
-        console.log("THIS IS plotPatient");
         if (!isNaN(currPatientId)) {
             if (typeof(showCured) != "boolean") {
                 showCured = true;
@@ -2921,6 +2951,7 @@ window.addEventListener("load", function () {
 
             currPatientId = parseInt(target.getAttribute("name"), 10);
         }
+        console.log("THIS IS plotPatient");
 
         if (typeof(minipic) != "boolean") {
             minipic = false;
@@ -2976,6 +3007,7 @@ window.addEventListener("load", function () {
                                 usedRooms[Global.availableDiseases[0][disease]["room"][0]] = 1;
                                 newdiv2.style.fontWeight = "bold";
                             }
+
                         }
                     }
                 }
@@ -3762,17 +3794,17 @@ window.addEventListener("load", function () {
 }, false);
 // Мои скрипты
 $(document).keyup(function(e) {
-    if (e.keyCode === 27 || e.keyCode === 81) { // esc, q
+	if (e.keyCode === 27 || e.keyCode === 81) { // esc, q
         close_page();
         $('#dlg_message').css({"display": "none", "background-color": "white", "position": "absolute", "z-index": "2001", "width": "400px", "height": "200px", "text-align": "center"});
         $('#dlg_background').css({"display": "none"});
-    }
-    if (e.keyCode === 37 || e.keyCode === 65) { // ArrowLeft, a | ф
+	}
+    if (e.keyCode === 37 || e.keyCode === 65) { // ArrowLeft, A | Ф
         MedicalRecord.show(1);
-    }
-    if (e.keyCode === 39 || e.keyCode === 68) { // ArrowRight, d | в
+	}
+    if (e.keyCode === 39 || e.keyCode === 68) { // ArrowRight, D | в
         MedicalRecord.show(2);
-    }
+	}
 
     if (e.keyCode) {
         switch(e.keyCode) {
@@ -3795,6 +3827,7 @@ $(document).keyup(function(e) {
             case 67: Map.jumpTo('floor3'); break; // c
             case 86: Map.jumpTo('floor4'); break; // v
             case 66: Map.jumpTo('floor5'); break; // b
+
         }
     }
 });
