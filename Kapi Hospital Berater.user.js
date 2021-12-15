@@ -257,8 +257,8 @@ window.addEventListener("load", function () {
             "https://s1.ru.kapihospital.com/service.room.php?mode=cleaner&position=115&level=2",
             "https://s1.ru.kapihospital.com/service.room.php?mode=cleaner&position=166&level=2"
         ];
-        cleaner.forEach(function callback(currentValue) {
-            $.get( currentValue, function( data ) { console.log(data); });
+        cleaner.forEach(function callback(currentUrl) {
+            $.get( currentUrl, function( data ) { console.log(data); });
         });
 
         for (var v in Global.availableMedics[0]) {
