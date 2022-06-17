@@ -4,7 +4,7 @@
 // @date            28.02.2017
 // @version         2.4.9.0
 // @author          IreuN
-// @include         http://*kapihospital.com/*
+// @include         https://*kapihospital.com/*
 // @grant           GM_getValue
 // @grant           GM_setValue
 // @grant           GM_addStyle
@@ -61,7 +61,7 @@ window.addEventListener("load", function () {
     var texte = {};
     var medi = {};
 
-    var reg2 = /http:\/\/(s\d+\.|www\.|)kapihospital\.com\/(.*)/i;
+    var reg2 = /https:\/\/(s\d+\.|www\.|)kapihospital\.com\/(.*)/i;
     var delimThou = ".";
     var regDelimThou = /\./g;
     var delimDeci = ",";
@@ -98,10 +98,11 @@ window.addEventListener("load", function () {
 
     ccode.forEach(function (ccode) {
         if (document.location.href.search(ccode[1] + ".kapihospital.com") != -1) {
-            lng = ccode[0];
-            reg = new RegExp("http://s(\\d+)\\." + ccode[1] + "\\.kapihospital\\.com/(.*?)\\.php(.*)", "i");
+            lng = ccode[0];//Object.keys(gamepages)[0]; //
+            reg = new RegExp("https://s(\\d+)\\." + ccode[1] + "\\.kapihospital\\.com/(.*?)\\.php(.*)", "i");
             gamepages[ccode[1]] = "http://www" + ccode[2];
             console.log(info + "Setting language: " + lng);
+            //console.log("Setting language: ", gamepages, Object.keys(gamepages)[0]);
             loadLanguage(lng);
         }
     });
@@ -228,6 +229,37 @@ window.addEventListener("load", function () {
         roomTimes["allrooms"] = [0, 0];
         roomTimes["emptyrooms"] = [0, 0];
 
+        var cleaner = [
+            "https://s1.ru.kapihospital.com/service.room.php?mode=cleaner&position=52&level=1",
+            "https://s1.ru.kapihospital.com/service.room.php?mode=cleaner&position=56&level=1",
+            "https://s1.ru.kapihospital.com/service.room.php?mode=cleaner&position=60&level=1",
+            "https://s1.ru.kapihospital.com/service.room.php?mode=cleaner&position=64&level=1",
+            "https://s1.ru.kapihospital.com/service.room.php?mode=cleaner&position=103&level=1",
+            "https://s1.ru.kapihospital.com/service.room.php?mode=cleaner&position=106&level=1",
+            "https://s1.ru.kapihospital.com/service.room.php?mode=cleaner&position=109&level=1",
+            "https://s1.ru.kapihospital.com/service.room.php?mode=cleaner&position=109&level=1",
+            "https://s1.ru.kapihospital.com/service.room.php?mode=cleaner&position=113&level=1",
+            "https://s1.ru.kapihospital.com/service.room.php?mode=cleaner&position=117&level=1",
+            "https://s1.ru.kapihospital.com/service.room.php?mode=cleaner&position=154&level=1",
+            "https://s1.ru.kapihospital.com/service.room.php?mode=cleaner&position=157&level=1",
+            "https://s1.ru.kapihospital.com/service.room.php?mode=cleaner&position=160&level=1",
+            "https://s1.ru.kapihospital.com/service.room.php?mode=cleaner&position=164&level=1",
+            "https://s1.ru.kapihospital.com/service.room.php?mode=cleaner&position=168&level=1",
+            "https://s1.ru.kapihospital.com/service.room.php?mode=cleaner&position=86&level=2",
+            "https://s1.ru.kapihospital.com/service.room.php?mode=cleaner&position=89&level=2",
+            "https://s1.ru.kapihospital.com/service.room.php?mode=cleaner&position=92&level=2",
+            "https://s1.ru.kapihospital.com/service.room.php?mode=cleaner&position=95&level=2",
+            "https://s1.ru.kapihospital.com/service.room.php?mode=cleaner&position=64&level=2",
+            "https://s1.ru.kapihospital.com/service.room.php?mode=cleaner&position=137&level=2",
+            "https://s1.ru.kapihospital.com/service.room.php?mode=cleaner&position=141&level=2",
+            "https://s1.ru.kapihospital.com/service.room.php?mode=cleaner&position=145&level=2",
+            "https://s1.ru.kapihospital.com/service.room.php?mode=cleaner&position=115&level=2",
+            "https://s1.ru.kapihospital.com/service.room.php?mode=cleaner&position=115&level=2",
+            "https://s1.ru.kapihospital.com/service.room.php?mode=cleaner&position=166&level=2"
+        ];
+        cleaner.forEach(function callback(currentUrl) {
+            $.get( currentUrl, function( data ) { console.log(data); });
+        });
 
         for (var v in Global.availableMedics[0]) {
             medi[Global.availableMedics[0][v]["diseases"]] = Global.availableMedics[0][v];
@@ -457,6 +489,22 @@ window.addEventListener("load", function () {
         newbutton.addEventListener("mouseout", function () {
             this.style.backgroundColor = "";
         }, false);
+
+        newbutton = createElement("button", {
+            type: "button",
+            class: "cursorclickable",
+            style: "margin-left:3px;"
+        }, newdiv, "GG EZ");
+        newbutton.addEventListener("click", function () {
+            window.open(scriptUrl);
+        }, false);
+        newbutton.addEventListener("mouseover", function () {
+            this.style.backgroundColor = "#cc9";
+        }, false);
+        newbutton.addEventListener("mouseout", function () {
+            this.style.backgroundColor = "";
+        }, false);
+
         newbutton = createElement("button", {
             id: "berateroptionen",
             type: "button",
@@ -1025,7 +1073,7 @@ window.addEventListener("load", function () {
                 if (patientDiseases[currPatientId]) {
                     patientDiseases[currPatientId]["floor"] = Global.refPatients.get("p" + currPatientId)["floor"];
                     var classStr = canddiv[pat].getAttribute("class").replace(" allcured", "").replace(" unhealable", "").replace(" needminitreatment", "");
-
+                    //console.log("ВОТ ПАЦИЕНТ", patientDiseases[currPatientId]);
                     //dont remove, its flickring to much
                     if (Select("mcont_" + currPatientId)) {
                         //removeElement( Select("mcont_"+currPatientId) );
@@ -1060,10 +1108,12 @@ window.addEventListener("load", function () {
                                 }, canddiv[pat]);
 
                                 for (var m = 0; m < patientDiseases[currPatientId]["m"]; m++) {
+                                    console.log("RESULT: ", patientDiseases[currPatientId]["m"]);
                                     createElement("div", {style: "width: 7px; height: 7px; margin: 1px;background-color:green;"}, Select("mcont_" + currPatientId));
                                 }
 
                                 for (; m < 4; m++) {
+                                    console.log("RESULT m: ", currPatientId, patientDiseases[currPatientId]);
                                     createElement("div", {style: "width: 7px; height: 7px; margin: 1px;background-color:red;"}, Select("mcont_" + currPatientId));
                                 }
                             }
@@ -1693,7 +1743,6 @@ window.addEventListener("load", function () {
         }
     }
 
-
     function mousedown(A) {
         var B = document.createEvent("MouseEvents");
 
@@ -1795,9 +1844,9 @@ window.addEventListener("load", function () {
     }
 
     function time2str(time, mode) {
-        str = "";
+        var str = "";
         time = Math.max(0, time);
-        tmp = "";
+        var tmp = "";
 
         //seconds
         if (!mode || mode == 2) {
@@ -2902,6 +2951,7 @@ window.addEventListener("load", function () {
 
             currPatientId = parseInt(target.getAttribute("name"), 10);
         }
+        console.log("THIS IS plotPatient");
 
         if (typeof(minipic) != "boolean") {
             minipic = false;
@@ -2923,7 +2973,7 @@ window.addEventListener("load", function () {
                     newdiv = createElement("div", {style: "float:left;"}, target);
                     if (minipic) {
                         if (patientDiseases[currPatientId][disease] == "cured") {
-                            newdiv1 = createElement("div", {
+                            var newdiv1 = createElement("div", {
                                 class: "d_a_15 d_" + disease + "_15",
                                 style: "opacity:0.5;"
                             }, newdiv);
@@ -2957,6 +3007,7 @@ window.addEventListener("load", function () {
                                 usedRooms[Global.availableDiseases[0][disease]["room"][0]] = 1;
                                 newdiv2.style.fontWeight = "bold";
                             }
+
                         }
                     }
                 }
@@ -2967,12 +3018,14 @@ window.addEventListener("load", function () {
             if (minipic) {
                 newdiv = createElement("div", {style: "position:relative;float:left;"}, target);
                 createElement("div", {class: "treatment_icon_15 treatment_icon_15_1"}, newdiv);
-            } else {
+            }
+            else {
                 newdiv = createElement("div", {style: "position:relative;float:left;margin-left:30px;"}, target);
                 createElement("div", {class: "pat_dis1 treatmenticonpa"}, newdiv);
                 createElement("div", {class: "treatmenticons cureds"}, newdiv);
-                newdiv2 = createElement("div", "", newdiv, time2str(restlicheZeit, 1));
+                var newdiv2 = createElement("div", "", newdiv, time2str(restlicheZeit, 1));
                 newdiv2.style.fontWeight = "bold";
+                console.log("THIS IF", patientDiseases[currPatientId], minipic);
             }
         }
         else {
@@ -2981,9 +3034,36 @@ window.addEventListener("load", function () {
                 createElement("div", {class: "pat_dis1 treatmenticonpa"}, newdiv);
                 newdiv2 = createElement("div", "", newdiv, time2str(restlicheZeit, 1));
                 newdiv2.style.fontWeight = "bold";
+                //console.log("THIS ELSE", patientDiseases[currPatientId], minipic);
+                //console.log("SERVER:", server, "LANG:", lng);
+
+                //console.log("getFullPatientInfos", getFullPatientInfos(currPatientId));
+                //var s = getFullPatientInfos(currPatientId);
+                //var med = $('#med_price');
+                //getFullPatientInfos(currPatientId);
+                //console.log(getTest(currPatientId)+" "+$('#med_price span').html());
+                $('#forHtml').html("HELLO WORLD");
             }
         }
         newdiv = null;
+    }
+
+    function getTest() {
+        var data = {"message":"<div\n        id=\"ref_divdetailsbig\"\n        class=\"msgwindow\"\n        style=\"z-index:10;display:none;background:url('http:\/\/pics.kapihospital.de\/bg_referral_02.jpg') no-repeat;\"\n>\n    <div\n            class=\"closebutton cursorclickable\"\n            title=\"\u0437\u0430\u043a\u0440\u044b\u0442\u044c\"\n            id=\"msg_head_close1\"\n            onclick=\"Referral.closeDetails();\"\n    ><\/div>\n    <div\n            class=\"msgwindow\"\n            id=\"ref_divdetails\"\n    ><\/div>\n<\/div>\n<div id=\"msgwindow\" class=\"msgwindow\" style=\"background:url('http:\/\/pics.kapihospital.de\/medicalrecord_1.png') no-repeat;\">\n    <div\n            id=\"medi_navi_first\"\n            onclick=\"MedicalRecord.show(1);\"\n            style=\"display:block;z-index:2;position:absolute;top:0;height:20px;left:0;width:420px;\"\n            class=\"cursorclickable\"\n    ><\/div>\n    <div\n            id=\"medi_navi_second\"\n            onclick=\"MedicalRecord.show(2);\"\n            style=\"display:block;z-index:2;position:absolute;top:0;height:20px;right:0;width:180px;\"\n            class=\"cursorclickable\"\n    ><\/div>\n    <div\n            id=\"medi_bling_first\"\n            onclick=\"MedicalRecord.show(1);\"\n            style=\"z-index:2;position:absolute;top:1px;height:20px;left:34px;width:65px;background-image:url('http:\/\/pics.kapihospital.de\/medicalrecord_1a.gif');display:none;\"\n            class=\"cursorclickable\"\n    ><\/div>\n    <div\n            id=\"medi_blingt_second\"\n            onclick=\"MedicalRecord.show(2);\"\n            style=\"display:block;z-index:2;position:absolute;top:0;height:20px;left:503px;width:65px;background-image:url('http:\/\/pics.kapihospital.de\/medicalrecord_2a.gif');\"\n            class=\"cursorclickable\"\n    ><\/div>\n    <div\n            class=\"closebutton cursorclickable\"\n            title=\"\u0437\u0430\u043a\u0440\u044b\u0442\u044c\"\n            id=\"msg_head_close\"\n            style=\"right: 0; top: 30px;\"\n            onclick=\"close_page();\"\n    ><\/div>\n    <div id=\"patientDetails\">\n        <div\n                id=\"medi_patientname\"\n                style=\"\n\t\t\t\tposition: absolute;\n\t\t\t\theight: 20px;\n\t\t\t\tcolor: black;\n\t\t\t\tfont-weight: bold;\n\t\t\t\ttext-align: center;\n\t\t\t\tfont-size: large;\n\t\t\t\ttop: 40px;\n\t\t\t\tleft: 65px;\n\t\t\t\twidth: 465px;\n\t\t\t\"\n        >\u0415\u0440\u043e\u0444\u0435\u0439 \u0410\u0440\u0443\u0442\u043e\u0432\n        <\/div>\n        <div\n                id=\"medi_patientimage\"\n                style=\"position: absolute; width: 70px; height: 90px; left: 67px; top: 74px; background-repeat:no-repeat; background-image:url('http:\/\/portraits.kapihospital.de\/f\/6\/0\/f604122653cbf25b3dbc7f2773dc15e0.png');\">\n            <div id=\"mr_cdc_pat_over\" style=\"display:none;background-image:url('http:\/\/pics.kapihospital.de\/cdc_pat_over.png');\"><\/div>\n        <\/div>\n        <div\n                id=\"medi_patientdoba\"\n                style=\"position: absolute; height: 20px; top: 74px; left: 150px; color: black; width: 350px; text-align: left;\"\n        >\u0414\u0435\u043d\u044c \u0440\u043e\u0436\u0434\u0435\u043d\u0438\u044f <span id=\"dob\" style=\"position:absolute;left:120px;\">10.09.1949<\/span><\/div>\n        <div id=\"patientDetailsSub1\">\n            <div\n                    id=\"medi_patientpoba\"\n                    style=\"position: absolute; height: 20px; top: 94px; left: 150px; color: black; width: 350px; text-align: left;\"\n            >\u041c\u0435\u0441\u0442\u043e \u0440\u043e\u0436\u0434\u0435\u043d\u0438\u044f <span id=\"pob\" style=\"position:absolute;left:120px;\">\u041f\u043e\u043a\u0440\u043e\u0432\u0441\u043a<\/span>\n            <\/div>\n            <div\n                    id=\"medi_patientoccupation\"\n                    style=\"\n\t\t\t\t\tposition: absolute;\n\t\t\t\t\theight: 20px;\n\t\t\t\t\ttop: 114px;\n\t\t\t\t\tleft: 150px;\n\t\t\t\t\tcolor: black;\n\t\t\t\t\twidth: 390px;\n\t\t\t\t\ttext-align: left;\n\t\t\t\t\toverflow-y:hidden;\n\t\t\t\t\"\n            >\u041f\u0440\u043e\u0444\u0435\u0441\u0441\u0438\u044f <span id=\"occupation\" style=\"position:absolute;left:120px;\" title=\"\u0417\u0432\u0443\u043a\u043e\u0440\u0435\u0436\u0438\u0441\u0441\u0435\u0440\">\u0417\u0432\u0443\u043a\u043e\u0440\u0435\u0436\u0438\u0441\u0441\u0435\u0440<\/span>\n            <\/div>\n            <div\n                    id=\"medi_patientheight\"\n                    style=\"position: absolute; height: 20px; top: 134px; left: 150px; color: black; width: 350px; text-align: left;\"\n            >\u0420\u043e\u0441\u0442 <span id=\"occupation\" style=\"position:absolute;left:120px;\">193 \u0441\u043c<\/span>\n                <span id=\"occupation\" style=\"position:absolute;left:220px;\">\u0412\u0435\u0441 90 \u043a\u0433<\/span>\n            <\/div>\n            <div\n                    id=\"medi_patienthobbies\"\n                    style=\"position: absolute; height: 36px; top: 154px; left: 150px; color: black; width: 390px; text-align: left;overflow:hidden;\"\n            >\u0423\u0432\u043b\u0435\u0447\u0435\u043d\u0438\u0435 <span id=\"occupation\" style=\"position:absolute;left:120px;\">\u043a\u0443\u0440\u0438\u0442\u044c \u0411\u0435\u043b\u043e\u043c\u043e\u0440\u043a\u0430\u043d\u0430\u043b<\/span>\n            <\/div>\n        <\/div>\n        <div id=\"patientDetailsSub2\" style=\"display:none;\">\n            <div\n                    id=\"medi_patientmedsr\"\n                    style=\"position: absolute; height: 20px; top: 94px; left: 150px; color: black; width: 350px;text-align: left;\"\n            >\u041c\u0435\u0434\u0438\u043a\u0430\u043c\u0435\u043d\u0442\u044b \u0434\u043e\u0441\u0442. <span id=\"medsr\" style=\"position:absolute;left:120px;\">0<\/span>\n            <\/div>\n            <div\n                    id=\"medi_patientsince\"\n                    style=\"position: absolute; height: 20px; top: 114px; left: 150px; color: black; width: 400px; text-align: left;\"\n            >\u0414\u0430\u0442\u0430 \u043f\u043e\u0441\u0442\u0443\u043f\u043b\u0435\u043d\u0438\u044f <span id=\"since\" style=\"position:absolute;left:120px;\">19.07.2021 23:39, \u043f\u0440\u0438\u043c\u0435\u0440\u043d\u043e 15 \u0447. \u0441\u043f\u0443\u0441\u0442\u044f<\/span>\n            <\/div>\n            <div\n                    id=\"medi_patientmoodt\"\n                    style=\"position: absolute; height: 20px; top: 144px; left: 150px; color: black; width: 350px; text-align: left;\"\n            >\u0414\u043e\u0432\u043e\u043b\u044c\u0441\u0442\u0432\u043e\n            <\/div>\n            <div id=\"medi_patientmoodi\" style=\"top:134px;left:270px;\" class=\"mood_a mood_5\"><\/div>\n            <div\n                    id=\"medi_patientmoodp\"\n                    style=\"position: absolute; height: 20px; top: 144px; left: 305px; color: black; width: 150px; text-align: left;\"\n            >(47%)\n            <\/div>\n            <div\n                    id=\"medi_patientremai\"\n                    style=\"display:none;position: absolute; height: 20px; top: 164px; left: 150px; color: black; width: 350px; text-align: left;\"\n            >\u041e\u0441\u0442\u0430\u0432\u0448\u0435\u0435\u0441\u044f \u0432\u0440\u0435\u043c\u044f: <span id=\"medi_treat\" style=\"left:120px;\">##REST_TIME_TIMER##<\/span><\/div>\n        <\/div>\n    <\/div>\n    <div id=\"medi_first\">\n        <div id=\"tut27_1\" class=\"tut9 tut9_4\" style=\"display:none;top: 190px; left: 249px;\">\n            <div class=\"innertut\">\n                <p id=\"tut27_1_1\" class=\"tut9_2_1\"><b>\u0412\u0435\u043b\u043d\u0435\u0441-\u043f\u043e\u0442\u0440\u0435\u0431\u043d\u043e\u0441\u0442\u0438!<\/b><br>\u041e\u0439, \u0443 \u044d\u0442\u043e\u0433\u043e \u043f\u0430\u0446\u0438\u0435\u043d\u0442\u0430 \u0435\u0449\u0451 \u0431\u043e\u043b\u044c\u0448\u0435 \u043f\u043e\u0442\u0440\u0435\u0431\u043d\u043e\u0441\u0442\u0435\u0439! \u041e\u043d\u0438 \u0443\u0437\u043d\u0430\u0432\u0430\u0435\u043c\u044b \u043f\u043e \u044d\u0442\u043e\u043c\u0443 \u0441\u0438\u043c\u0432\u043e\u043b\u0443. \u041d\u0430\u0436\u043c\u0438 \u043d\u0430 \u043d\u0435\u0433\u043e, \u0447\u0442\u043e\u0431\u044b \u043e\u0442\u043f\u0440\u0430\u0432\u0438\u0442\u044c \u043f\u0430\u0446\u0438\u0435\u043d\u0442\u0430 \u043d\u0430 \u0432\u0435\u043b\u043d\u0435\u0441-\u044d\u0442\u0430\u0436.<\/p>\n            <\/div>\n        <\/div>\n        <div id=\"tut14_1\" class=\"tut9 tut9_2\" style=\"display:none;top: 20px; left: 100px;\">\n            <div class=\"innertut\" style=\"top:80px;\">\n                <p id=\"tut_14_1_1\" class=\"tut9_2_1\"><b>\u0417\u0430\u0440\u0430\u0431\u043e\u0442\u0430\u0439 \u0431\u043e\u043b\u044c\u0448\u0435 \u0434\u0435\u043d\u0435\u0433 \u0437\u0430 \u0441\u0447\u0435\u0442 \u043c\u0438\u043d\u0438-\u043b\u0435\u0447\u0435\u043d\u0438\u0439!<\/b><br><br>\u041e\u0431\u0440\u0430\u0442\u0438 \u0432\u043d\u0438\u043c\u0430\u043d\u0438\u0435 \u043d\u0430 \u0432\u0442\u043e\u0440\u0443\u044e \u0441\u0442\u0440\u0430\u043d\u0438\u0446\u0443 \u0431\u043e\u043b\u044c\u043d\u0438\u0447\u043d\u043e\u0433\u043e \u0436\u0443\u0440\u043d\u0430\u043b\u0430, \u0442\u0430\u043c \u043e\u0436\u0438\u0434\u0430\u044e\u0442 \u0442\u0435\u0431\u044f 4 \u043c\u0438\u043d\u0438-\u043b\u0435\u0447\u0435\u043d\u0438\u044f, \u043a\u043e\u0442\u043e\u0440\u044b\u0435 \u043f\u043e\u0434\u043d\u0438\u043c\u0430\u044e\u0442 \u043d\u0430\u0441\u0442\u0440\u043e\u0435\u043d\u0438\u0435 \u043f\u0430\u0446\u0438\u0435\u043d\u0442\u0430.<\/p>\n            <\/div>\n        <\/div>\n        <div id=\"diseases\" class=\"mr_diseases\" style=\"display:block\">\n            \n\t\t\t<div id=\"s1\" style=\"position:absolute;top:0px;left:0px;width:240px;height:55px;color:black;\">\n\t\t\t\t<div id=\"s1img\" class=\"d_a_50 d_11_50\"  style=\"margin-top:11px\" title=\"\u043f\u0440\u043e\u0446\u0435\u0434\u0443\u0440\u043d\u0430\u044f\">\n\t\t\t\t\t\n\t\t\t\t<\/div>\n\t\t\t\t<div style=\"margin-left:55px;margin-top:8px\">\n\t\t\t\t\t<div id=\"s1name\" style=\"left:55px;font-weight:bold;min-height:26px;\">\u0412\u043e\u0441\u043f\u0430\u043b\u0435\u043d\u0438\u0435 \u0443\u0445\u0430<\/div>\n\t\t\t\t\t<div id=\"s1time\" style=\"left:55px;\">\u0432\u0440\u0435\u043c\u044f: <span style=\"color:black\">02:00:00<\/span><\/div>\n\t\t\t\t\t<div id=\"s1state\" style=\"left:55px;\"><span>\u043d\u0435 \u043e\u0441\u043c\u043e\u0442\u0440\u0435\u043d\/\u0430<\/span><\/div>\n\t\t\t\t\n\t\t\t\t<\/div>\n\t\t\t<\/div>\n\t\t\t<div id=\"s2\" style=\"position:absolute;top:0px;left:245px;width:240px;height:55px;color:black;\">\n\t\t\t\t<div id=\"s2img\" class=\"d_a_50 d_12_50\"  style=\"margin-top:11px\" title=\"\u043f\u0440\u043e\u0446\u0435\u0434\u0443\u0440\u043d\u0430\u044f\">\n\t\t\t\t\t\n\t\t\t\t<\/div>\n\t\t\t\t<div style=\"margin-left:55px;margin-top:8px\">\n\t\t\t\t\t<div id=\"s2name\" style=\"left:55px;font-weight:bold;min-height:26px;\">\u0421\u0438\u043d\u0434\u0440\u043e\u043c \u0433\u043d\u043e\u043c\u0430 \u041d\u0430\u043f\u043e\u043b\u0435\u043e\u043d\u0430<\/div>\n\t\t\t\t\t<div id=\"s2time\" style=\"left:55px;\">\u0432\u0440\u0435\u043c\u044f: <span style=\"color:black\">02:40:00<\/span><\/div>\n\t\t\t\t\t<div id=\"s2state\" style=\"left:55px;\"><span>\u043d\u0435 \u043e\u0441\u043c\u043e\u0442\u0440\u0435\u043d\/\u0430<\/span><\/div>\n\t\t\t\t\n\t\t\t\t<\/div>\n\t\t\t<\/div>\n\t\t\t<div id=\"s3\" style=\"position:absolute;top:65px;left:0px;width:240px;height:55px;color:black;\">\n\t\t\t\t<div id=\"s3img\" class=\"d_a_50 d_48_50\"  style=\"margin-top:11px\" title=\"\u043e\u0440\u0442\u043e\u043f\u0435\u0434\u0438\u044f\">\n\t\t\t\t\t\n\t\t\t\t<\/div>\n\t\t\t\t<div style=\"margin-left:55px;margin-top:8px\">\n\t\t\t\t\t<div id=\"s3name\" style=\"left:55px;font-weight:bold;min-height:26px;\">\u0423\u0441\u044b\u0445\u0430\u043d\u0438\u0435 \u0441\u0442\u043e\u043f\u044b<\/div>\n\t\t\t\t\t<div id=\"s3time\" style=\"left:55px;\">\u0432\u0440\u0435\u043c\u044f: <span style=\"color:black\">02:30:00<\/span><\/div>\n\t\t\t\t\t<div id=\"s3state\" style=\"left:55px;\"><span>\u043d\u0435 \u043e\u0441\u043c\u043e\u0442\u0440\u0435\u043d\/\u0430<\/span><\/div>\n\t\t\t\t\n\t\t\t\t<\/div>\n\t\t\t<\/div>\n        <\/div>\n        <div id=\"cdc_diseases\" class=\"mr_cdc_diseases\" style=\"display:none\">\n            <div\n                    id=\"mr_cdc_medicon\"\n                    style=\"background-image:url('http:\/\/pics.kapihospital.de\/cdc_medicon.jpg');\"\n                    onmouseover=\"CDC.showMed();\"\n                    onmouseout=\"CDC.hideMed();\">\n            <\/div>\n            <div id=\"mr_cdc_med\" style=\"display:none;background-image:url('http:\/\/pics.kapihospital.de\/cdcm_1.jpg');\"><\/div>\n            <div id=\"mr_cdc_image\" style=\"background-image:url('http:\/\/pics.kapihospital.de\/cdc_1.jpg');\">\n                ##CDC_TICK_ICON##\n                <div id=\"mr_cdc_time\" style=\"background-image:url('http:\/\/pics.kapihospital.de\/cdc_timer.gif');\">\n                    <span id=\"medi_counter_1\">##CDC_TIMER_TIME##<\/span>\n                <\/div>\n            <\/div>\n            <div id=\"mr_cdc_text\">\n                ##CDC_TEXT##\n            <\/div>\n        <\/div>\n        <div id=\"med_price\" style=\"position: absolute; top: 375px; left: 65px; width: 468px; height: 65px; color: black;\">\n            <div style=\"position: absolute; color: gray; font-size: smaller; bottom: 5px; left: 0;\">ID: 150787052<\/div>\n            <div style=\"display:block;position:absolute;bottom:10px;right:10px;\">\n                \u043f\u043b\u0430\u0442\u0438\u0442 <span style=\"color:red;font-weight:bold;font-size:x-large;\">152,70 h\u0422 - 190,88 h\u0422<\/span>\n            <\/div>\n            <div style=\"display:none;position:absolute;bottom:-30px;right:10px;\">\n                \u043f\u043b\u0430\u0442\u0438\u0442 <span style=\"color:red;font-weight:bold;font-size:x-large;\">190,88 h\u0422<\/span>\n            <\/div>\n        <\/div>\n        <div id=\"cdc_points\" style=\"display:none;top: 445px;right: 90px;\">\n            \u041e\u0447\u043a\u0438: 99 - 119\n        <\/div>\n    <\/div>\n    <div id=\"medi_second\" style=\"display:none\">\n        <div style=\"width:600px; height: 500px; position:absolute;overflow-x:hidden;overflow-y:auto;\">\n            <div\n                    id=\"nurse_bubble_container\"\n                    style=\"position: absolute; color: black; overflow: hidden; top: 205px; left: 270px;width: 277px;height: 263px;\"\n            >\n                <div class=\"floatSpacerPersonal floatSpacer_medicalRecordNormal\"><\/div>\n                <div class=\"floatPersonal float_medicalRecordNormal\"><\/div>\n                <div id=\"nurse_bubble\"><b>\u041d\u0430\u0436\u043c\u0438 \u0441\u043b\u0435\u0432\u0430 \u043d\u0430 \u0447\u0435\u0442\u044b\u0440\u0435 \u043a\u043b\u0435\u0442\u043a\u0438, \u0447\u0442\u043e\u0431\u044b \u043f\u0440\u043e\u0432\u0435\u0441\u0442\u0438 \u0441\u043e\u043e\u0442\u0432\u0435\u0442\u0441\u0442\u0432\u0443\u044e\u0449\u0438\u0435 \u043c\u0438\u043d\u0438-\u043b\u0435\u0447\u0435\u043d\u0438\u044f.<\/b><br><br>\u041d\u0430 \u0440\u0430\u0431\u043e\u0442\u0443 \u0443\u0439\u0434\u0451\u0442 \u0434\u0432\u0435 \u043c\u0438\u043d\u0443\u0442\u044b, \u0430 \u0434\u043e\u0432\u043e\u043b\u044c\u0441\u0442\u0432\u043e \u0432\u043e\u0437\u0440\u0430\u0441\u0442\u0451\u0442 \u043d\u0430 5 \u043f\u0440\u043e\u0446\u0435\u043d\u0442\u043e\u0432. \u0427\u0435\u043c \u0434\u043e\u0432\u043e\u043b\u044c\u043d\u0435\u0435, \u0442\u0435\u043c \u0431\u043e\u043b\u044c\u0448\u0435 \u0434\u0435\u043d\u0435\u0433.<br><br>\u041f\u0443\u0441\u0442\u044c \u043f\u0440\u043e\u0444\u0435\u0441\u0441\u0438\u043e\u043d\u0430\u043b \u0440\u0430\u0431\u043e\u0442\u0430\u0435\u0442 \u0438 \u043f\u0440\u043e\u0432\u043e\u0434\u0438\u0442 \u0432\u0441\u0435 \u043c\u0438\u043d\u0438-\u043b\u0435\u0447\u0435\u043d\u0438\u044f!<br><br><b>\u041d\u0430\u043d\u044f\u0442\u044c \u0441\u0435\u0439\u0447\u0430\u0441!<\/b><\/div>\n            <\/div>\n            <div class=\"medicalRecordPersonal medicalRecordNormal\"><\/div>\n            <div id=\"medi_patientremai\" style=\"position: absolute; height: 20px; top: 164px; left: 150px; color: black; width: 350px;\n\t\t\ttext-align: left;\"><\/div>\n            <div\n                    id=\"medi_s_t1\"\n                    class=\"minitreatment \"\n                    onmouseover=\"MedicalRecord.showHint(this, 'http:\/\/pics.kapihospital.de\/medi_s_t0.jpg', '\u0418\u0437\u043c\u0435\u0440\u0438\u0442\u044c \u0442\u0435\u043c\u043f\u0435\u0440\u0430\u0442\u0443\u0440\u0443');\"\n                    onmouseout=\"MedicalRecord.closeHint(this);\"\n                    onclick=\"MedicalRecord._onclick(this, 150787052);\"\n            ><\/div>\n            <div\n                    id=\"medi_s_t2\"\n                    class=\"minitreatment \"\n                    onmouseover=\"MedicalRecord.showHint(this, 'http:\/\/pics.kapihospital.de\/medi_s_t0.jpg', '\u0420\u0430\u0437\u043d\u0435\u0441\u0442\u0438 \u043f\u0438\u0449\u0443');\"\n                    onmouseout=\"MedicalRecord.closeHint(this);\"\n                    onclick=\"MedicalRecord._onclick(this, 150787052);\"><\/div>\n            <div\n                    id=\"medi_s_t3\"\n                    class=\"minitreatment \"\n                    onmouseover=\"MedicalRecord.showHint(this, 'http:\/\/pics.kapihospital.de\/medi_s_t0.jpg', '\u041f\u0435\u0440\u0435\u0431\u0438\u043d\u0442\u043e\u0432\u0430\u0442\u044c');\"\n                    onmouseout=\"MedicalRecord.closeHint(this);\"\n                    onclick=\"MedicalRecord._onclick(this, 150787052);\"\n            ><\/div>\n            <div\n                    id=\"medi_s_t4\"\n                    class=\"minitreatment \"\n                    onmouseover=\"MedicalRecord.showHint(this, 'http:\/\/pics.kapihospital.de\/medi_s_t0.jpg', '\u0418\u0437\u043c\u0435\u0440\u0438\u0442\u044c \u0434\u0430\u0432\u043b\u0435\u043d\u0438\u0435');\"\n                    onmouseout=\"MedicalRecord.closeHint(this);\"\n                    onclick=\"MedicalRecord._onclick(this, 150787052);\"\n            ><\/div>\n            <input type=\"hidden\" id=\"pnuid\" value=\"aa850d7b\"\/>\n            <div\n                    id=\"powernurse_div\"\n                    style=\"position: absolute; height: 50px; bottom: 40px; left: 60px; width: 360px;\"\n                    onmouseover=\"MedicalRecord.showPowerNurseNotice('<b>\u0412\u0441\u0435 \u043c\u0438\u043d\u0438-\u043f\u0440\u043e\u0446\u0435\u0434\u0443\u0440\u044b \u044f \u0432\u043e\u0437\u044c\u043c\u0443 \u043d\u0430 \u0441\u0435\u0431\u044f!<\/b><br><br>\u041a\u0430\u043a \u0441\u0443\u043f\u0435\u0440-\u0441\u0435\u0441\u0442\u0440\u0430 \u044f \u043e\u0442\u0432\u0435\u0447\u0430\u044e \u0437\u0430 \u0432\u0441\u0435 \u043c\u0438\u043d\u0438-\u043b\u0435\u0447\u0435\u043d\u0438\u044f. \u042f \u0430\u0432\u0442\u043e\u043c\u0430\u0442\u0438\u0447\u0435\u0441\u043a\u0438 \u043d\u0430\u0447\u0438\u043d\u0430\u044e \u0434\u0435\u0439\u0441\u0442\u0432\u043e\u0432\u0430\u0442\u044c, \u043a\u0430\u043a \u0442\u043e\u043b\u044c\u043a\u043e \u0442\u044b \u0443\u043b\u043e\u0436\u0438\u0448\u044c \u043f\u0430\u0446\u0438\u0435\u043d\u0442\u0430 \u0432 \u0431\u043e\u043b\u044c\u043d\u0438\u0447\u043d\u0443\u044e \u043a\u043e\u0439\u043a\u0443.<br><br><b>\u041d\u0430\u043d\u044f\u0442\u044c \u0441\u0435\u0439\u0447\u0430\u0441!<\/b>');\"\n                    onmouseout=\"MedicalRecord.closeHint(this);\"\n            >\n                \u0421\u0443\u043f\u0435\u0440-\u0441\u0435\u0441\u0442\u0440\u0430 \u0443 \u0442\u0435\u0431\u044f \u043f\u043e\u043a\u0430 \u043d\u0435 \u0440\u0430\u0431\u043e\u0442\u0430\u0435\u0442<br\/>\n                <select id=\"personal_booking\" style=\"color:black;\" class=\"cursorclickable\">\n                    \n\t\t\t<option value=\"1\">7 \u0434\u043d\u0435\u0439 \u0437\u0430 5 Coins<\/option>\n\t\t\t<option value=\"2\">14 \u0434\u043d\u0435\u0439 \u0437\u0430 9 Coins (10 %\u044d\u043a\u043e\u043d\u043e\u043c\u0438\u044f!)<\/option>\n\t\t\t<option value=\"3\">28 \u0434\u043d\u0435\u0439 \u0437\u0430 15 Coins (25 %\u044d\u043a\u043e\u043d\u043e\u043c\u0438\u044f!)<\/option>\n\t\t\t<option value=\"4\">180 \u0434\u043d\u0435\u0439 \u0437\u0430 90 Coins (30 %\u044d\u043a\u043e\u043d\u043e\u043c\u0438\u044f!)<\/option>\n\t\t\n                <\/select>\n                <input type=\"button\" class=\"cursorclickable kh_btn\" value=\"\u0437\u0430\u043a\u0430\u0437\u0430\u0442\u044c\" onclick=\"MedicalRecord.getPersonal();\"\/>\n            <\/div>\n            <div id=\"tut31_1\" class=\"tut9 tut9_4\"\n                 style=\"display:none;left: 200px; top: 20px;background-position: -28px -47px;width: 316px;height: 203px;\">\n                <div class=\"innertut\" style=\"top: 17px; left: 43px;\">\n                    <p id=\"tut31_1_1\" class=\"tut9_2_1\"><b>\u041d\u0430\u0447\u0430\u0442\u044c \u043c\u0438\u043d\u0438-\u043f\u0440\u043e\u0446\u0435\u0434\u0443\u0440\u044b!<\/b><br><br>\u0412\u044b\u0431\u0435\u0440\u0438 \u043e\u0434\u043d\u0443 \u0438\u0437 \u0447\u0435\u0442\u044b\u0440\u0451\u0445 \u043c\u0438\u043d\u0438-\u043f\u0440\u043e\u0446\u0435\u0434\u0443\u0440 \u0438 \u043d\u0430\u0447\u043d\u0438 \u043f\u0440\u043e\u0446\u0435\u0434\u0443\u0440, \u043d\u0430\u0436\u0430\u0432 \u043d\u0430 \u043d\u0435\u0451! \u0415\u0441\u043b\u0438 \u0442\u044b \u0432\u044b\u043f\u043e\u043b\u043d\u0438\u043b \u0432\u0441\u0435 4 \u043f\u0440\u043e\u0446\u0435\u0434\u0443\u0440\u044b, \u0442\u044b \u0434\u043e\u0441\u0442\u0438\u0433\u0430\u0435\u0448\u044c \u043c\u0430\u043a\u0441\u0438\u043c\u0430\u043b\u044c\u043d\u043e\u0435 \u0443\u0434\u043e\u0432\u043b\u0435\u0442\u0432\u043e\u0440\u0451\u043d\u043d\u043e\u0441\u0442\u044c \u043f\u0430\u0446\u0438\u0435\u043d\u0442\u0430.<\/p>\n                <\/div>\n            <\/div>\n        <\/div>\n    <\/div>\n    <div id=\"tut_info\" style=\"display:none;\"><div id=\"tut_info\" style=\"position:absolute;width:140px;height:160px;top:220px;left:350px;background-image:url(http:\/\/pics.kapihospital.de\/tut_doc1.2.png);\"><div id=\"tut_doc_msg\" style=\"position:absolute;top:5px;left:7px;width:126px;height:93px;color:black;overflow-x:hidden;overflow-y:auto;\">\u0417\u0430\u043a\u0440\u043e\u0439 \u0431\u043e\u043b\u044c\u043d\u0438\u0447\u043d\u044b\u0439 \u0436\u0443\u0440\u043d\u0430\u043b, \u0447\u0442\u043e\u0431\u044b \u043f\u0440\u043e\u0434\u043e\u043b\u0436\u0438\u0442\u044c \u0443\u0447\u0435\u0431\u043d\u044b\u0439 \u043f\u0435\u0440\u0438\u043e\u0434.<\/div><\/div><\/div>\n<\/div>\n<div style=\"width: 400px; position: absolute; left: 100px; height: 40px; bottom: 20px;\" id=\"medi_navigation\">\n    <div id=\"referralExchangeMessage\" style=\"##SHOW_REFERRAL_EXCHANGE_MESSAGE##;text-align:center;\"><\/div>\n    <div\n            id=\"medi_kick\"\n            class=\"medicalrecordnavi cursorclickable\"\n            style=\"display:block;left:0px;\"\n            onclick=\"Dialog.confirmation('\u0422\u044b \u0434\u0435\u0439\u0441\u0442\u0432\u0438\u0442\u0435\u043b\u044c\u043d\u043e \u0445\u043e\u0447\u0435\u0448\u044c \u0432\u044b\u043f\u0440\u043e\u0432\u043e\u0434\u0438\u0442\u044c \u043f\u0430\u0446\u0438\u0435\u043d\u0442\u0430 &lt;b&gt;\u0415\u0440\u043e\u0444\u0435\u0439 \u0410\u0440\u0443\u0442\u043e\u0432&lt;\/b&gt;? \u0417\u0430 \u044d\u0442\u043e \u043d\u0435 \u043f\u043e\u043b\u0443\u0447\u0438\u0448\u044c \u0434\u0435\u043d\u0435\u0433.', function() {dischargePatient(150787052);\n\t\t\t\treturn true;})\"\n            title=\"\u0432\u044b\u043f\u0440\u043e\u0432\u043e\u0434\u0438\u0442\u044c [\u0417\u0430 \u044d\u0442\u043e \u0442\u044b \u043d\u0435 \u043f\u043e\u043b\u0443\u0447\u0438\u0448\u044c \u0434\u0435\u043d\u0435\u0433 \u043e\u0442 \u0415\u0440\u043e\u0444\u0435\u0439 \u0410\u0440\u0443\u0442\u043e\u0432!]\"\n    ><\/div>\n    <div\n            id=\"wellnessclick\"\n            onclick=\"Wellness.sendToCenter(150787052);\"\n            class=\"cursorclickable\"\n            style=\"display:none;background-image:url('http:\/\/pics.kapihospital.de\/roxxo.png');\"\n            title=\"\u0415\u0440\u043e\u0444\u0435\u0439 \u0410\u0440\u0443\u0442\u043e\u0432 \u043d\u0443\u0436\u0434\u0430\u0435\u0442\u0441\u044f \u0432 \u0432\u0435\u043b\u043d\u0435\u0441-\u043f\u0440\u043e\u0446\u0435\u0434\u0443\u0440\u0435! \u041d\u0430\u0436\u043c\u0438 \u0441\u044e\u0434\u0430 \u0438 \u043e\u0442\u043f\u0440\u0430\u0432\u044c \u043f\u0430\u0446\u0438\u0435\u043d\u0442\u0430 \u043d\u0430 \u0432\u0435\u043b\u043d\u0435\u0441-\u044d\u0442\u0430\u0436!\"\n    ><\/div>\n    <div\n            id=\"medi_wunder\"\n            class=\"medicalrecordnavi cursorclickable faithHealerAnimated\"\n            style=\"display:none;z-index:2;left:150px;\"\n            onclick=\"Dialog.confirmation('\u0422\u044b \u0445\u043e\u0447\u0435\u0448\u044c \u0432\u044b\u0437\u0432\u0430\u0442\u044c \u0427\u0443\u0434\u043e-\u043b\u0435\u043a\u0430\u0440\u044f? \u042d\u0442\u043e \u0431\u0443\u0434\u0435\u0442 \u0441\u0442\u043e\u0438\u0442\u044c &lt;b&gt;1&lt;\/b&gt; Coins. \u041f\u043e\u0441\u043b\u0435 \u0435\u0433\u043e \u043b\u0435\u0447\u0435\u0431\u043d\u044b\u0445 \u043f\u0440\u043e\u0446\u0435\u0434\u0443\u0440 \u043f\u0430\u0446\u0438\u0435\u043d\u0442 \u043c\u043e\u043c\u0435\u043d\u0442\u0430\u043b\u044c\u043d\u043e \u0432\u044b\u0437\u0434\u043e\u0440\u0430\u0432\u043b\u0438\u0432\u0430\u0435\u0442. \u0422\u044b \u043c\u043e\u0436\u0435\u0448\u044c \u0432\u044b\u0437\u044b\u0432\u0430\u0442\u044c \u0427\u0443\u0434\u043e-\u043b\u0435\u043a\u0430\u0440\u044f \u0434\u043e 10 \u0440\u0430\u0437 \u0432 \u0434\u0435\u043d\u044c. \u0421 \u043a\u0430\u0436\u0434\u044b\u043c \u043d\u043e\u0432\u044b\u043c \u0432\u044b\u0437\u043e\u0432\u043e\u043c \u0432 \u043e\u043d \u0442\u0440\u0435\u0431\u0443\u0435\u0442, \u043e\u0434\u043d\u0430\u043a\u043e, \u0431\u043e\u043b\u044c\u0448\u0435 \u0434\u0435\u043d\u0435\u0433.', function() {Global.refPatients.get('p150787052').miracleHealer('6074b9d3'); return true;});\"\n            title=\"\u0412\u044b\u0437\u0432\u0430\u0442\u044c \u0427\u0443\u0434\u043e-\u043b\u0435\u043a\u0430\u0440\u044f! (\u043c\u0430\u043a\u0441. 10)\"\n    ><\/div>\n    <div style=\"display:none;z-index:2;position:absolute;left:185px;top:25px;\">\n        <img src=\"http:\/\/pics.kapihospital.de\/coinsdot.png\" class=\"cursorclickable\" style=\"width:10px;height:10px;\" onclick=\"show_page(coins);\" alt=\"\u041a \u043c\u0430\u0433\u0430\u0437\u0438\u043d\u0443 Coins\" title=\"\u041a \u043c\u0430\u0433\u0430\u0437\u0438\u043d\u0443 Coins\" \/>\n    <\/div>\n    <div id=\"naviReferral\" style=\"display:block\">\n        <div\n                id=\"medi_lounge\"\n                class=\"medicalrecordnavi cursorclickable\"\n                style=\"display:none;left:240px;\"\n                onclick=\"Referral.sendToLoungePerId(150787052);\"\n                title=\"\u041e\u0442\u043f\u0440\u0430\u0432\u0438\u0442\u044c \u043f\u0430\u0446\u0438\u0435\u043d\u0442\u0430 \u0415\u0440\u043e\u0444\u0435\u0439 \u0410\u0440\u0443\u0442\u043e\u0432 \u0432 \u0437\u0430\u043b \u043e\u0436\u0438\u0434\u0430\u043d\u0438\u044f\"\n        ><\/div>\n        <div\n                id=\"medi_referral\"\n                class=\"medicalrecordnavi cursorclickable\"\n                style=\"display:block;right:0px;\"\n                onclick=\"Referral.writeReferral('150787052');\"\n                title=\"\u0415\u0440\u043e\u0444\u0435\u0439 \u0410\u0440\u0443\u0442\u043e\u0432 \u043d\u0430\u043f\u0440\u0430\u0432\u0438\u0442\u044c\"\n        ><\/div>\n        <div\n                id=\"medi_exchange\"\n                class=\"medicalrecordnavi cursorclickable\"\n                style=\"left:300px;\"\n                onclick=\"Exchange.newOffer(150787052);\"\n                title=\"\u0415\u0440\u043e\u0444\u0435\u0439 \u0410\u0440\u0443\u0442\u043e\u0432 \u043f\u043e\u0441\u0442\u0430\u0432\u0438\u0442\u044c \u043d\u0430 \u0431\u0438\u0440\u0436\u0443\"\n        ><\/div>\n    <\/div>\n<\/div>","js":"MedicalRecord.bgPage1 = 'medicalrecord_1.png';MedicalRecord.bgPage2 = 'medicalrecord_2.2.png';MedicalRecord.miniTreatmentHint = '<b>\u041d\u0430\u0436\u043c\u0438 \u0441\u043b\u0435\u0432\u0430 \u043d\u0430 \u0447\u0435\u0442\u044b\u0440\u0435 \u043a\u043b\u0435\u0442\u043a\u0438, \u0447\u0442\u043e\u0431\u044b \u043f\u0440\u043e\u0432\u0435\u0441\u0442\u0438 \u0441\u043e\u043e\u0442\u0432\u0435\u0442\u0441\u0442\u0432\u0443\u044e\u0449\u0438\u0435 \u043c\u0438\u043d\u0438-\u043b\u0435\u0447\u0435\u043d\u0438\u044f.<\/b><br><br>\u041d\u0430 \u0440\u0430\u0431\u043e\u0442\u0443 \u0443\u0439\u0434\u0451\u0442 \u0434\u0432\u0435 \u043c\u0438\u043d\u0443\u0442\u044b, \u0430 \u0434\u043e\u0432\u043e\u043b\u044c\u0441\u0442\u0432\u043e \u0432\u043e\u0437\u0440\u0430\u0441\u0442\u0451\u0442 \u043d\u0430 5 \u043f\u0440\u043e\u0446\u0435\u043d\u0442\u043e\u0432. \u0427\u0435\u043c \u0434\u043e\u0432\u043e\u043b\u044c\u043d\u0435\u0435, \u0442\u0435\u043c \u0431\u043e\u043b\u044c\u0448\u0435 \u0434\u0435\u043d\u0435\u0433.<br><br>\u041f\u0443\u0441\u0442\u044c \u043f\u0440\u043e\u0444\u0435\u0441\u0441\u0438\u043e\u043d\u0430\u043b \u0440\u0430\u0431\u043e\u0442\u0430\u0435\u0442 \u0438 \u043f\u0440\u043e\u0432\u043e\u0434\u0438\u0442 \u0432\u0441\u0435 \u043c\u0438\u043d\u0438-\u043b\u0435\u0447\u0435\u043d\u0438\u044f!<br><br><b>\u041d\u0430\u043d\u044f\u0442\u044c \u0441\u0435\u0439\u0447\u0430\u0441!<\/b>';","error":false,"ident":"514e3fc"};
+        return Object(data)["message"];
+    }
+
+    function getFullPatientInfos(id) {
+        console.log(info + "getPatientInfos with id: " + id);
+        var result = "";
+        var find_me = "";
+        $.get("http://s1.ru.kapihospital.com/medicalrecord.php?patient=" + id, function() {
+            //return Object(data)["message"];
+            //console.log("Платит", $('#med_price span').html());
+        }).done(function(data) {
+            console.log(Object(data)["message"]);
+            console.log($('#med_price'));
+        });
     }
 
     function getPatientInfos(id, with_nurse) {
@@ -3024,7 +3104,7 @@ window.addEventListener("load", function () {
         }
 
         // in Rooms
-        var canddiv = Select("garten_komplett").getElementsByClassName("room");
+        canddiv = Select("garten_komplett").getElementsByClassName("room");
         for (var v = 0; v < canddiv.length; v++) {
             canddiv[v].style.backgroundColor = "";
             var currPatientId = Global.refRooms.get(canddiv[v].id)["patient"];
@@ -3295,6 +3375,7 @@ window.addEventListener("load", function () {
                     }
                     else {
                         console.log(info + "Eight quests done, job's done. ;)");
+                        GarageOld.doJob();
                     }
                 }
 
@@ -3639,7 +3720,6 @@ window.addEventListener("load", function () {
         cand = null;
     }
 
-
     function do_login() {
         console.log(info + "do_login");
         var loc = reg2.exec(document.location.href);
@@ -3656,7 +3736,7 @@ window.addEventListener("load", function () {
                 var logindata = explode(GM_getValue("logindata", "[]"));
             }
             catch (err) {
-                var logindata = [];
+                logindata = [];
             }
 
             unsafeWindow.showDiv("login_div");
@@ -3712,3 +3792,53 @@ window.addEventListener("load", function () {
     }
 
 }, false);
+// Мои скрипты
+$(document).keyup(function(e) {
+	if (e.keyCode === 27 || e.keyCode === 81) { // esc, q
+        close_page();
+        $('#dlg_message').css({"display": "none", "background-color": "white", "position": "absolute", "z-index": "2001", "width": "400px", "height": "200px", "text-align": "center"});
+        $('#dlg_background').css({"display": "none"});
+	}
+    if (e.keyCode === 37 || e.keyCode === 65) { // ArrowLeft, A | Ф
+        MedicalRecord.show(1);
+	}
+    if (e.keyCode === 39 || e.keyCode === 68) { // ArrowRight, D | в
+        MedicalRecord.show(2);
+	}
+
+    if (e.keyCode) {
+        switch(e.keyCode) {
+            // Переход между койками
+            case 49: document.getElementById("r1").click(); break; // 1
+            case 50: document.getElementById("r2").click(); break; // 2
+            case 51: document.getElementById("r3").click(); break; // 3
+            case 52: document.getElementById("r4").click(); break; // 4
+            case 53: document.getElementById("r5").click(); break; // 5
+            case 54: document.getElementById("r6").click(); break; // 6
+            case 55: document.getElementById("r12").click(); break; // 7
+            case 56: document.getElementById("r13").click(); break; // 8
+            case 57: document.getElementById("r14").click(); break; // 9
+            case 48: document.getElementById("r15").click(); break; // 0
+            case 173:document.getElementById("r16").click(); break; // -
+            case 61: document.getElementById("r17").click(); break; // =
+            // Переход между этажами
+            case 90: Map.jumpTo('floor1'); break; // z
+            case 88: Map.jumpTo('floor2'); break; // x
+            case 67: Map.jumpTo('floor3'); break; // c
+            case 86: Map.jumpTo('floor4'); break; // v
+            case 66: Map.jumpTo('floor5'); break; // b
+
+        }
+    }
+});
+
+$('#fade_span2').on('click', function(){
+    close_page();
+});
+
+$(function(){
+    $('#dlg_background').on('click', function(){
+        $('#dlg_message').css({"display": "none", "background-color": "white", "position": "absolute", "z-index": "2001", "width": "400px", "height": "200px", "text-align": "center"});
+        $('#dlg_background').css({"display": "none"});
+    });
+});
